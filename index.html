@@ -252,7 +252,8 @@
             <div class="glass-panel sidebar-menu">
                 <a onclick="openTab('privileges', this)" class="active">👑 Привилегии</a>
                 <a onclick="openTab('cases', this)">🎁 Кейсы</a>
-                <a href="#">💎 Услуги</a>
+                <!-- ТЕПЕРЬ УСЛУГИ РАБОТАЮТ -->
+                <a onclick="openTab('services', this)">💎 Услуги</a>
             </div>
             
             <div class="glass-panel top-donators">
@@ -283,7 +284,7 @@
                 Недавно купили: <b>Загрузка...</b>
             </div>
 
-            <!-- ================== ВКЛАДКА 1: ВСЕ ПРИВИЛЕГИИ ================== -->
+            <!-- ================== ВКЛАДКА 1: ПРИВИЛЕГИИ ================== -->
             <div id="privileges" class="tab-content active-tab">
                 <h2 class="section-title">Магазин привилегий</h2>
                 <div class="cards-grid">
@@ -530,6 +531,25 @@
                 </div>
             </div>
 
+            <!-- ================== ВКЛАДКА 3: УСЛУГИ ================== -->
+            <div id="services" class="tab-content">
+                <h2 class="section-title">Услуги</h2>
+                <div class="cards-grid">
+                    
+                    <!-- РАЗБАН -->
+                    <div class="card">
+                        <span class="badge sale">ПОПУЛЯРНОЕ</span>
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=⚖️" class="card-img" style="object-fit: contain; padding: 20px;">
+                        <div class="card-title">Разбан</div>
+                        <div class="price-box">
+                            <span class="current-price">199 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -564,7 +584,7 @@
 
         // --- 2. ЖИВАЯ ЛЕНТА ПОКУПОК ---
         const fakeUsers = ['Nad***r', 'Ke***is', 'df***se', 'Alex***1', 'Snow***K', 'Mega***Pro', 'Ice***Man'];
-        const fakeRanks = ['VAMPIRE', 'GOD', 'DIABLO', 'PEGAS', 'СУПЕР КЕЙС', 'КЕЙС С ПРЕФИКСАМИ', 'D.OWNER'];
+        const fakeRanks = ['VAMPIRE', 'GOD', 'DIABLO', 'PEGAS', 'СУПЕР КЕЙС', 'КЕЙС С ПРЕФИКСАМИ', 'D.OWNER', 'РАЗБАН'];
 
         function updateFeed() {
             const feed = document.getElementById('recent-feed');
@@ -586,7 +606,7 @@
         updateFeed();
 
 
-        // --- 3. ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК (ПРИВИЛЕГИИ / КЕЙСЫ) ---
+        // --- 3. ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ---
         function openTab(tabId, element) {
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => {
