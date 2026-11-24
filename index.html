@@ -74,7 +74,6 @@
         /* --- БАННЕР --- */
         .hero {
             max-width: 1300px; margin: 25px auto;
-            /* Если картинки bg.jpg нет, сайт покажет стильный темный фон */
             background: linear-gradient(rgba(11, 16, 33, 0.6), rgba(11, 16, 33, 0.8)), url('bg.jpg') center/cover no-repeat, #1a2a4c;
             border-radius: 24px; padding: 80px 50px;
             display: flex; align-items: center; justify-content: space-between;
@@ -251,13 +250,11 @@
         <!-- Боковое меню -->
         <aside class="sidebar">
             <div class="glass-panel sidebar-menu">
-                <!-- Вкладки, которые переключают контент -->
                 <a onclick="openTab('privileges', this)" class="active">👑 Привилегии</a>
                 <a onclick="openTab('cases', this)">🎁 Кейсы</a>
                 <a href="#">💎 Услуги</a>
             </div>
             
-            <!-- Топ донатеров -->
             <div class="glass-panel top-donators">
                 <h3>🏆 Топ донатеров</h3>
                 <div class="top-list">
@@ -286,11 +283,12 @@
                 Недавно купили: <b>Загрузка...</b>
             </div>
 
-            <!-- ================== ВКЛАДКА 1: ПРИВИЛЕГИИ ================== -->
+            <!-- ================== ВКЛАДКА 1: ВСЕ ПРИВИЛЕГИИ ================== -->
             <div id="privileges" class="tab-content active-tab">
                 <h2 class="section-title">Магазин привилегий</h2>
                 <div class="cards-grid">
                     
+                    <!-- VAMPIRE -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=VAMPIRE" class="card-img">
                         <div class="card-title">VAMPIRE</div>
@@ -301,6 +299,7 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
+                    <!-- GOD -->
                     <div class="card">
                         <span class="badge sale">Скидка</span>
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=GOD" class="card-img">
@@ -312,6 +311,39 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
+                    <!-- DIABLO -->
+                    <div class="card">
+                        <span class="badge sale">Скидка</span>
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=DIABLO" class="card-img">
+                        <div class="card-title">DIABLO</div>
+                        <div class="price-box">
+                            <span class="old-price">99 ₽</span>
+                            <span class="current-price">59 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- PEGAS -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=PEGAS" class="card-img">
+                        <div class="card-title">PEGAS</div>
+                        <div class="price-box">
+                            <span class="current-price">79 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- RABBIT -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=RABBIT" class="card-img">
+                        <div class="card-title">RABBIT</div>
+                        <div class="price-box">
+                            <span class="current-price">99 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- D.HELPER -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.HELPER" class="card-img">
                         <div class="card-title">D.HELPER</div>
@@ -320,7 +352,108 @@
                         </div>
                         <button class="buy-btn">Купить</button>
                     </div>
-                    
+
+                    <!-- RAIN -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=RAIN" class="card-img">
+                        <div class="card-title">RAIN</div>
+                        <div class="price-box">
+                            <span class="current-price">159 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- SUMMER -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=SUMMER" class="card-img">
+                        <div class="card-title">SUMMER</div>
+                        <div class="price-box">
+                            <span class="current-price">199 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- GRAPE -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=GRAPE" class="card-img">
+                        <div class="card-title">GRAPE</div>
+                        <div class="price-box">
+                            <span class="current-price">229 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- ANGEL -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=ANGEL" class="card-img">
+                        <div class="card-title">ANGEL</div>
+                        <div class="price-box">
+                            <span class="current-price">279 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- AURORA -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=AURORA" class="card-img">
+                        <div class="card-title">AURORA</div>
+                        <div class="price-box">
+                            <span class="current-price">319 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- PRIME -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=PRIME" class="card-img">
+                        <div class="card-title">PRIME</div>
+                        <div class="price-box">
+                            <span class="current-price">379 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- ENIGMA -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=ENIGMA" class="card-img">
+                        <div class="card-title">ENIGMA</div>
+                        <div class="price-box">
+                            <span class="current-price">419 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- D.MODER -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.MODER" class="card-img">
+                        <div class="card-title">D.MODER</div>
+                        <div class="price-box">
+                            <span class="current-price">479 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- D.ST.MODER -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.ST.MODER" class="card-img">
+                        <div class="card-title">D.ST.MODER</div>
+                        <div class="price-box">
+                            <span class="current-price">539 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- D.GL.MODER -->
+                    <div class="card">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.GL.MODER" class="card-img">
+                        <div class="card-title">D.GL.MODER</div>
+                        <div class="price-box">
+                            <span class="current-price">579 ₽</span>
+                        </div>
+                        <button class="buy-btn">Купить</button>
+                    </div>
+
+                    <!-- D.OWNER -->
                     <div class="card">
                         <span class="badge hit">ХИТ</span>
                         <img src="https://placehold.co/300x300/1a2a4c/f39c12?text=D.OWNER" class="card-img">
@@ -330,6 +463,7 @@
                         </div>
                         <button class="buy-btn">Купить</button>
                     </div>
+
                 </div>
             </div>
 
@@ -454,19 +588,16 @@
 
         // --- 3. ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК (ПРИВИЛЕГИИ / КЕЙСЫ) ---
         function openTab(tabId, element) {
-            // 1. Скрываем все вкладки
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => {
                 content.classList.remove('active-tab');
             });
 
-            // 2. Убираем активный класс со всех кнопок меню
             const menuLinks = document.querySelectorAll('.sidebar-menu a');
             menuLinks.forEach(link => {
                 link.classList.remove('active');
             });
 
-            // 3. Показываем нужную вкладку и делаем кнопку активной
             document.getElementById(tabId).classList.add('active-tab');
             element.classList.add('active');
         }
