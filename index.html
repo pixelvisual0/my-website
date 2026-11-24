@@ -3,295 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Магазин доната | ComfortWorld</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>ComfortWorld | Магазин доната</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- БАЗОВЫЕ НАСТРОЙКИ И ЗИМНИЙ ФОН --- */
+        /* --- БАЗА И АТМОСФЕРА --- */
+        :root {
+            --bg-color: #0b1021;
+            --bg-gradient: radial-gradient(circle at top, #1a2a4c 0%, #0b1021 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --neon-blue: #00f2fe;
+            --neon-purple: #4facfe;
+            --gold: #f39c12;
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); /* Морозный градиент */
-            color: #2c3e50;
+            background: var(--bg-gradient);
+            color: #e2e8f0;
             min-height: 100vh;
             overflow-x: hidden;
+            background-attachment: fixed;
         }
         a { text-decoration: none; color: inherit; }
 
-        /* --- ЭФФЕКТ СНЕГА (CSS) --- */
+        /* --- СНЕГ --- */
+        #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
         .snowflake {
-            position: fixed;
-            top: -10px;
-            color: #fff;
-            user-select: none;
-            pointer-events: none;
-            z-index: 9999;
-            font-size: 1.2em;
-            animation-name: fall;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-            text-shadow: 0 0 5px rgba(255,255,255,0.8);
+            position: absolute; top: -10px; color: #fff; user-select: none;
+            animation-name: fall; animation-timing-function: linear; animation-iteration-count: infinite;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
         }
-        @keyframes fall {
-            to { transform: translateY(105vh) rotate(360deg); }
-        }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
 
-        /* --- ШАПКА САЙТА (HEADER) --- */
+        /* --- ШАПКА --- */
         header {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px); /* Эффект стекла */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.5);
+            background: rgba(11, 16, 33, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid var(--glass-border);
         }
         .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            max-width: 1300px; margin: 0 auto; padding: 15px 25px;
+            display: flex; align-items: center; justify-content: space-between;
         }
-        .logo { font-weight: 800; font-size: 22px; display: flex; align-items: center; gap: 10px; }
-        .logo span { color: #3498db; } /* Сменили оранжевый на зимний синий */
-        .nav-links { display: flex; gap: 25px; font-weight: 600; font-size: 14px; color: #555; }
-        .nav-links a:hover { color: #3498db; transition: 0.3s; }
+        .logo { font-weight: 900; font-size: 24px; display: flex; align-items: center; gap: 10px; letter-spacing: 1px; }
+        .logo span { background: linear-gradient(90deg, #00f2fe, #4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 30px; font-weight: 600; font-size: 14px; color: #94a3b8; }
+        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--neon-blue); transition: 0.3s; }
+        
+        .header-right { display: flex; gap: 15px; align-items: center; }
         .online-status {
-            background: rgba(52, 152, 219, 0.1);
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            color: #2980b9;
-            border: 1px solid rgba(52, 152, 219, 0.2);
+            background: rgba(39, 174, 96, 0.1); padding: 8px 16px; border-radius: 20px;
+            font-size: 13px; font-weight: 700; color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3);
+            display: flex; align-items: center; gap: 8px;
         }
+        .online-status::before { content: ''; width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; box-shadow: 0 0 10px #2ecc71; animation: pulse-green 1.5s infinite; }
+        @keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
+
         .shop-btn-header {
-            background: #3498db;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 14px;
-            transition: 0.3s;
-            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            color: #0b1021; padding: 10px 24px; border-radius: 8px;
+            font-weight: 800; font-size: 14px; transition: 0.3s;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
         }
-        .shop-btn-header:hover { background: #2980b9; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4); }
+        .shop-btn-header:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(0, 242, 254, 0.7); }
 
         /* --- БАННЕР --- */
         .hero {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            border-radius: 20px;
-            max-width: 1200px;
-            margin: 25px auto;
-            padding: 50px 40px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 15px 35px rgba(79, 172, 254, 0.4); /* Свечение баннера */
-            position: relative;
-            overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.4);
+            max-width: 1300px; margin: 25px auto;
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.15) 0%, rgba(0, 242, 254, 0.1) 100%), url('https://www.transparenttextures.com/patterns/cubes.png');
+            border-radius: 24px; padding: 60px 50px;
+            display: flex; align-items: center; justify-content: space-between;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .hero-text h1 { font-size: 42px; font-weight: 800; margin-bottom: 15px; line-height: 1.2; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .hero-text p { font-size: 16px; margin-bottom: 30px; opacity: 0.9; max-width: 400px; }
-        .play-btn {
-            background: #fff;
-            color: #2980b9;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-weight: 800;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .hero::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(243, 156, 18, 0.2) 0%, transparent 60%);
+            animation: rotate 20s linear infinite; z-index: 0;
         }
-        .play-btn:hover { background: #f0f8ff; transform: translateY(-3px) scale(1.05); }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
         
-        /* Анимация парения для персонажа */
+        .hero-text { position: relative; z-index: 1; max-width: 600px; }
+        .hero-text h1 { font-size: 48px; font-weight: 900; margin-bottom: 20px; line-height: 1.1; }
+        .hero-text h1 span { background: linear-gradient(90deg, #f39c12, #f1c40f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-text p { font-size: 16px; color: #94a3b8; margin-bottom: 35px; line-height: 1.6; }
+        
+        .hero-buttons { display: flex; gap: 15px; }
+        .play-btn {
+            background: #fff; color: #0b1021; padding: 16px 35px; border-radius: 12px;
+            font-weight: 800; font-size: 16px; transition: 0.3s; display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+        }
+        .play-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255,255,255,0.2); }
+        .discord-btn {
+            background: rgba(255,255,255,0.05); color: #fff; padding: 16px 35px; border-radius: 12px;
+            font-weight: 700; font-size: 16px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .discord-btn:hover { background: rgba(255,255,255,0.1); border-color: #5865F2; box-shadow: 0 0 15px rgba(88,101,242,0.4); }
+        
         .hero-img {
-            width: 300px;
-            height: 300px;
-            background: url('https://mc-heads.net/body/Notch/300') no-repeat center;
-            background-size: contain;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
+            width: 350px; height: 350px;
+            background: url('https://mc-heads.net/body/Notch/350') no-repeat center;
+            background-size: contain; position: relative; z-index: 1;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6));
             animation: float 4s ease-in-out infinite;
         }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         /* --- ОСНОВНОЙ КОНТЕНТ --- */
         .main-container {
-            max-width: 1200px;
-            margin: 30px auto;
-            display: flex;
-            gap: 30px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
+            max-width: 1300px; margin: 30px auto; display: flex; gap: 30px; padding: 0 25px;
         }
 
-        /* Боковое меню (стеклянное) */
-        .sidebar { width: 250px; flex-shrink: 0; }
-        .sidebar-menu {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            border: 1px solid #fff;
+        /* Сайдбар */
+        .sidebar { width: 280px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
+        .glass-panel {
+            background: var(--glass-bg); backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-radius: 20px; padding: 20px;
         }
+        .sidebar-menu { display: flex; flex-direction: column; gap: 8px; }
         .sidebar-menu a {
-            padding: 12px 15px;
-            border-radius: 10px;
-            font-weight: 600;
-            color: #555;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.3s;
+            padding: 14px 20px; border-radius: 12px; font-weight: 600; color: #94a3b8;
+            display: flex; align-items: center; gap: 12px; transition: 0.3s;
         }
-        .sidebar-menu a:hover, .sidebar-menu a.active { 
-            background: #fff; 
-            color: #3498db; 
-            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.15); 
-            transform: translateX(5px);
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: rgba(0, 242, 254, 0.1); color: #fff; border-left: 3px solid var(--neon-blue);
+            box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.05);
         }
 
+        /* Топ донатеров */
+        .top-donators h3 { font-size: 16px; margin-bottom: 15px; color: #fff; }
+        .top-list { display: flex; flex-direction: column; gap: 12px; }
+        .top-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 10px; }
+        .top-item img { width: 32px; height: 32px; border-radius: 6px; }
+        .top-item .name { font-size: 13px; font-weight: 700; }
+        .top-item .rank { font-size: 11px; color: var(--neon-blue); font-weight: 800; }
+
+        /* Контент */
         .content { flex-grow: 1; }
         
-        /* Лента покупок (с анимацией обновления) */
+        /* Лента */
         .recent-purchases {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px);
-            border-radius: 12px;
-            padding: 15px 20px;
-            margin-bottom: 25px;
-            font-size: 14px;
-            color: #555;
-            display: flex;
-            gap: 15px;
-            overflow: hidden;
-            white-space: nowrap;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #fff;
-            transition: opacity 0.5s ease; /* Плавное исчезновение */
+            background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 12px; padding: 15px 25px; margin-bottom: 25px;
+            font-size: 14px; color: #94a3b8; display: flex; gap: 15px; overflow: hidden; white-space: nowrap;
+            transition: opacity 0.5s ease;
         }
         .recent-purchases.fade-out { opacity: 0; }
-        .recent-purchases b { color: #2980b9; }
-
-        h2.section-title { font-size: 28px; margin-bottom: 20px; font-weight: 800; color: #2c3e50; }
+        .recent-purchases b { color: #fff; }
+        
+        h2.section-title { font-size: 32px; font-weight: 900; margin-bottom: 25px; color: #fff; }
 
         /* Сетка карточек */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
 
         /* Карточка */
         .card {
-            background: #fff;
-            border-radius: 16px;
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
-            position: relative;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid rgba(255,255,255,0.5);
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border); border-radius: 20px; padding: 20px;
+            position: relative; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; overflow: hidden;
         }
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.2); /* Синее свечение при наведении */
-            border-color: #3498db;
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(0,242,254,0.15), transparent 70%);
+            opacity: 0; transition: 0.4s; z-index: 0;
         }
-
-        .card-img {
-            width: 100%;
-            height: 180px;
-            border-radius: 12px;
-            background: #eee;
-            object-fit: cover;
-            margin-bottom: 15px;
-            transition: 0.3s;
-        }
-        .card:hover .card-img { transform: scale(1.02); }
-
-        /* Бейджи */
-        .badge {
-            position: absolute;
-            top: 25px;
-            left: 25px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 800;
-            color: #fff;
-            text-transform: uppercase;
-            z-index: 10;
-        }
-        .badge.hit { 
-            background: #e74c3c; 
-            animation: pulse 1.5s infinite; /* Пульсация */
-        }
-        .badge.sale { background: #27ae60; }
+        .card:hover { transform: translateY(-10px); border-color: rgba(0,242,254,0.5); box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(0,242,254,0.2); }
+        .card:hover::before { opacity: 1; }
         
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
-        }
+        .card > * { position: relative; z-index: 1; }
 
-        .card-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; }
-        .price-box { margin-bottom: 15px; margin-top: auto; }
-        .old-price { font-size: 12px; color: #aaa; text-decoration: line-through; display: block; margin-bottom: 2px; }
-        .current-price { font-size: 16px; font-weight: 800; color: #2c3e50; }
+        .card-img { width: 100%; height: 180px; border-radius: 14px; object-fit: cover; margin-bottom: 15px; filter: brightness(0.9); transition: 0.3s; }
+        .card:hover .card-img { filter: brightness(1.1); transform: scale(1.05); }
+
+        .badge {
+            position: absolute; top: 30px; left: 30px; padding: 5px 12px; border-radius: 8px;
+            font-size: 11px; font-weight: 900; color: #0b1021; text-transform: uppercase; z-index: 10;
+        }
+        .badge.hit { background: linear-gradient(90deg, #f1c40f, #f39c12); box-shadow: 0 0 15px rgba(243, 156, 18, 0.6); animation: pulse-gold 2s infinite; }
+        .badge.sale { background: linear-gradient(90deg, #00f2fe, #4facfe); box-shadow: 0 0 15px rgba(0, 242, 254, 0.5); }
+        @keyframes pulse-gold { 0% { box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } 50% { box-shadow: 0 0 25px rgba(243, 156, 18, 0.9); } 100% { box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } }
+
+        .card-title { font-size: 18px; font-weight: 900; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+        .price-box { margin-bottom: 20px; margin-top: auto; }
+        .old-price { font-size: 13px; color: #64748b; text-decoration: line-through; display: block; margin-bottom: 4px; font-weight: 600; }
+        .current-price { font-size: 22px; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 15px rgba(0, 242, 254, 0.4); }
         
         .buy-btn {
-            background: #3498db;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.3s;
-            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            color: #0b1021; border: none; padding: 14px; border-radius: 12px;
+            font-weight: 900; font-size: 15px; cursor: pointer; width: 100%;
+            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+            position: relative; overflow: hidden;
         }
-        .buy-btn:hover { 
-            background: #2980b9; 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.5);
+        .buy-btn::after {
+            content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%;
+            background: rgba(255,255,255,0.4); transform: rotate(30deg); transition: 0.5s;
         }
+        .buy-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 242, 254, 0.4); }
+        .buy-btn:hover::after { left: 120%; }
 
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .hero { flex-direction: column; text-align: center; padding: 30px 20px; }
-            .hero-text h1 { font-size: 28px; }
-            .hero-img { margin-top: 30px; width: 200px; height: 200px; }
+        /* Адаптив */
+        @media (max-width: 992px) {
             .main-container { flex-direction: column; }
-            .sidebar { width: 100%; }
-            .sidebar-menu { flex-direction: row; overflow-x: auto; }
-            .nav-links { display: none; }
-            .recent-purchases { font-size: 12px; }
+            .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
+            .glass-panel { flex: 1; min-width: 250px; }
+            .hero { flex-direction: column; text-align: center; padding: 40px 20px; }
+            .hero-text h1 { font-size: 32px; }
+            .hero-buttons { justify-content: center; flex-direction: column; }
+            .hero-img { margin-top: 30px; width: 250px; height: 250px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Контейнер для снега -->
     <div id="snow-container"></div>
 
     <!-- ШАПКА -->
@@ -304,7 +235,7 @@
                 <a href="#">Правила</a>
                 <a href="#">Форум</a>
             </nav>
-            <div style="display: flex; gap: 15px; align-items: center;">
+            <div class="header-right">
                 <div class="online-status">Онлайн: 4485 / 7500</div>
                 <a href="#" class="shop-btn-header">Магазин 🛒</a>
             </div>
@@ -314,9 +245,12 @@
     <!-- БАННЕР -->
     <section class="hero">
         <div class="hero-text">
-            <h1>ComfortWorld — Начало<br>новой эры</h1>
-            <p>Открой для себя огромные миры, полные веселья, зимнего уюта и миллионов друзей!</p>
-            <a href="#" class="play-btn">▶ Играть сейчас</a>
+            <h1>Погрузись в <span>ComfortWorld</span><br>Мир зимнего уюта</h1>
+            <p>Начни свое выживание с комфортом. Уникальные механики, дружелюбное сообщество и лучший донат на сервере.</p>
+            <div class="hero-buttons">
+                <a href="#" class="play-btn">▶ Играть сейчас</a>
+                <a href="#" class="discord-btn">Discord 💬</a>
+            </div>
         </div>
         <div class="hero-img"></div>
     </section>
@@ -326,28 +260,55 @@
         
         <!-- Боковое меню -->
         <aside class="sidebar">
-            <div class="sidebar-menu">
+            <div class="glass-panel sidebar-menu">
                 <a href="#" class="active">👑 Привилегии</a>
                 <a href="#">🎁 Сундуки</a>
                 <a href="#">💎 Услуги</a>
+            </div>
+            
+            <!-- Топ донатеров (заполняет пустоту) -->
+            <div class="glass-panel top-donators">
+                <h3>🏆 Топ донатеров</h3>
+                <div class="top-list">
+                    <div class="top-item">
+                        <img src="https://mc-heads.net/avatar/Notch/32" alt="skin">
+                        <div>
+                            <div class="name">Notch</div>
+                            <div class="rank">D.OWNER</div>
+                        </div>
+                    </div>
+                    <div class="top-item">
+                        <img src="https://mc-heads.net/avatar/Herobrine/32" alt="skin">
+                        <div>
+                            <div class="name">Herobrine</div>
+                            <div class="rank">ENIGMA</div>
+                        </div>
+                    </div>
+                    <div class="top-item">
+                        <img src="https://mc-heads.net/avatar/Steve/32" alt="skin">
+                        <div>
+                            <div class="name">Steve</div>
+                            <div class="rank">PRIME</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </aside>
 
         <!-- Контент магазина -->
         <div class="content">
             
-            <!-- Лента покупок (обновляется скриптом) -->
             <div class="recent-purchases" id="recent-feed">
                 Недавно купили: <b>Загрузка...</b>
             </div>
 
-            <h2 class="section-title">Магазин доната</h2>
+            <h2 class="section-title">Магазин привилегий</h2>
 
             <div class="cards-grid">
                 
                 <!-- VAMPIRE -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=VAMPIRE" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=VAMPIRE" class="card-img">
                     <div class="card-title">VAMPIRE</div>
                     <div class="price-box">
                         <span class="old-price">59 ₽</span>
@@ -359,7 +320,7 @@
                 <!-- GOD -->
                 <div class="card">
                     <span class="badge sale">Скидка</span>
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=GOD" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=GOD" class="card-img">
                     <div class="card-title">GOD</div>
                     <div class="price-box">
                         <span class="old-price">79 ₽</span>
@@ -371,7 +332,7 @@
                 <!-- DIABLO -->
                 <div class="card">
                     <span class="badge sale">Скидка</span>
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=DIABLO" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=DIABLO" class="card-img">
                     <div class="card-title">DIABLO</div>
                     <div class="price-box">
                         <span class="old-price">99 ₽</span>
@@ -382,7 +343,7 @@
 
                 <!-- PEGAS -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=PEGAS" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=PEGAS" class="card-img">
                     <div class="card-title">PEGAS</div>
                     <div class="price-box">
                         <span class="current-price">79 ₽</span>
@@ -392,7 +353,7 @@
 
                 <!-- RABBIT -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=RABBIT" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=RABBIT" class="card-img">
                     <div class="card-title">RABBIT</div>
                     <div class="price-box">
                         <span class="current-price">99 ₽</span>
@@ -402,7 +363,7 @@
 
                 <!-- D.HELPER -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=D.HELPER" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.HELPER" class="card-img">
                     <div class="card-title">D.HELPER</div>
                     <div class="price-box">
                         <span class="current-price">129 ₽</span>
@@ -412,7 +373,7 @@
 
                 <!-- RAIN -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=RAIN" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=RAIN" class="card-img">
                     <div class="card-title">RAIN</div>
                     <div class="price-box">
                         <span class="current-price">159 ₽</span>
@@ -422,7 +383,7 @@
 
                 <!-- SUMMER -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=SUMMER" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=SUMMER" class="card-img">
                     <div class="card-title">SUMMER</div>
                     <div class="price-box">
                         <span class="current-price">199 ₽</span>
@@ -432,7 +393,7 @@
 
                 <!-- GRAPE -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=GRAPE" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=GRAPE" class="card-img">
                     <div class="card-title">GRAPE</div>
                     <div class="price-box">
                         <span class="current-price">229 ₽</span>
@@ -442,7 +403,7 @@
 
                 <!-- ANGEL -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=ANGEL" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=ANGEL" class="card-img">
                     <div class="card-title">ANGEL</div>
                     <div class="price-box">
                         <span class="current-price">279 ₽</span>
@@ -452,7 +413,7 @@
 
                 <!-- AURORA -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=AURORA" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=AURORA" class="card-img">
                     <div class="card-title">AURORA</div>
                     <div class="price-box">
                         <span class="current-price">319 ₽</span>
@@ -462,7 +423,7 @@
 
                 <!-- PRIME -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=PRIME" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=PRIME" class="card-img">
                     <div class="card-title">PRIME</div>
                     <div class="price-box">
                         <span class="current-price">379 ₽</span>
@@ -472,7 +433,7 @@
 
                 <!-- ENIGMA -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=ENIGMA" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=ENIGMA" class="card-img">
                     <div class="card-title">ENIGMA</div>
                     <div class="price-box">
                         <span class="current-price">419 ₽</span>
@@ -482,7 +443,7 @@
 
                 <!-- D.MODER -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=D.MODER" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.MODER" class="card-img">
                     <div class="card-title">D.MODER</div>
                     <div class="price-box">
                         <span class="current-price">479 ₽</span>
@@ -492,7 +453,7 @@
 
                 <!-- D.ST.MODER -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=D.ST.MODER" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.ST.MODER" class="card-img">
                     <div class="card-title">D.ST.MODER</div>
                     <div class="price-box">
                         <span class="current-price">539 ₽</span>
@@ -502,7 +463,7 @@
 
                 <!-- D.GL.MODER -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=D.GL.MODER" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.GL.MODER" class="card-img">
                     <div class="card-title">D.GL.MODER</div>
                     <div class="price-box">
                         <span class="current-price">579 ₽</span>
@@ -513,7 +474,7 @@
                 <!-- D.OWNER -->
                 <div class="card">
                     <span class="badge hit">ХИТ</span>
-                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=D.OWNER" class="card-img">
+                    <img src="https://placehold.co/300x300/1a2a4c/f39c12?text=D.OWNER" class="card-img">
                     <div class="card-title">D.OWNER</div>
                     <div class="price-box">
                         <span class="current-price">699 ₽</span>
@@ -525,37 +486,40 @@
         </div>
     </main>
 
-    <!-- СКРИПТЫ (СНЕГ И ЖИВАЯ ЛЕНТА) -->
+    <!-- СКРИПТЫ -->
     <script>
-        // --- 1. ГЕНЕРАТОР СНЕГА ---
+        // --- ГЕНЕРАТОР СНЕГА (Двухслойный) ---
         function createSnow() {
             const snowContainer = document.getElementById('snow-container');
             const snowflake = document.createElement('div');
-            snowflake.innerHTML = '❄'; // Символ снежинки
+            snowflake.innerHTML = '❄'; 
             snowflake.classList.add('snowflake');
             
-            // Случайные параметры для каждой снежинки
+            const isBlurred = Math.random() > 0.7;
+            
             snowflake.style.left = Math.random() * 100 + 'vw';
-            snowflake.style.animationDuration = Math.random() * 3 + 4 + 's'; // От 4 до 7 секунд
-            snowflake.style.opacity = Math.random() * 0.8 + 0.2; // Прозрачность
-            snowflake.style.fontSize = Math.random() * 10 + 8 + 'px'; // Размер
+            snowflake.style.animationDuration = Math.random() * 4 + 6 + 's'; 
+            snowflake.style.opacity = Math.random() * 0.6 + 0.2;
+            snowflake.style.fontSize = Math.random() * 15 + 8 + 'px';
+            
+            if (isBlurred) {
+                snowflake.style.filter = 'blur(2px)';
+                snowflake.style.zIndex = '1';
+            } else {
+                snowflake.style.zIndex = '9999';
+            }
             
             snowContainer.appendChild(snowflake);
-            
-            // Удаляем снежинку, когда она упадет, чтобы не грузить браузер
-            setTimeout(() => {
-                snowflake.remove();
-            }, 7000);
+            setTimeout(() => { snowflake.remove(); }, 10000);
         }
-        
-        // Создаем новую снежинку каждые 150 миллисекунд
-        setInterval(createSnow, 150);
+        setInterval(createSnow, 100);
 
 
-        // --- 2. ЖИВАЯ ЛЕНТА ПОКУПОК ---
+        // --- ЖИВАЯ ЛЕНТА ПОКУПОК ---
         const fakeUsers = [
             'Nad***r', 'Ke***is', 'df***se', 'Alex***1', 'Snow***K', 
-            'Mega***Pro', 'Ice***Man', 'Comf***User', 'Vlad***ok', 'Sta***s'
+            'Mega***Pro', 'Ice***Man', 'Comf***User', 'Vlad***ok', 'Sta***s',
+            'Ender***', 'Mine***', 'Crazy***', 'Dark***', 'Zima***'
         ];
         
         const fakeRanks = [
@@ -566,36 +530,22 @@
 
         function updateFeed() {
             const feed = document.getElementById('recent-feed');
-            
-            // 1. Плавно скрываем ленту
             feed.classList.add('fade-out');
             
-            // 2. Ждем полсекунды, пока она исчезнет, и меняем текст
             setTimeout(() => {
                 let html = 'Недавно купили: ';
-                
-                // Генерируем 3 случайные покупки
                 for(let i = 0; i < 3; i++) {
                     const randomUser = fakeUsers[Math.floor(Math.random() * fakeUsers.length)];
                     const randomRank = fakeRanks[Math.floor(Math.random() * fakeRanks.length)];
-                    
-                    html += `<b>${randomUser}</b> — ${randomRank}`;
-                    
-                    // Добавляем разделитель, если это не последний элемент
-                    if (i < 2) html += ' &nbsp;|&nbsp; ';
+                    html += `<b>${randomUser}</b> — <span style="color:#00f2fe">${randomRank}</span>`;
+                    if (i < 2) html += ' &nbsp;&nbsp;|&nbsp;&nbsp; ';
                 }
-                
                 feed.innerHTML = html;
-                
-                // 3. Плавно показываем ленту обратно
                 feed.classList.remove('fade-out');
             }, 500); 
         }
 
-        // Запускаем обновление каждые 5 секунд (5000 мс)
         setInterval(updateFeed, 5000);
-        
-        // И сразу при загрузке страницы
         updateFeed();
     </script>
 </body>
