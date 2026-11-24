@@ -3,249 +3,458 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Магазин доната</title>
+    <title>Магазин доната | ReallyWorld Style</title>
+    <!-- Подключаем красивый шрифт -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        /* Базовые стили */
+        /* --- БАЗОВЫЕ НАСТРОЙКИ --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f6fa;
-            margin: 0;
-            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f4f5f8;
             color: #333;
         }
+        a { text-decoration: none; color: inherit; }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 28px;
+        /* --- ШАПКА САЙТА (HEADER) --- */
+        header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-
-        /* Сетка для карточек */
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
+        .header-content {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-
-        /* Сама карточка */
-        .card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Картинка (заглушка) */
-        .card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            background-color: #ddd; /* Цвет, если картинки нет */
-        }
-
-        /* Название ранга */
-        .card h3 {
-            margin: 0 0 10px 0;
-            font-size: 18px;
-            text-transform: uppercase;
-        }
-
-        /* Цена */
-        .price {
-            font-weight: bold;
-            color: #666;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        /* Кнопка купить */
-        .buy-btn {
-            background-color: #f39c12; /* Оранжевый цвет */
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.2s;
-        }
-
-        .buy-btn:hover {
-            background-color: #e67e22;
-        }
-        
-        /* Бейдж "Скидка" или "ХИТ" */
-        .badge {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 5px 10px;
+        .logo { font-weight: 800; font-size: 20px; display: flex; align-items: center; gap: 10px; }
+        .logo span { color: #f39c12; }
+        .nav-links { display: flex; gap: 20px; font-weight: 600; font-size: 14px; color: #666; }
+        .nav-links a:hover { color: #f39c12; }
+        .online-status {
+            background: #f0f0f0;
+            padding: 5px 15px;
             border-radius: 20px;
             font-size: 12px;
-            font-weight: bold;
+            font-weight: 700;
+            color: #27ae60;
+        }
+        .shop-btn-header {
+            background: #f39c12;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .shop-btn-header:hover { background: #e67e22; }
+
+        /* --- БАННЕР (HERO SECTION) --- */
+        .hero {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            border-radius: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 50px 40px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+        }
+        .hero-text h1 { font-size: 42px; font-weight: 800; margin-bottom: 15px; line-height: 1.2; }
+        .hero-text p { font-size: 16px; margin-bottom: 30px; opacity: 0.9; max-width: 400px; }
+        .play-btn {
+            background: #222;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+        .play-btn:hover { background: #000; transform: translateY(-2px); }
+        .hero-img {
+            width: 300px;
+            height: 300px;
+            background: url('https://mc-heads.net/body/Notch/300') no-repeat center;
+            background-size: contain;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        /* --- ОСНОВНОЙ КОНТЕНТ МАГАЗИНА --- */
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            display: flex;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        /* Боковое меню */
+        .sidebar { width: 250px; flex-shrink: 0; }
+        .sidebar-menu {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sidebar-menu a {
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.2s;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background: #fdf2e9; color: #f39c12; }
+
+        /* Контентная часть */
+        .content { flex-grow: 1; }
+        
+        /* Бегущая строка */
+        .recent-purchases {
+            background: #fff;
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #666;
+            display: flex;
+            gap: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+        .recent-purchases b { color: #333; }
+
+        h2.section-title { font-size: 28px; margin-bottom: 20px; font-weight: 800; }
+
+        /* Сетка карточек */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        /* Карточка */
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Картинки в карточках (заглушки) */
+        .card-img {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            background: #eee;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        /* Бейджи (ХИТ, Скидка) */
+        .badge {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+        .badge.hit { background: #27ae60; }
+        .badge.sale { background: #e74c3c; }
+
+        .card-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; }
+        .price-box { margin-bottom: 15px; margin-top: auto; }
+        .old-price { font-size: 12px; color: #aaa; text-decoration: line-through; display: block; margin-bottom: 2px; }
+        .current-price { font-size: 16px; font-weight: 800; color: #333; }
+        
+        .buy-btn {
+            background: #f39c12;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .buy-btn:hover { background: #e67e22; }
+
+        /* Адаптация под телефоны */
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; padding: 30px 20px; }
+            .hero-text h1 { font-size: 28px; }
+            .hero-img { margin-top: 30px; width: 200px; height: 200px; }
+            .main-container { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .sidebar-menu { flex-direction: row; overflow-x: auto; }
+            .nav-links { display: none; } /* Скрываем меню на телефоне */
         }
     </style>
 </head>
 <body>
 
-    <h1>Магазин доната</h1>
-
-    <div class="shop-grid">
-
-        <!-- Карточка 1 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=VAMPIRE" alt="VAMPIRE">
-            <h3>VAMPIRE</h3>
-            <div class="price">29 ₽</div>
-            <button class="buy-btn">Купить</button>
+    <!-- ШАПКА -->
+    <header>
+        <div class="header-content">
+            <div class="logo">🔥 <span>Really</span>World</div>
+            <nav class="nav-links">
+                <a href="#">Главная</a>
+                <a href="#">Описание</a>
+                <a href="#">Правила</a>
+                <a href="#">Форум</a>
+            </nav>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div class="online-status">Онлайн: 4485 / 7500</div>
+                <a href="#" class="shop-btn-header">Магазин 🛒</a>
+            </div>
         </div>
+    </header>
 
-        <!-- Карточка 2 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=GOD" alt="GOD">
-            <h3>GOD</h3>
-            <div class="price">49 ₽</div>
-            <button class="buy-btn">Купить</button>
+    <!-- БАННЕР -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>ReallyWorld — Начало<br>новой эры</h1>
+            <p>Открой для себя огромные миры, полные веселья и миллионов друзей!</p>
+            <a href="#" class="play-btn">▶ Играть сейчас</a>
         </div>
+        <div class="hero-img"></div>
+    </section>
 
-        <!-- Карточка 3 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=DIABLO" alt="DIABLO">
-            <h3>DIABLO</h3>
-            <div class="price">59 ₽</div>
-            <button class="buy-btn">Купить</button>
+    <!-- ОСНОВНАЯ ЧАСТЬ -->
+    <main class="main-container">
+        
+        <!-- Боковое меню -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="#" class="active">👑 Привилегии</a>
+                <a href="#">🎁 Сундуки</a>
+                <a href="#">💎 Услуги</a>
+            </div>
+        </aside>
+
+        <!-- Контент магазина -->
+        <div class="content">
+            
+            <div class="recent-purchases">
+                Недавно купили: <b>Nad***r</b> — DRAGON &nbsp;|&nbsp; <b>Ke***is</b> — D.HELPER &nbsp;|&nbsp; <b>df***se</b> — VAMPIRE
+            </div>
+
+            <h2 class="section-title">Магазин доната</h2>
+
+            <div class="cards-grid">
+                
+                <!-- VAMPIRE -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=VAMPIRE" class="card-img">
+                    <div class="card-title">VAMPIRE</div>
+                    <div class="price-box">
+                        <span class="old-price">59 ₽</span>
+                        <span class="current-price">29 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- GOD -->
+                <div class="card">
+                    <span class="badge sale">Скидка</span>
+                    <img src="https://placehold.co/300x300/222/fff?text=GOD" class="card-img">
+                    <div class="card-title">GOD</div>
+                    <div class="price-box">
+                        <span class="old-price">79 ₽</span>
+                        <span class="current-price">49 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- DIABLO -->
+                <div class="card">
+                    <span class="badge sale">Скидка</span>
+                    <img src="https://placehold.co/300x300/222/fff?text=DIABLO" class="card-img">
+                    <div class="card-title">DIABLO</div>
+                    <div class="price-box">
+                        <span class="old-price">99 ₽</span>
+                        <span class="current-price">59 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- PEGAS -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=PEGAS" class="card-img">
+                    <div class="card-title">PEGAS</div>
+                    <div class="price-box">
+                        <span class="current-price">79 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- RABBIT -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=RABBIT" class="card-img">
+                    <div class="card-title">RABBIT</div>
+                    <div class="price-box">
+                        <span class="current-price">99 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- D.HELPER -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=D.HELPER" class="card-img">
+                    <div class="card-title">D.HELPER</div>
+                    <div class="price-box">
+                        <span class="current-price">129 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- RAIN -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=RAIN" class="card-img">
+                    <div class="card-title">RAIN</div>
+                    <div class="price-box">
+                        <span class="current-price">159 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- SUMMER -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=SUMMER" class="card-img">
+                    <div class="card-title">SUMMER</div>
+                    <div class="price-box">
+                        <span class="current-price">199 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- GRAPE -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=GRAPE" class="card-img">
+                    <div class="card-title">GRAPE</div>
+                    <div class="price-box">
+                        <span class="current-price">229 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- ANGEL -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=ANGEL" class="card-img">
+                    <div class="card-title">ANGEL</div>
+                    <div class="price-box">
+                        <span class="current-price">279 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- AURORA -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=AURORA" class="card-img">
+                    <div class="card-title">AURORA</div>
+                    <div class="price-box">
+                        <span class="current-price">319 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- PRIME -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=PRIME" class="card-img">
+                    <div class="card-title">PRIME</div>
+                    <div class="price-box">
+                        <span class="current-price">379 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- ENIGMA -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=ENIGMA" class="card-img">
+                    <div class="card-title">ENIGMA</div>
+                    <div class="price-box">
+                        <span class="current-price">419 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- D.MODER -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=D.MODER" class="card-img">
+                    <div class="card-title">D.MODER</div>
+                    <div class="price-box">
+                        <span class="current-price">479 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- D.ST.MODER -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=D.ST.MODER" class="card-img">
+                    <div class="card-title">D.ST.MODER</div>
+                    <div class="price-box">
+                        <span class="current-price">539 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- D.GL.MODER -->
+                <div class="card">
+                    <img src="https://placehold.co/300x300/222/fff?text=D.GL.MODER" class="card-img">
+                    <div class="card-title">D.GL.MODER</div>
+                    <div class="price-box">
+                        <span class="current-price">579 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+                <!-- D.OWNER -->
+                <div class="card">
+                    <span class="badge hit">ХИТ</span>
+                    <img src="https://placehold.co/300x300/222/fff?text=D.OWNER" class="card-img">
+                    <div class="card-title">D.OWNER</div>
+                    <div class="price-box">
+                        <span class="current-price">699 ₽</span>
+                    </div>
+                    <button class="buy-btn">Купить</button>
+                </div>
+
+            </div>
         </div>
-
-        <!-- Карточка 4 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=PEGAS" alt="PEGAS">
-            <h3>PEGAS</h3>
-            <div class="price">79 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 5 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=RABBIT" alt="RABBIT">
-            <h3>RABBIT</h3>
-            <div class="price">99 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 6 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=D.HELPER" alt="D.HELPER">
-            <h3>D.HELPER</h3>
-            <div class="price">129 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 7 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=RAIN" alt="RAIN">
-            <h3>RAIN</h3>
-            <div class="price">159 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 8 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=SUMMER" alt="SUMMER">
-            <h3>SUMMER</h3>
-            <div class="price">199 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 9 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=GRAPE" alt="GRAPE">
-            <h3>GRAPE</h3>
-            <div class="price">229 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 10 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=ANGEL" alt="ANGEL">
-            <h3>ANGEL</h3>
-            <div class="price">279 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 11 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=AURORA" alt="AURORA">
-            <h3>AURORA</h3>
-            <div class="price">319 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 12 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=PRIME" alt="PRIME">
-            <h3>PRIME</h3>
-            <div class="price">379 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 13 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=ENIGMA" alt="ENIGMA">
-            <h3>ENIGMA</h3>
-            <div class="price">419 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 14 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=D.MODER" alt="D.MODER">
-            <h3>D.MODER</h3>
-            <div class="price">479 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 15 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=D.ST.MODER" alt="D.ST.MODER">
-            <h3>D.ST.MODER</h3>
-            <div class="price">539 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 16 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=D.GL.MODER" alt="D.GL.MODER">
-            <h3>D.GL.MODER</h3>
-            <div class="price">579 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-        <!-- Карточка 17 -->
-        <div class="card">
-            <img src="https://via.placeholder.com/200x150?text=D.OWNER" alt="D.OWNER">
-            <span class="badge">ХИТ</span>
-            <h3>D.OWNER</h3>
-            <div class="price">699 ₽</div>
-            <button class="buy-btn">Купить</button>
-        </div>
-
-    </div>
+    </main>
 
 </body>
 </html>
