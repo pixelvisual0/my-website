@@ -17,6 +17,7 @@
             --neon-purple: #4facfe;
             --gold: #f39c12;
             --penalty-red: #e74c3c;
+            --success-green: #2ecc71;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -119,6 +120,7 @@
             background: #fff; color: #0b1021; padding: 16px 35px; border-radius: 12px;
             font-weight: 800; font-size: 16px; transition: 0.3s; display: flex; align-items: center; gap: 10px;
             box-shadow: 0 10px 20px rgba(255,255,255,0.1); animation: float 3s ease-in-out infinite;
+            cursor: pointer; border: none;
         }
         .play-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 25px rgba(255,255,255,0.3); }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
@@ -252,10 +254,10 @@
 
         .buy-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 25px rgba(0, 242, 254, 0.6); background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%); }
 
-        /* --- МОДАЛЬНОЕ ОКНО ПРАВИЛ --- */
+        /* --- МОДАЛЬНЫЕ ОКНА (ПРАВИЛА И IP) --- */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(11, 16, 33, 0.8); backdrop-filter: blur(10px); z-index: 2000;
+            background: rgba(11, 16, 33, 0.85); backdrop-filter: blur(10px); z-index: 2000;
             justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s;
         }
         .modal-overlay.show { display: flex; opacity: 1; }
@@ -270,9 +272,14 @@
         }
         .modal-overlay.show .modal-content { transform: translateY(0); }
 
+        /* Специфичные стили для окна с IP */
+        .ip-modal-content { max-width: 500px; text-align: center; }
+        .ip-modal-content .modal-header { justify-content: center; border-bottom: none; padding-bottom: 0; }
+        .ip-modal-content .close-btn { position: absolute; right: 20px; top: 20px; }
+        
         .modal-header {
             padding: 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex; justify-content: space-between; align-items: center; position: relative;
         }
         .modal-header h2 { color: #fff; font-size: 24px; font-weight: 800; text-shadow: 0 0 10px var(--neon-blue); }
         .close-btn {
@@ -281,19 +288,63 @@
         }
         .close-btn:hover { color: #e74c3c; transform: rotate(90deg); }
 
-        .modal-body {
-            padding: 30px; overflow-y: auto; color: #e2e8f0; line-height: 1.6; font-size: 14px;
-        }
-        .modal-body::-webkit-scrollbar { width: 8px; }
-        .modal-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
-        .modal-body::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
+        .modal-body { padding: 30px; overflow-y: auto; color: #e2e8f0; line-height: 1.6; font-size: 14px; }
+        
+        /* Скроллбар для правил */
+        #rules-modal .modal-body::-webkit-scrollbar { width: 8px; }
+        #rules-modal .modal-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        #rules-modal .modal-body::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
 
         .modal-body h3 { color: var(--neon-blue); margin: 20px 0 10px 0; font-size: 18px; }
         .modal-body p { margin-bottom: 10px; }
         .modal-body ul { margin-left: 20px; margin-bottom: 15px; }
         .modal-body li { margin-bottom: 8px; }
-        
         .penalty { color: var(--penalty-red); font-weight: 800; text-shadow: 0 0 5px rgba(231, 76, 60, 0.4); }
+
+        /* Стили для IP-адреса с кучей эффектов */
+        .ip-box {
+            background: rgba(0, 0, 0, 0.4); border: 2px solid rgba(0, 242, 254, 0.5);
+            border-radius: 12px; padding: 20px; margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace; font-size: 22px; font-weight: 900;
+            color: var(--neon-blue); letter-spacing: 2px; cursor: pointer;
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+            animation: neon-pulse 2s infinite alternate, border-glow 3s infinite alternate;
+            transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .ip-box:hover { transform: scale(1.02); background: rgba(0, 242, 254, 0.1); }
+        
+        /* Анимация свечения текста */
+        @keyframes neon-pulse {
+            0% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue); }
+            100% { text-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue), 0 0 40px var(--neon-blue); }
+        }
+        /* Анимация свечения рамки */
+        @keyframes border-glow {
+            0% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.3) inset, 0 0 10px rgba(0, 242, 254, 0.3); }
+            100% { box-shadow: 0 0 20px rgba(0, 242, 254, 0.6) inset, 0 0 20px rgba(0, 242, 254, 0.6); }
+        }
+
+        /* Блик внутри IP-бокса */
+        .ip-box::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: sweep 3s infinite;
+        }
+        @keyframes sweep { 100% { left: 100%; } }
+
+        .copy-btn {
+            background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+            color: #fff; box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
+        }
+        .copy-btn:hover { background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%); box-shadow: 0 0 25px rgba(46, 204, 113, 0.8); }
+
+        .copy-success {
+            color: var(--success-green); font-weight: 800; font-size: 14px;
+            margin-top: 15px; opacity: 0; transition: opacity 0.3s; transform: translateY(-10px);
+        }
+        .copy-success.show { opacity: 1; transform: translateY(0); animation: pop 0.3s ease-out; }
+        @keyframes pop { 0% { transform: scale(0.8); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
 
         /* Адаптив */
         @media (max-width: 992px) {
@@ -305,15 +356,14 @@
             .hero-buttons { justify-content: center; flex-direction: column; }
             .snowman-bg { display: none; }
             .modal-content { width: 95%; }
+            .ip-box { font-size: 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Фон: Снеговики и Снег -->
     <div id="snow-container"></div>
     
-    <!-- Красивые SVG-снеговики на фоне -->
     <svg class="snowman-bg snowman-1" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="85" r="30" fill="white"/>
         <circle cx="50" cy="45" r="22" fill="white"/>
@@ -344,7 +394,6 @@
             <nav class="nav-links">
                 <a href="#" onclick="window.scrollTo(0,0)">Главная</a>
                 <a href="#">Описание</a>
-                <!-- Кнопка вызова правил -->
                 <a onclick="openRules()">Правила</a>
                 <a href="#">Форум</a>
             </nav>
@@ -361,7 +410,7 @@
             <h1>Погрузись в <span>ComfortWorld</span><br>Мир зимнего уюта</h1>
             <p>Начни свое выживание с комфортом. Уникальные механики, дружелюбное сообщество и лучший донат на сервере.</p>
             <div class="hero-buttons">
-                <a href="#" class="play-btn">▶ Играть сейчас</a>
+                <button onclick="openIpModal()" class="play-btn">▶ Играть сейчас</button>
                 <a href="#" class="discord-btn">Discord 💬</a>
             </div>
         </div>
@@ -370,7 +419,6 @@
     <!-- ОСНОВНАЯ ЧАСТЬ -->
     <main class="main-container">
         
-        <!-- Боковое меню -->
         <aside class="sidebar">
             <div class="glass-panel sidebar-menu">
                 <a onclick="openTab('privileges', this)" class="active">👑 Привилегии</a>
@@ -399,14 +447,12 @@
             </div>
         </aside>
 
-        <!-- Контент магазина -->
         <div class="content">
             
             <div class="recent-purchases" id="recent-feed">
                 Недавно купили: <b>Загрузка...</b>
             </div>
 
-            <!-- ================== ВКЛАДКА 1: ПРИВИЛЕГИИ ================== -->
             <div id="privileges" class="tab-content active-tab">
                 <h2 class="section-title">Магазин привилегий</h2>
                 <div class="cards-grid">
@@ -573,7 +619,6 @@
                 </div>
             </div>
 
-            <!-- ================== ВКЛАДКА 2: КЕЙСЫ ================== -->
             <div id="cases" class="tab-content">
                 <h2 class="section-title">Кейсы и Сундуки</h2>
                 <div class="cards-grid">
@@ -648,7 +693,6 @@
                 </div>
             </div>
 
-            <!-- ================== ВКЛАДКА 3: УСЛУГИ ================== -->
             <div id="services" class="tab-content">
                 <h2 class="section-title">Услуги</h2>
                 <div class="cards-grid">
@@ -762,6 +806,28 @@
         </div>
     </div>
 
+    <!-- ================== МОДАЛЬНОЕ ОКНО С IP (ЭФФЕКТЫ) ================== -->
+    <div class="modal-overlay" id="ip-modal">
+        <div class="modal-content ip-modal-content">
+            <div class="modal-header">
+                <h2>✨ Подключение</h2>
+                <button class="close-btn" onclick="closeIpModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="color: #94a3b8;">Запускай Minecraft и заходи на наш сервер!</p>
+                
+                <!-- IP с эффектами (ОБНОВЛЕНО) -->
+                <div class="ip-box" onclick="copyIp()" title="Нажми, чтобы скопировать">
+                    comfortworld.gigacube.host
+                </div>
+                
+                <button class="buy-btn copy-btn" onclick="copyIp()">📋 Скопировать IP</button>
+                
+                <p class="copy-success" id="copy-success">✅ IP успешно скопирован в буфер обмена!</p>
+            </div>
+        </div>
+    </div>
+
     <!-- СКРИПТЫ -->
     <script>
         // --- 1. ГЕНЕРАТОР СНЕГА ---
@@ -840,36 +906,56 @@
             });
         }
 
-        // --- 4. УПРАВЛЕНИЕ МОДАЛЬНЫМ ОКНОМ ПРАВИЛ ---
+        // --- 4. УПРАВЛЕНИЕ МОДАЛЬНЫМИ ОКНАМИ ---
         function openRules() {
-            const modal = document.getElementById('rules-modal');
-            modal.classList.add('show');
+            document.getElementById('rules-modal').classList.add('show');
             document.body.style.overflow = 'hidden';
         }
 
         function closeRules() {
-            const modal = document.getElementById('rules-modal');
-            modal.classList.remove('show');
+            document.getElementById('rules-modal').classList.remove('show');
             document.body.style.overflow = 'auto';
         }
 
-        // Закрытие по клику вне окна
-        window.onclick = function(event) {
-            const modal = document.getElementById('rules-modal');
-            if (event.target == modal) {
-                closeRules();
-            }
+        // Открытие и закрытие окна IP
+        function openIpModal() {
+            document.getElementById('ip-modal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('copy-success').classList.remove('show');
         }
 
-        // --- 5. ЗВУК ПРИ КЛИКЕ (Web Audio API) ---
+        function closeIpModal() {
+            document.getElementById('ip-modal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Копирование IP (ОБНОВЛЕНО)
+        function copyIp() {
+            const ip = "comfortworld.gigacube.host";
+            navigator.clipboard.writeText(ip).then(() => {
+                const successMsg = document.getElementById('copy-success');
+                successMsg.classList.add('show');
+                setTimeout(() => {
+                    successMsg.classList.remove('show');
+                }, 3000);
+            });
+        }
+
+        // Закрытие любого окна по клику вне его
+        window.onclick = function(event) {
+            const rulesModal = document.getElementById('rules-modal');
+            const ipModal = document.getElementById('ip-modal');
+            if (event.target == rulesModal) closeRules();
+            if (event.target == ipModal) closeIpModal();
+        }
+
+        // --- 5. ЗВУК ПРИ КЛИКЕ ---
         let audioCtx;
         function playClickSound() {
             try {
-                // Инициализация аудио-контекста (только при первом клике)
                 if (!audioCtx) {
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 }
-                // Если браузер усыпил контекст, будим его
                 if (audioCtx.state === 'suspended') {
                     audioCtx.resume();
                 }
@@ -877,26 +963,23 @@
                 const osc = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
 
-                // Настройка звука (короткий "клик" или "поп")
-                osc.type = 'sine'; // Плавная волна
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime); // Высокая частота
-                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.08); // Быстрое понижение
+                osc.type = 'sine'; 
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime); 
+                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.08);
 
-                // Настройка громкости (быстрое затухание)
-                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime); // Громкость (0.3 = 30%)
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime); 
                 gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
 
                 osc.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
 
                 osc.start();
-                osc.stop(audioCtx.currentTime + 0.1); // Звук длится 0.1 секунду
+                osc.stop(audioCtx.currentTime + 0.1);
             } catch (e) {
-                console.log("Звук не поддерживается браузером");
+                console.log("Звук не поддерживается");
             }
         }
 
-        // Вешаем событие клика на весь документ
         document.addEventListener('click', playClickSound);
     </script>
 </body>
