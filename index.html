@@ -3,27 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Магазин доната | ReallyWorld Style</title>
-    <!-- Подключаем красивый шрифт -->
+    <title>Магазин доната | ComfortWorld</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* --- БАЗОВЫЕ НАСТРОЙКИ --- */
+        /* --- БАЗОВЫЕ НАСТРОЙКИ И ЗИМНИЙ ФОН --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #f4f5f8;
-            color: #333;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); /* Морозный градиент */
+            color: #2c3e50;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
         a { text-decoration: none; color: inherit; }
 
+        /* --- ЭФФЕКТ СНЕГА (CSS) --- */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: #fff;
+            user-select: none;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 1.2em;
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            text-shadow: 0 0 5px rgba(255,255,255,0.8);
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
+        }
+
         /* --- ШАПКА САЙТА (HEADER) --- */
         header {
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px); /* Эффект стекла */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
         }
         .header-content {
             max-width: 1200px;
@@ -33,116 +54,142 @@
             align-items: center;
             justify-content: space-between;
         }
-        .logo { font-weight: 800; font-size: 20px; display: flex; align-items: center; gap: 10px; }
-        .logo span { color: #f39c12; }
-        .nav-links { display: flex; gap: 20px; font-weight: 600; font-size: 14px; color: #666; }
-        .nav-links a:hover { color: #f39c12; }
+        .logo { font-weight: 800; font-size: 22px; display: flex; align-items: center; gap: 10px; }
+        .logo span { color: #3498db; } /* Сменили оранжевый на зимний синий */
+        .nav-links { display: flex; gap: 25px; font-weight: 600; font-size: 14px; color: #555; }
+        .nav-links a:hover { color: #3498db; transition: 0.3s; }
         .online-status {
-            background: #f0f0f0;
-            padding: 5px 15px;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 6px 15px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
-            color: #27ae60;
+            color: #2980b9;
+            border: 1px solid rgba(52, 152, 219, 0.2);
         }
         .shop-btn-header {
-            background: #f39c12;
+            background: #3498db;
             color: #fff;
             padding: 10px 20px;
             border-radius: 8px;
             font-weight: 700;
             font-size: 14px;
             transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
         }
-        .shop-btn-header:hover { background: #e67e22; }
+        .shop-btn-header:hover { background: #2980b9; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4); }
 
-        /* --- БАННЕР (HERO SECTION) --- */
+        /* --- БАННЕР --- */
         .hero {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             border-radius: 20px;
             max-width: 1200px;
-            margin: 20px auto;
+            margin: 25px auto;
             padding: 50px 40px;
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+            box-shadow: 0 15px 35px rgba(79, 172, 254, 0.4); /* Свечение баннера */
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.4);
         }
-        .hero-text h1 { font-size: 42px; font-weight: 800; margin-bottom: 15px; line-height: 1.2; }
+        .hero-text h1 { font-size: 42px; font-weight: 800; margin-bottom: 15px; line-height: 1.2; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .hero-text p { font-size: 16px; margin-bottom: 30px; opacity: 0.9; max-width: 400px; }
         .play-btn {
-            background: #222;
-            color: #fff;
+            background: #fff;
+            color: #2980b9;
             padding: 15px 30px;
             border-radius: 12px;
-            font-weight: 700;
+            font-weight: 800;
             display: inline-flex;
             align-items: center;
             gap: 10px;
             transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .play-btn:hover { background: #000; transform: translateY(-2px); }
+        .play-btn:hover { background: #f0f8ff; transform: translateY(-3px) scale(1.05); }
+        
+        /* Анимация парения для персонажа */
         .hero-img {
             width: 300px;
             height: 300px;
             background: url('https://mc-heads.net/body/Notch/300') no-repeat center;
             background-size: contain;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
 
-        /* --- ОСНОВНОЙ КОНТЕНТ МАГАЗИНА --- */
+        /* --- ОСНОВНОЙ КОНТЕНТ --- */
         .main-container {
             max-width: 1200px;
             margin: 30px auto;
             display: flex;
             gap: 30px;
             padding: 0 20px;
+            position: relative;
+            z-index: 10;
         }
 
-        /* Боковое меню */
+        /* Боковое меню (стеклянное) */
         .sidebar { width: 250px; flex-shrink: 0; }
         .sidebar-menu {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
             border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             gap: 10px;
+            border: 1px solid #fff;
         }
         .sidebar-menu a {
             padding: 12px 15px;
             border-radius: 10px;
             font-weight: 600;
-            color: #666;
+            color: #555;
             display: flex;
             align-items: center;
             gap: 10px;
-            transition: 0.2s;
+            transition: 0.3s;
         }
-        .sidebar-menu a:hover, .sidebar-menu a.active { background: #fdf2e9; color: #f39c12; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { 
+            background: #fff; 
+            color: #3498db; 
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.15); 
+            transform: translateX(5px);
+        }
 
-        /* Контентная часть */
         .content { flex-grow: 1; }
         
-        /* Бегущая строка */
+        /* Лента покупок (с анимацией обновления) */
         .recent-purchases {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
             border-radius: 12px;
-            padding: 12px 20px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            color: #666;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            color: #555;
             display: flex;
-            gap: 20px;
+            gap: 15px;
             overflow: hidden;
             white-space: nowrap;
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid #fff;
+            transition: opacity 0.5s ease; /* Плавное исчезновение */
         }
-        .recent-purchases b { color: #333; }
+        .recent-purchases.fade-out { opacity: 0; }
+        .recent-purchases b { color: #2980b9; }
 
-        h2.section-title { font-size: 28px; margin-bottom: 20px; font-weight: 800; }
+        h2.section-title { font-size: 28px; margin-bottom: 20px; font-weight: 800; color: #2c3e50; }
 
         /* Сетка карточек */
         .cards-grid {
@@ -158,16 +205,17 @@
             padding: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.04);
             position: relative;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.5);
         }
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.2); /* Синее свечение при наведении */
+            border-color: #3498db;
         }
 
-        /* Картинки в карточках (заглушки) */
         .card-img {
             width: 100%;
             height: 180px;
@@ -175,9 +223,11 @@
             background: #eee;
             object-fit: cover;
             margin-bottom: 15px;
+            transition: 0.3s;
         }
+        .card:hover .card-img { transform: scale(1.02); }
 
-        /* Бейджи (ХИТ, Скидка) */
+        /* Бейджи */
         .badge {
             position: absolute;
             top: 25px;
@@ -190,16 +240,25 @@
             text-transform: uppercase;
             z-index: 10;
         }
-        .badge.hit { background: #27ae60; }
-        .badge.sale { background: #e74c3c; }
+        .badge.hit { 
+            background: #e74c3c; 
+            animation: pulse 1.5s infinite; /* Пульсация */
+        }
+        .badge.sale { background: #27ae60; }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
 
         .card-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; }
         .price-box { margin-bottom: 15px; margin-top: auto; }
         .old-price { font-size: 12px; color: #aaa; text-decoration: line-through; display: block; margin-bottom: 2px; }
-        .current-price { font-size: 16px; font-weight: 800; color: #333; }
+        .current-price { font-size: 16px; font-weight: 800; color: #2c3e50; }
         
         .buy-btn {
-            background: #f39c12;
+            background: #3498db;
             color: #fff;
             border: none;
             padding: 12px;
@@ -208,11 +267,16 @@
             font-size: 14px;
             cursor: pointer;
             width: 100%;
-            transition: background 0.2s;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
         }
-        .buy-btn:hover { background: #e67e22; }
+        .buy-btn:hover { 
+            background: #2980b9; 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.5);
+        }
 
-        /* Адаптация под телефоны */
+        /* Адаптивность */
         @media (max-width: 768px) {
             .hero { flex-direction: column; text-align: center; padding: 30px 20px; }
             .hero-text h1 { font-size: 28px; }
@@ -220,16 +284,20 @@
             .main-container { flex-direction: column; }
             .sidebar { width: 100%; }
             .sidebar-menu { flex-direction: row; overflow-x: auto; }
-            .nav-links { display: none; } /* Скрываем меню на телефоне */
+            .nav-links { display: none; }
+            .recent-purchases { font-size: 12px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Контейнер для снега -->
+    <div id="snow-container"></div>
+
     <!-- ШАПКА -->
     <header>
         <div class="header-content">
-            <div class="logo">🔥 <span>Really</span>World</div>
+            <div class="logo">❄️ <span>Comfort</span>World</div>
             <nav class="nav-links">
                 <a href="#">Главная</a>
                 <a href="#">Описание</a>
@@ -246,8 +314,8 @@
     <!-- БАННЕР -->
     <section class="hero">
         <div class="hero-text">
-            <h1>ReallyWorld — Начало<br>новой эры</h1>
-            <p>Открой для себя огромные миры, полные веселья и миллионов друзей!</p>
+            <h1>ComfortWorld — Начало<br>новой эры</h1>
+            <p>Открой для себя огромные миры, полные веселья, зимнего уюта и миллионов друзей!</p>
             <a href="#" class="play-btn">▶ Играть сейчас</a>
         </div>
         <div class="hero-img"></div>
@@ -268,8 +336,9 @@
         <!-- Контент магазина -->
         <div class="content">
             
-            <div class="recent-purchases">
-                Недавно купили: <b>Nad***r</b> — DRAGON &nbsp;|&nbsp; <b>Ke***is</b> — D.HELPER &nbsp;|&nbsp; <b>df***se</b> — VAMPIRE
+            <!-- Лента покупок (обновляется скриптом) -->
+            <div class="recent-purchases" id="recent-feed">
+                Недавно купили: <b>Загрузка...</b>
             </div>
 
             <h2 class="section-title">Магазин доната</h2>
@@ -278,7 +347,7 @@
                 
                 <!-- VAMPIRE -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=VAMPIRE" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=VAMPIRE" class="card-img">
                     <div class="card-title">VAMPIRE</div>
                     <div class="price-box">
                         <span class="old-price">59 ₽</span>
@@ -290,7 +359,7 @@
                 <!-- GOD -->
                 <div class="card">
                     <span class="badge sale">Скидка</span>
-                    <img src="https://placehold.co/300x300/222/fff?text=GOD" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=GOD" class="card-img">
                     <div class="card-title">GOD</div>
                     <div class="price-box">
                         <span class="old-price">79 ₽</span>
@@ -302,7 +371,7 @@
                 <!-- DIABLO -->
                 <div class="card">
                     <span class="badge sale">Скидка</span>
-                    <img src="https://placehold.co/300x300/222/fff?text=DIABLO" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=DIABLO" class="card-img">
                     <div class="card-title">DIABLO</div>
                     <div class="price-box">
                         <span class="old-price">99 ₽</span>
@@ -313,7 +382,7 @@
 
                 <!-- PEGAS -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=PEGAS" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=PEGAS" class="card-img">
                     <div class="card-title">PEGAS</div>
                     <div class="price-box">
                         <span class="current-price">79 ₽</span>
@@ -323,7 +392,7 @@
 
                 <!-- RABBIT -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=RABBIT" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=RABBIT" class="card-img">
                     <div class="card-title">RABBIT</div>
                     <div class="price-box">
                         <span class="current-price">99 ₽</span>
@@ -333,7 +402,7 @@
 
                 <!-- D.HELPER -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=D.HELPER" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=D.HELPER" class="card-img">
                     <div class="card-title">D.HELPER</div>
                     <div class="price-box">
                         <span class="current-price">129 ₽</span>
@@ -343,7 +412,7 @@
 
                 <!-- RAIN -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=RAIN" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=RAIN" class="card-img">
                     <div class="card-title">RAIN</div>
                     <div class="price-box">
                         <span class="current-price">159 ₽</span>
@@ -353,7 +422,7 @@
 
                 <!-- SUMMER -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=SUMMER" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=SUMMER" class="card-img">
                     <div class="card-title">SUMMER</div>
                     <div class="price-box">
                         <span class="current-price">199 ₽</span>
@@ -363,7 +432,7 @@
 
                 <!-- GRAPE -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=GRAPE" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=GRAPE" class="card-img">
                     <div class="card-title">GRAPE</div>
                     <div class="price-box">
                         <span class="current-price">229 ₽</span>
@@ -373,7 +442,7 @@
 
                 <!-- ANGEL -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=ANGEL" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=ANGEL" class="card-img">
                     <div class="card-title">ANGEL</div>
                     <div class="price-box">
                         <span class="current-price">279 ₽</span>
@@ -383,7 +452,7 @@
 
                 <!-- AURORA -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=AURORA" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=AURORA" class="card-img">
                     <div class="card-title">AURORA</div>
                     <div class="price-box">
                         <span class="current-price">319 ₽</span>
@@ -393,7 +462,7 @@
 
                 <!-- PRIME -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=PRIME" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=PRIME" class="card-img">
                     <div class="card-title">PRIME</div>
                     <div class="price-box">
                         <span class="current-price">379 ₽</span>
@@ -403,7 +472,7 @@
 
                 <!-- ENIGMA -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=ENIGMA" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=ENIGMA" class="card-img">
                     <div class="card-title">ENIGMA</div>
                     <div class="price-box">
                         <span class="current-price">419 ₽</span>
@@ -413,7 +482,7 @@
 
                 <!-- D.MODER -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=D.MODER" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=D.MODER" class="card-img">
                     <div class="card-title">D.MODER</div>
                     <div class="price-box">
                         <span class="current-price">479 ₽</span>
@@ -423,7 +492,7 @@
 
                 <!-- D.ST.MODER -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=D.ST.MODER" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=D.ST.MODER" class="card-img">
                     <div class="card-title">D.ST.MODER</div>
                     <div class="price-box">
                         <span class="current-price">539 ₽</span>
@@ -433,7 +502,7 @@
 
                 <!-- D.GL.MODER -->
                 <div class="card">
-                    <img src="https://placehold.co/300x300/222/fff?text=D.GL.MODER" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=D.GL.MODER" class="card-img">
                     <div class="card-title">D.GL.MODER</div>
                     <div class="price-box">
                         <span class="current-price">579 ₽</span>
@@ -444,7 +513,7 @@
                 <!-- D.OWNER -->
                 <div class="card">
                     <span class="badge hit">ХИТ</span>
-                    <img src="https://placehold.co/300x300/222/fff?text=D.OWNER" class="card-img">
+                    <img src="https://placehold.co/300x300/e0eafc/2c3e50?text=D.OWNER" class="card-img">
                     <div class="card-title">D.OWNER</div>
                     <div class="price-box">
                         <span class="current-price">699 ₽</span>
@@ -456,5 +525,78 @@
         </div>
     </main>
 
+    <!-- СКРИПТЫ (СНЕГ И ЖИВАЯ ЛЕНТА) -->
+    <script>
+        // --- 1. ГЕНЕРАТОР СНЕГА ---
+        function createSnow() {
+            const snowContainer = document.getElementById('snow-container');
+            const snowflake = document.createElement('div');
+            snowflake.innerHTML = '❄'; // Символ снежинки
+            snowflake.classList.add('snowflake');
+            
+            // Случайные параметры для каждой снежинки
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 4 + 's'; // От 4 до 7 секунд
+            snowflake.style.opacity = Math.random() * 0.8 + 0.2; // Прозрачность
+            snowflake.style.fontSize = Math.random() * 10 + 8 + 'px'; // Размер
+            
+            snowContainer.appendChild(snowflake);
+            
+            // Удаляем снежинку, когда она упадет, чтобы не грузить браузер
+            setTimeout(() => {
+                snowflake.remove();
+            }, 7000);
+        }
+        
+        // Создаем новую снежинку каждые 150 миллисекунд
+        setInterval(createSnow, 150);
+
+
+        // --- 2. ЖИВАЯ ЛЕНТА ПОКУПОК ---
+        const fakeUsers = [
+            'Nad***r', 'Ke***is', 'df***se', 'Alex***1', 'Snow***K', 
+            'Mega***Pro', 'Ice***Man', 'Comf***User', 'Vlad***ok', 'Sta***s'
+        ];
+        
+        const fakeRanks = [
+            'VAMPIRE', 'GOD', 'DIABLO', 'PEGAS', 'RABBIT', 'D.HELPER', 
+            'RAIN', 'SUMMER', 'GRAPE', 'ANGEL', 'AURORA', 'PRIME', 
+            'ENIGMA', 'D.MODER', 'D.ST.MODER', 'D.GL.MODER', 'D.OWNER'
+        ];
+
+        function updateFeed() {
+            const feed = document.getElementById('recent-feed');
+            
+            // 1. Плавно скрываем ленту
+            feed.classList.add('fade-out');
+            
+            // 2. Ждем полсекунды, пока она исчезнет, и меняем текст
+            setTimeout(() => {
+                let html = 'Недавно купили: ';
+                
+                // Генерируем 3 случайные покупки
+                for(let i = 0; i < 3; i++) {
+                    const randomUser = fakeUsers[Math.floor(Math.random() * fakeUsers.length)];
+                    const randomRank = fakeRanks[Math.floor(Math.random() * fakeRanks.length)];
+                    
+                    html += `<b>${randomUser}</b> — ${randomRank}`;
+                    
+                    // Добавляем разделитель, если это не последний элемент
+                    if (i < 2) html += ' &nbsp;|&nbsp; ';
+                }
+                
+                feed.innerHTML = html;
+                
+                // 3. Плавно показываем ленту обратно
+                feed.classList.remove('fade-out');
+            }, 500); 
+        }
+
+        // Запускаем обновление каждые 5 секунд (5000 мс)
+        setInterval(updateFeed, 5000);
+        
+        // И сразу при загрузке страницы
+        updateFeed();
+    </script>
 </body>
 </html>
