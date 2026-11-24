@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ComfortWorld | Магазин</title>
+    <title>ComfortWorld | Зимний Магазин</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
@@ -12,7 +12,7 @@
             --bg-color: #0b1021;
             --bg-gradient: radial-gradient(circle at top, #1a2a4c 0%, #0b1021 100%);
             --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.1);
             --neon-blue: #00f2fe;
             --neon-purple: #4facfe;
             --gold: #f39c12;
@@ -28,14 +28,35 @@
         }
         a { text-decoration: none; color: inherit; }
 
-        /* --- СНЕГ --- */
+        /* --- СНЕГ И СНЕГОВИКИ (ФОН) --- */
         #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
         .snowflake {
             position: absolute; top: -10px; color: #fff; user-select: none;
             animation-name: fall; animation-timing-function: linear; animation-iteration-count: infinite;
             text-shadow: 0 0 10px rgba(255,255,255,0.8);
         }
-        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+        @keyframes fall { 
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); }
+            100% { transform: translateY(110vh) translateX(20px) rotate(360deg); } 
+        }
+
+        /* Летающие снеговики */
+        .snowman-bg {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+            animation: floatSnowman 8s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+        }
+        .snowman-1 { top: 10%; left: 5%; width: 150px; animation-delay: 0s; }
+        .snowman-2 { bottom: 20%; right: 5%; width: 200px; animation-delay: -2s; }
+        .snowman-3 { top: 40%; right: 15%; width: 100px; animation-delay: -4s; }
+
+        @keyframes floatSnowman {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
 
         /* --- ШАПКА --- */
         header {
@@ -44,7 +65,10 @@
             -webkit-backdrop-filter: blur(20px);
             position: sticky; top: 0; z-index: 100;
             border-bottom: 1px solid var(--glass-border);
+            animation: slideDown 0.8s ease-out;
         }
+        @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+        
         .header-content {
             max-width: 1300px; margin: 0 auto; padding: 15px 25px;
             display: flex; align-items: center; justify-content: space-between;
@@ -52,7 +76,10 @@
         .logo { font-weight: 900; font-size: 24px; display: flex; align-items: center; gap: 10px; letter-spacing: 1px; }
         .logo span { background: linear-gradient(90deg, #00f2fe, #4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .nav-links { display: flex; gap: 30px; font-weight: 600; font-size: 14px; color: #94a3b8; }
-        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--neon-blue); transition: 0.3s; }
+        .nav-links a { transition: 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--neon-blue); transition: 0.3s; }
+        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--neon-blue); }
+        .nav-links a:hover::after { width: 100%; }
         
         .header-right { display: flex; gap: 15px; align-items: center; }
         .online-status {
@@ -68,8 +95,10 @@
             color: #0b1021; padding: 10px 24px; border-radius: 8px;
             font-weight: 800; font-size: 14px; transition: 0.3s;
             box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+            animation: pulse-glow 2s infinite;
         }
-        .shop-btn-header:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(0, 242, 254, 0.7); }
+        .shop-btn-header:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 0 25px rgba(0, 242, 254, 0.8); }
+        @keyframes pulse-glow { 0% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.4); } 50% { box-shadow: 0 0 25px rgba(0, 242, 254, 0.7); } 100% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.4); } }
 
         /* --- БАННЕР --- */
         .hero {
@@ -80,6 +109,7 @@
             border: 1px solid rgba(255,255,255,0.1);
             position: relative; overflow: hidden;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: fadeIn 1s ease-out;
         }
         
         .hero-text { position: relative; z-index: 1; max-width: 600px; }
@@ -91,15 +121,17 @@
         .play-btn {
             background: #fff; color: #0b1021; padding: 16px 35px; border-radius: 12px;
             font-weight: 800; font-size: 16px; transition: 0.3s; display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1); animation: float 3s ease-in-out infinite;
         }
-        .play-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255,255,255,0.2); }
+        .play-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 25px rgba(255,255,255,0.3); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        
         .discord-btn {
             background: rgba(11, 16, 33, 0.6); color: #fff; padding: 16px 35px; border-radius: 12px;
             font-weight: 700; font-size: 16px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2);
             backdrop-filter: blur(5px);
         }
-        .discord-btn:hover { background: rgba(11, 16, 33, 0.9); border-color: #5865F2; box-shadow: 0 0 15px rgba(88,101,242,0.4); }
+        .discord-btn:hover { background: rgba(11, 16, 33, 0.9); border-color: #5865F2; box-shadow: 0 0 20px rgba(88,101,242,0.6); transform: scale(1.05); }
 
         /* --- ОСНОВНОЙ КОНТЕНТ --- */
         .main-container {
@@ -111,21 +143,25 @@
         .glass-panel {
             background: var(--glass-bg); backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border); border-radius: 20px; padding: 20px;
+            animation: slideRight 0.6s ease-out;
         }
+        @keyframes slideRight { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+        
         .sidebar-menu { display: flex; flex-direction: column; gap: 8px; }
         .sidebar-menu a {
             padding: 14px 20px; border-radius: 12px; font-weight: 600; color: #94a3b8;
-            display: flex; align-items: center; gap: 12px; transition: 0.3s; cursor: pointer;
+            display: flex; align-items: center; gap: 12px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
         }
         .sidebar-menu a:hover, .sidebar-menu a.active {
             background: rgba(0, 242, 254, 0.1); color: #fff; border-left: 3px solid var(--neon-blue);
-            box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.05);
+            box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.1); transform: translateX(10px);
         }
 
         /* Топ донатеров */
         .top-donators h3 { font-size: 16px; margin-bottom: 15px; color: #fff; }
         .top-list { display: flex; flex-direction: column; gap: 12px; }
-        .top-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 10px; }
+        .top-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 10px; transition: 0.3s; }
+        .top-item:hover { background: rgba(255,255,255,0.08); transform: translateX(5px); }
         .top-item img { width: 32px; height: 32px; border-radius: 6px; }
         .top-item .name { font-size: 13px; font-weight: 700; }
         .top-item .rank { font-size: 11px; color: var(--neon-blue); font-weight: 800; }
@@ -138,54 +174,78 @@
             background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.2);
             border-radius: 12px; padding: 15px 25px; margin-bottom: 25px;
             font-size: 14px; color: #94a3b8; display: flex; gap: 15px; overflow: hidden; white-space: nowrap;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease; animation: fadeIn 0.8s ease-out;
         }
         .recent-purchases.fade-out { opacity: 0; }
         .recent-purchases b { color: #fff; }
         
         h2.section-title { font-size: 32px; font-weight: 900; margin-bottom: 25px; color: #fff; transition: 0.3s; }
+        .section-title:hover { text-shadow: 0 0 20px var(--neon-blue); }
 
-        /* --- ВКЛАДКИ (Скрытие/Показ) --- */
-        .tab-content { display: none; animation: fadeIn 0.5s ease forwards; }
+        /* --- ВКЛАДКИ --- */
+        .tab-content { display: none; }
         .tab-content.active-tab { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Сетка карточек */
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
 
-        /* Карточка */
+        /* Карточка с анимацией появления */
         .card {
             background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
             border: 1px solid var(--glass-border); border-radius: 20px; padding: 20px;
             position: relative; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex; flex-direction: column; overflow: hidden;
+            animation: slideUpFade 0.6s ease-out forwards; opacity: 0;
         }
+        /* Задержка для эффекта каскада */
+        .card:nth-child(1) { animation-delay: 0.05s; }
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.15s; }
+        .card:nth-child(4) { animation-delay: 0.2s; }
+        .card:nth-child(5) { animation-delay: 0.25s; }
+        .card:nth-child(6) { animation-delay: 0.3s; }
+        
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
         .card::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 0%, rgba(0,242,254,0.15), transparent 70%);
+            background: radial-gradient(circle at 50% 0%, rgba(0,242,254,0.2), transparent 70%);
             opacity: 0; transition: 0.4s; z-index: 0;
         }
-        .card:hover { transform: translateY(-10px); border-color: rgba(0,242,254,0.5); box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(0,242,254,0.2); }
+        .card:hover { transform: translateY(-10px) scale(1.02); border-color: rgba(0,242,254,0.6); box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(0,242,254,0.3); }
         .card:hover::before { opacity: 1; }
         
         .card > * { position: relative; z-index: 1; }
 
-        .card-img { width: 100%; height: 180px; border-radius: 14px; object-fit: cover; margin-bottom: 15px; filter: brightness(0.9); transition: 0.3s; }
+        /* Контейнер для SVG-иконок вместо картинок */
+        .card-img-container {
+            width: 100%; height: 150px; display: flex; justify-content: center; align-items: center;
+            margin-bottom: 15px; transition: 0.4s;
+        }
+        .card:hover .card-img-container { transform: scale(1.1) rotate(5deg); filter: drop-shadow(0 0 20px var(--neon-blue)); }
+        
+        .card-img-container svg { width: 100px; height: 100px; }
+
+        .card-img { width: 100%; height: 150px; border-radius: 14px; object-fit: cover; margin-bottom: 15px; filter: brightness(0.9); transition: 0.3s; }
         .card:hover .card-img { filter: brightness(1.1); transform: scale(1.05); }
 
         .badge {
-            position: absolute; top: 30px; left: 30px; padding: 5px 12px; border-radius: 8px;
+            position: absolute; top: 20px; left: 20px; padding: 5px 12px; border-radius: 8px;
             font-size: 11px; font-weight: 900; color: #0b1021; text-transform: uppercase; z-index: 10;
         }
-        .badge.hit { background: linear-gradient(90deg, #f1c40f, #f39c12); box-shadow: 0 0 15px rgba(243, 156, 18, 0.6); animation: pulse-gold 2s infinite; }
-        .badge.sale { background: linear-gradient(90deg, #00f2fe, #4facfe); box-shadow: 0 0 15px rgba(0, 242, 254, 0.5); }
-        @keyframes pulse-gold { 0% { box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } 50% { box-shadow: 0 0 25px rgba(243, 156, 18, 0.9); } 100% { box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } }
+        .badge.hit { background: linear-gradient(90deg, #f1c40f, #f39c12); box-shadow: 0 0 15px rgba(243, 156, 18, 0.8); animation: pulse-gold 1.5s infinite; }
+        .badge.sale { background: linear-gradient(90deg, #00f2fe, #4facfe); box-shadow: 0 0 15px rgba(0, 242, 254, 0.6); animation: pulse-blue 1.5s infinite; }
+        @keyframes pulse-gold { 0% { box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } 50% { box-shadow: 0 0 25px rgba(243, 156, 18, 1); } 100% { box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } }
+        @keyframes pulse-blue { 0% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.4); } 50% { box-shadow: 0 0 20px rgba(0, 242, 254, 0.8); } 100% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.4); } }
 
-        .card-title { font-size: 16px; font-weight: 900; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); line-height: 1.3; }
+        .card-title { font-size: 16px; font-weight: 900; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); line-height: 1.3; transition: 0.3s; }
+        .card:hover .card-title { color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
+        
         .price-box { margin-bottom: 20px; margin-top: auto; }
         .old-price { font-size: 13px; color: #64748b; text-decoration: line-through; display: block; margin-bottom: 4px; font-weight: 600; }
-        .current-price { font-size: 22px; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 15px rgba(0, 242, 254, 0.4); }
+        .current-price { font-size: 22px; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 15px rgba(0, 242, 254, 0.6); }
         
+        /* Анимированная кнопка */
         .buy-btn {
             background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
             color: #0b1021; border: none; padding: 14px; border-radius: 12px;
@@ -195,10 +255,12 @@
         }
         .buy-btn::after {
             content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%;
-            background: rgba(255,255,255,0.4); transform: rotate(30deg); transition: 0.5s;
+            background: rgba(255,255,255,0.5); transform: rotate(30deg); transition: 0.5s;
+            animation: shimmer 3s infinite; /* Постоянное переливание */
         }
-        .buy-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 242, 254, 0.4); }
-        .buy-btn:hover::after { left: 120%; }
+        @keyframes shimmer { 0% { left: -60%; } 20% { left: 120%; } 100% { left: 120%; } }
+
+        .buy-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 25px rgba(0, 242, 254, 0.6); background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%); }
 
         /* Адаптив */
         @media (max-width: 992px) {
@@ -208,12 +270,40 @@
             .hero { flex-direction: column; text-align: center; padding: 40px 20px; }
             .hero-text h1 { font-size: 32px; }
             .hero-buttons { justify-content: center; flex-direction: column; }
+            .snowman-bg { display: none; } /* Прячем снеговиков на мобилках, чтобы не мешали */
         }
     </style>
 </head>
 <body>
 
+    <!-- Фон: Снеговики и Снег -->
     <div id="snow-container"></div>
+    
+    <!-- Красивые SVG-снеговики на фоне -->
+    <svg class="snowman-bg snowman-1" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="85" r="30" fill="white"/>
+        <circle cx="50" cy="45" r="22" fill="white"/>
+        <circle cx="50" cy="20" r="16" fill="white"/>
+        <circle cx="44" cy="17" r="2" fill="black"/>
+        <circle cx="56" cy="17" r="2" fill="black"/>
+        <polygon points="50,20 65,23 50,26" fill="orange"/>
+        <circle cx="50" cy="45" r="3" fill="black"/>
+        <circle cx="50" cy="55" r="3" fill="black"/>
+        <circle cx="50" cy="75" r="3" fill="black"/>
+        <circle cx="50" cy="90" r="3" fill="black"/>
+        <path d="M 30 20 L 70 20" stroke="black" stroke-width="3"/>
+        <path d="M 40 15 L 60 15" stroke="black" stroke-width="2"/>
+    </svg>
+    <svg class="snowman-bg snowman-2" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="85" r="30" fill="white"/>
+        <circle cx="50" cy="45" r="22" fill="white"/>
+        <circle cx="50" cy="20" r="16" fill="white"/>
+        <circle cx="44" cy="17" r="2" fill="black"/>
+        <circle cx="56" cy="17" r="2" fill="black"/>
+        <polygon points="50,20 65,23 50,26" fill="orange"/>
+        <circle cx="50" cy="45" r="3" fill="black"/>
+        <circle cx="50" cy="55" r="3" fill="black"/>
+    </svg>
 
     <!-- ШАПКА -->
     <header>
@@ -252,7 +342,6 @@
             <div class="glass-panel sidebar-menu">
                 <a onclick="openTab('privileges', this)" class="active">👑 Привилегии</a>
                 <a onclick="openTab('cases', this)">🎁 Кейсы</a>
-                <!-- ТЕПЕРЬ УСЛУГИ РАБОТАЮТ -->
                 <a onclick="openTab('services', this)">💎 Услуги</a>
             </div>
             
@@ -475,7 +564,10 @@
 
                     <div class="card">
                         <span class="badge hit">СУПЕР</span>
-                        <img src="https://placehold.co/300x300/1a2a4c/f39c12?text=🎁" class="card-img" style="object-fit: contain; padding: 20px;">
+                        <!-- Векторный светящийся сундук -->
+                        <div class="card-img-container">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px var(--neon-blue));"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                        </div>
                         <div class="card-title">Кейс с супер донатом</div>
                         <div class="price-box">
                             <span class="current-price">99 ₽</span>
@@ -484,7 +576,10 @@
                     </div>
 
                     <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/4facfe?text=🗝️" class="card-img" style="object-fit: contain; padding: 20px;">
+                        <!-- Векторный ключ -->
+                        <div class="card-img-container">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-purple)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px var(--neon-purple));"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
+                        </div>
                         <div class="card-title">Кейс с легендарным донатом</div>
                         <div class="price-box">
                             <span class="current-price">199 ₽</span>
@@ -493,7 +588,10 @@
                     </div>
 
                     <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=🎁" class="card-img" style="object-fit: contain; padding: 20px;">
+                        <!-- Векторная корона (префиксы) -->
+                        <div class="card-img-container">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#f1c40f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #f1c40f);"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+                        </div>
                         <div class="card-title">Кейс с префиксами</div>
                         <div class="price-box">
                             <span class="current-price">19 ₽</span>
@@ -502,7 +600,10 @@
                     </div>
 
                     <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=💰" class="card-img" style="object-fit: contain; padding: 20px;">
+                        <!-- Векторная монета -->
+                        <div class="card-img-container">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #f39c12);"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M15 9.17A3 3 0 0 0 13.5 8h-3a2.5 2.5 0 0 0 0 5h3a2.5 2.5 0 0 1 0 5h-3A3 3 0 0 1 9 14.83"/></svg>
+                        </div>
                         <div class="card-title">Кейс с рилликами</div>
                         <div class="price-box">
                             <span class="current-price">9 ₽</span>
@@ -511,7 +612,10 @@
                     </div>
 
                     <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=💵" class="card-img" style="object-fit: contain; padding: 20px;">
+                        <!-- Векторные деньги (валюта) -->
+                        <div class="card-img-container">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #2ecc71);"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+                        </div>
                         <div class="card-title">Кейс с валютой</div>
                         <div class="price-box">
                             <span class="current-price">9 ₽</span>
@@ -520,7 +624,10 @@
                     </div>
 
                     <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=🐋" class="card-img" style="object-fit: contain; padding: 20px;">
+                        <!-- Векторный кит -->
+                        <div class="card-img-container">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #3498db);"><path d="M22 12c0-3.3-2.7-6-6-6H8c-3.3 0-6 2.7-6 6s2.7 6 6 6h8c3.3 0 6-2.7 6-6z"/><path d="M12 16V8"/><path d="M16 12h-4"/><path d="M8 12H6"/></svg>
+                        </div>
                         <div class="card-title">Кейс с китами</div>
                         <div class="price-box">
                             <span class="current-price">7 ₽</span>
@@ -539,7 +646,10 @@
                     <!-- РАЗБАН -->
                     <div class="card">
                         <span class="badge sale">ПОПУЛЯРНОЕ</span>
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=⚖️" class="card-img" style="object-fit: contain; padding: 20px;">
+                        <!-- Векторные весы правосудия -->
+                        <div class="card-img-container">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 15px var(--neon-blue));"><path d="M12 3v18"/><path d="M8 21h8"/><path d="M4 8h16"/><path d="M4 8a4 4 0 0 0 8 0"/><path d="M12 8a4 4 0 0 0 8 0"/></svg>
+                        </div>
                         <div class="card-title">Разбан</div>
                         <div class="price-box">
                             <span class="current-price">199 ₽</span>
@@ -555,31 +665,34 @@
 
     <!-- СКРИПТЫ -->
     <script>
-        // --- 1. ГЕНЕРАТОР СНЕГА ---
+        // --- 1. УСИЛЕННЫЙ ГЕНЕРАТОР СНЕГА ---
         function createSnow() {
             const snowContainer = document.getElementById('snow-container');
             const snowflake = document.createElement('div');
             snowflake.innerHTML = '❄'; 
             snowflake.classList.add('snowflake');
             
-            const isBlurred = Math.random() > 0.7;
+            const isBlurred = Math.random() > 0.6; // Больше размытых снежинок для глубины
             
             snowflake.style.left = Math.random() * 100 + 'vw';
-            snowflake.style.animationDuration = Math.random() * 4 + 6 + 's'; 
-            snowflake.style.opacity = Math.random() * 0.6 + 0.2;
-            snowflake.style.fontSize = Math.random() * 15 + 8 + 'px';
+            snowflake.style.animationDuration = Math.random() * 5 + 5 + 's'; // Медленнее падают
+            snowflake.style.opacity = Math.random() * 0.7 + 0.2;
+            snowflake.style.fontSize = Math.random() * 20 + 10 + 'px'; // Крупнее
             
             if (isBlurred) {
-                snowflake.style.filter = 'blur(2px)';
+                snowflake.style.filter = 'blur(3px)';
                 snowflake.style.zIndex = '1';
             } else {
                 snowflake.style.zIndex = '9999';
+                snowflake.style.textShadow = '0 0 15px rgba(255,255,255,1)';
             }
             
             snowContainer.appendChild(snowflake);
+            // Удаляем снежинку после падения (10 секунд)
             setTimeout(() => { snowflake.remove(); }, 10000);
         }
-        setInterval(createSnow, 100);
+        // Запускаем снег чаще (каждые 50 мс)
+        setInterval(createSnow, 50);
 
 
         // --- 2. ЖИВАЯ ЛЕНТА ПОКУПОК ---
@@ -606,7 +719,7 @@
         updateFeed();
 
 
-        // --- 3. ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ---
+        // --- 3. ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК С АНИМАЦИЕЙ ---
         function openTab(tabId, element) {
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => {
@@ -618,8 +731,17 @@
                 link.classList.remove('active');
             });
 
-            document.getElementById(tabId).classList.add('active-tab');
+            const activeTab = document.getElementById(tabId);
+            activeTab.classList.add('active-tab');
             element.classList.add('active');
+
+            // Перезапуск анимации карточек при переключении вкладки
+            const cards = activeTab.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.animation = 'none';
+                card.offsetHeight; /* trigger reflow */
+                card.style.animation = null; 
+            });
         }
     </script>
 </body>
