@@ -284,7 +284,6 @@
         .modal-body {
             padding: 30px; overflow-y: auto; color: #e2e8f0; line-height: 1.6; font-size: 14px;
         }
-        /* Кастомный скроллбар */
         .modal-body::-webkit-scrollbar { width: 8px; }
         .modal-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
         .modal-body::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
@@ -765,7 +764,7 @@
 
     <!-- СКРИПТЫ -->
     <script>
-        // --- 1. УСИЛЕННЫЙ ГЕНЕРАТОР СНЕГА ---
+        // --- 1. ГЕНЕРАТОР СНЕГА ---
         function createSnow() {
             const snowContainer = document.getElementById('snow-container');
             const snowflake = document.createElement('div');
@@ -845,13 +844,13 @@
         function openRules() {
             const modal = document.getElementById('rules-modal');
             modal.classList.add('show');
-            document.body.style.overflow = 'hidden'; // Запрещаем скролл фона
+            document.body.style.overflow = 'hidden';
         }
 
         function closeRules() {
             const modal = document.getElementById('rules-modal');
             modal.classList.remove('show');
-            document.body.style.overflow = 'auto'; // Возвращаем скролл
+            document.body.style.overflow = 'auto';
         }
 
         // Закрытие по клику вне окна
@@ -861,6 +860,44 @@
                 closeRules();
             }
         }
+
+        // --- 5. ЗВУК ПРИ КЛИКЕ (Web Audio API) ---
+        let audioCtx;
+        function playClickSound() {
+            try {
+                // Инициализация аудио-контекста (только при первом клике)
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                // Если браузер усыпил контекст, будим его
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                // Настройка звука (короткий "клик" или "поп")
+                osc.type = 'sine'; // Плавная волна
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime); // Высокая частота
+                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.08); // Быстрое понижение
+
+                // Настройка громкости (быстрое затухание)
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime); // Громкость (0.3 = 30%)
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1); // Звук длится 0.1 секунду
+            } catch (e) {
+                console.log("Звук не поддерживается браузером");
+            }
+        }
+
+        // Вешаем событие клика на весь документ
+        document.addEventListener('click', playClickSound);
     </script>
 </body>
 </html>
