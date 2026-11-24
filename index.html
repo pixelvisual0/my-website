@@ -16,6 +16,7 @@
             --neon-blue: #00f2fe;
             --neon-purple: #4facfe;
             --gold: #f39c12;
+            --penalty-red: #e74c3c;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -42,10 +43,7 @@
 
         /* Летающие снеговики */
         .snowman-bg {
-            position: fixed;
-            z-index: -1;
-            opacity: 0.15;
-            pointer-events: none;
+            position: fixed; z-index: -1; opacity: 0.15; pointer-events: none;
             animation: floatSnowman 8s ease-in-out infinite;
             filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
         }
@@ -62,8 +60,7 @@
         header {
             background: rgba(11, 16, 33, 0.7);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            position: sticky; top: 0; z-index: 100;
+            position: sticky; top: 0; z-index: 1000;
             border-bottom: 1px solid var(--glass-border);
             animation: slideDown 0.8s ease-out;
         }
@@ -76,7 +73,7 @@
         .logo { font-weight: 900; font-size: 24px; display: flex; align-items: center; gap: 10px; letter-spacing: 1px; }
         .logo span { background: linear-gradient(90deg, #00f2fe, #4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .nav-links { display: flex; gap: 30px; font-weight: 600; font-size: 14px; color: #94a3b8; }
-        .nav-links a { transition: 0.3s; position: relative; }
+        .nav-links a { transition: 0.3s; position: relative; cursor: pointer; }
         .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--neon-blue); transition: 0.3s; }
         .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--neon-blue); }
         .nav-links a:hover::after { width: 100%; }
@@ -197,13 +194,9 @@
             display: flex; flex-direction: column; overflow: hidden;
             animation: slideUpFade 0.6s ease-out forwards; opacity: 0;
         }
-        /* Задержка для эффекта каскада */
-        .card:nth-child(1) { animation-delay: 0.05s; }
-        .card:nth-child(2) { animation-delay: 0.1s; }
-        .card:nth-child(3) { animation-delay: 0.15s; }
-        .card:nth-child(4) { animation-delay: 0.2s; }
-        .card:nth-child(5) { animation-delay: 0.25s; }
-        .card:nth-child(6) { animation-delay: 0.3s; }
+        .card:nth-child(1) { animation-delay: 0.05s; } .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.15s; } .card:nth-child(4) { animation-delay: 0.2s; }
+        .card:nth-child(5) { animation-delay: 0.25s; } .card:nth-child(6) { animation-delay: 0.3s; }
         
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -217,13 +210,11 @@
         
         .card > * { position: relative; z-index: 1; }
 
-        /* Контейнер для SVG-иконок вместо картинок */
         .card-img-container {
             width: 100%; height: 150px; display: flex; justify-content: center; align-items: center;
             margin-bottom: 15px; transition: 0.4s;
         }
         .card:hover .card-img-container { transform: scale(1.1) rotate(5deg); filter: drop-shadow(0 0 20px var(--neon-blue)); }
-        
         .card-img-container svg { width: 100px; height: 100px; }
 
         .card-img { width: 100%; height: 150px; border-radius: 14px; object-fit: cover; margin-bottom: 15px; filter: brightness(0.9); transition: 0.3s; }
@@ -245,7 +236,6 @@
         .old-price { font-size: 13px; color: #64748b; text-decoration: line-through; display: block; margin-bottom: 4px; font-weight: 600; }
         .current-price { font-size: 22px; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 15px rgba(0, 242, 254, 0.6); }
         
-        /* Анимированная кнопка */
         .buy-btn {
             background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
             color: #0b1021; border: none; padding: 14px; border-radius: 12px;
@@ -256,11 +246,55 @@
         .buy-btn::after {
             content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%;
             background: rgba(255,255,255,0.5); transform: rotate(30deg); transition: 0.5s;
-            animation: shimmer 3s infinite; /* Постоянное переливание */
+            animation: shimmer 3s infinite;
         }
         @keyframes shimmer { 0% { left: -60%; } 20% { left: 120%; } 100% { left: 120%; } }
 
         .buy-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 25px rgba(0, 242, 254, 0.6); background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%); }
+
+        /* --- МОДАЛЬНОЕ ОКНО ПРАВИЛ --- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 16, 33, 0.8); backdrop-filter: blur(10px); z-index: 2000;
+            justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s;
+        }
+        .modal-overlay.show { display: flex; opacity: 1; }
+        
+        .modal-content {
+            background: linear-gradient(180deg, rgba(26, 42, 76, 0.95) 0%, rgba(11, 16, 33, 0.95) 100%);
+            border: 1px solid var(--neon-blue); border-radius: 20px;
+            width: 90%; max-width: 900px; max-height: 85vh;
+            display: flex; flex-direction: column;
+            box-shadow: 0 0 50px rgba(0, 242, 254, 0.2);
+            transform: translateY(20px); transition: transform 0.3s;
+        }
+        .modal-overlay.show .modal-content { transform: translateY(0); }
+
+        .modal-header {
+            padding: 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-header h2 { color: #fff; font-size: 24px; font-weight: 800; text-shadow: 0 0 10px var(--neon-blue); }
+        .close-btn {
+            background: none; border: none; color: #94a3b8; font-size: 30px;
+            cursor: pointer; transition: 0.3s; line-height: 1;
+        }
+        .close-btn:hover { color: #e74c3c; transform: rotate(90deg); }
+
+        .modal-body {
+            padding: 30px; overflow-y: auto; color: #e2e8f0; line-height: 1.6; font-size: 14px;
+        }
+        /* Кастомный скроллбар */
+        .modal-body::-webkit-scrollbar { width: 8px; }
+        .modal-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        .modal-body::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
+
+        .modal-body h3 { color: var(--neon-blue); margin: 20px 0 10px 0; font-size: 18px; }
+        .modal-body p { margin-bottom: 10px; }
+        .modal-body ul { margin-left: 20px; margin-bottom: 15px; }
+        .modal-body li { margin-bottom: 8px; }
+        
+        .penalty { color: var(--penalty-red); font-weight: 800; text-shadow: 0 0 5px rgba(231, 76, 60, 0.4); }
 
         /* Адаптив */
         @media (max-width: 992px) {
@@ -270,7 +304,8 @@
             .hero { flex-direction: column; text-align: center; padding: 40px 20px; }
             .hero-text h1 { font-size: 32px; }
             .hero-buttons { justify-content: center; flex-direction: column; }
-            .snowman-bg { display: none; } /* Прячем снеговиков на мобилках, чтобы не мешали */
+            .snowman-bg { display: none; }
+            .modal-content { width: 95%; }
         }
     </style>
 </head>
@@ -291,8 +326,6 @@
         <circle cx="50" cy="55" r="3" fill="black"/>
         <circle cx="50" cy="75" r="3" fill="black"/>
         <circle cx="50" cy="90" r="3" fill="black"/>
-        <path d="M 30 20 L 70 20" stroke="black" stroke-width="3"/>
-        <path d="M 40 15 L 60 15" stroke="black" stroke-width="2"/>
     </svg>
     <svg class="snowman-bg snowman-2" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="85" r="30" fill="white"/>
@@ -310,9 +343,10 @@
         <div class="header-content">
             <div class="logo">❄️ <span>Comfort</span>World</div>
             <nav class="nav-links">
-                <a href="#">Главная</a>
+                <a href="#" onclick="window.scrollTo(0,0)">Главная</a>
                 <a href="#">Описание</a>
-                <a href="#">Правила</a>
+                <!-- Кнопка вызова правил -->
+                <a onclick="openRules()">Правила</a>
                 <a href="#">Форум</a>
             </nav>
             <div class="header-right">
@@ -378,7 +412,6 @@
                 <h2 class="section-title">Магазин привилегий</h2>
                 <div class="cards-grid">
                     
-                    <!-- VAMPIRE -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=VAMPIRE" class="card-img">
                         <div class="card-title">VAMPIRE</div>
@@ -389,7 +422,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- GOD -->
                     <div class="card">
                         <span class="badge sale">Скидка</span>
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=GOD" class="card-img">
@@ -401,7 +433,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- DIABLO -->
                     <div class="card">
                         <span class="badge sale">Скидка</span>
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=DIABLO" class="card-img">
@@ -413,7 +444,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- PEGAS -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=PEGAS" class="card-img">
                         <div class="card-title">PEGAS</div>
@@ -423,7 +453,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- RABBIT -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=RABBIT" class="card-img">
                         <div class="card-title">RABBIT</div>
@@ -433,7 +462,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- D.HELPER -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.HELPER" class="card-img">
                         <div class="card-title">D.HELPER</div>
@@ -443,7 +471,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- RAIN -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=RAIN" class="card-img">
                         <div class="card-title">RAIN</div>
@@ -453,7 +480,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- SUMMER -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=SUMMER" class="card-img">
                         <div class="card-title">SUMMER</div>
@@ -463,7 +489,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- GRAPE -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=GRAPE" class="card-img">
                         <div class="card-title">GRAPE</div>
@@ -473,7 +498,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- ANGEL -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=ANGEL" class="card-img">
                         <div class="card-title">ANGEL</div>
@@ -483,7 +507,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- AURORA -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=AURORA" class="card-img">
                         <div class="card-title">AURORA</div>
@@ -493,7 +516,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- PRIME -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=PRIME" class="card-img">
                         <div class="card-title">PRIME</div>
@@ -503,7 +525,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- ENIGMA -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=ENIGMA" class="card-img">
                         <div class="card-title">ENIGMA</div>
@@ -513,7 +534,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- D.MODER -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.MODER" class="card-img">
                         <div class="card-title">D.MODER</div>
@@ -523,7 +543,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- D.ST.MODER -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.ST.MODER" class="card-img">
                         <div class="card-title">D.ST.MODER</div>
@@ -533,7 +552,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- D.GL.MODER -->
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.GL.MODER" class="card-img">
                         <div class="card-title">D.GL.MODER</div>
@@ -543,7 +561,6 @@
                         <button class="buy-btn">Купить</button>
                     </div>
 
-                    <!-- D.OWNER -->
                     <div class="card">
                         <span class="badge hit">ХИТ</span>
                         <img src="https://placehold.co/300x300/1a2a4c/f39c12?text=D.OWNER" class="card-img">
@@ -564,7 +581,6 @@
 
                     <div class="card">
                         <span class="badge hit">СУПЕР</span>
-                        <!-- Векторный светящийся сундук -->
                         <div class="card-img-container">
                             <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px var(--neon-blue));"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
                         </div>
@@ -576,7 +592,6 @@
                     </div>
 
                     <div class="card">
-                        <!-- Векторный ключ -->
                         <div class="card-img-container">
                             <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-purple)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px var(--neon-purple));"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
                         </div>
@@ -588,7 +603,6 @@
                     </div>
 
                     <div class="card">
-                        <!-- Векторная корона (префиксы) -->
                         <div class="card-img-container">
                             <svg viewBox="0 0 24 24" fill="none" stroke="#f1c40f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #f1c40f);"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
                         </div>
@@ -600,7 +614,6 @@
                     </div>
 
                     <div class="card">
-                        <!-- Векторная монета -->
                         <div class="card-img-container">
                             <svg viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #f39c12);"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M15 9.17A3 3 0 0 0 13.5 8h-3a2.5 2.5 0 0 0 0 5h3a2.5 2.5 0 0 1 0 5h-3A3 3 0 0 1 9 14.83"/></svg>
                         </div>
@@ -612,7 +625,6 @@
                     </div>
 
                     <div class="card">
-                        <!-- Векторные деньги (валюта) -->
                         <div class="card-img-container">
                             <svg viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #2ecc71);"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
                         </div>
@@ -624,7 +636,6 @@
                     </div>
 
                     <div class="card">
-                        <!-- Векторный кит -->
                         <div class="card-img-container">
                             <svg viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #3498db);"><path d="M22 12c0-3.3-2.7-6-6-6H8c-3.3 0-6 2.7-6 6s2.7 6 6 6h8c3.3 0 6-2.7 6-6z"/><path d="M12 16V8"/><path d="M16 12h-4"/><path d="M8 12H6"/></svg>
                         </div>
@@ -643,10 +654,8 @@
                 <h2 class="section-title">Услуги</h2>
                 <div class="cards-grid">
                     
-                    <!-- РАЗБАН -->
                     <div class="card">
                         <span class="badge sale">ПОПУЛЯРНОЕ</span>
-                        <!-- Векторные весы правосудия -->
                         <div class="card-img-container">
                             <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 15px var(--neon-blue));"><path d="M12 3v18"/><path d="M8 21h8"/><path d="M4 8h16"/><path d="M4 8a4 4 0 0 0 8 0"/><path d="M12 8a4 4 0 0 0 8 0"/></svg>
                         </div>
@@ -663,6 +672,97 @@
         </div>
     </main>
 
+    <!-- ================== МОДАЛЬНОЕ ОКНО С ПРАВИЛАМИ ================== -->
+    <div class="modal-overlay" id="rules-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📜 Правила сервера ComfortWorld</h2>
+                <button class="close-btn" onclick="closeRules()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>1.3</strong> Правила могут быть изменены без явного оповещения основной аудитории проекта. При значительных изменениях правил, на форуме проекта отображается объявление.</p>
+                <p><strong>1.4</strong> Решения и действия главной администрации (MrDomer, KondrMS, _TheUuni_, CakyraSun, AngelForch, Shukurinay) не обсуждаются и не поддаются разжалованию. Главная администрация вправе выдавать наказания вне рамок данных правил.</p>
+                <p><strong>1.5</strong> Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).</p>
+                <p><strong>1.6</strong> Продажа, взломы, попытки взломов, передачи аккаунтов, покупки аккаунтов в обход официального сайта, распространение данных игроков, вред серверу, а так же продажи\покупки чего либо за реальную валюту - строго запрещены. <span class="penalty">Наказание - отключение всех аккаунтов без возможности приобрести разбан.</span> Соучастие, содействие, совместная игра с нарушителями так же попадают под это правило.</p>
+
+                <h3>2. Правила регистрации</h3>
+                <p><strong>2.1</strong> Никнейм пользователя должен быть корректным. Некорректным можно назвать любой ник, нарушающий закрепленные правила, а также: <span class="penalty">[блокировка аккаунта; для сменённых - предупреждение, затем блокировка]</span></p>
+                <ul>
+                    <li>2.1.1 Никнейм, похожий на никнейм высшей Администрации.</li>
+                    <li>2.1.2 Никнейм, сексуального, аморального содержания.</li>
+                    <li>2.1.3 Никнейм, оскорбляющий никнейм другого игрока.</li>
+                    <li>2.1.4 Никнейм, содержащий названия запрещенных ПО.</li>
+                    <li>2.1.5 Никнейм, содержащий нецензурную лексику.</li>
+                    <li>2.1.6 Никнейм, содержащий слова, внесённые в Анти-Спам систему.</li>
+                    <li>2.1.7 Никнейм, связанный со смертью сотрудника проекта.</li>
+                </ul>
+                <p><strong>2.2</strong> При покупке платных дополнительных возможностей, кейсов, рилликов, предоставленный системой чек необходимо сохранить.</p>
+                <p><strong>2.3</strong> При утере/взломе аккаунта, необходимо обратиться в техподдержку (https://vk.com/comfortworld_tech).</p>
+
+                <h3>3. Приобретение платных услуг</h3>
+                <p><strong>3.1</strong> Игра на проекте не подразумевает платы за использование ресурсов ComfortWorld.</p>
+                <p><strong>3.4</strong> Возврата средств за покупки у нас нету, так как ComfortWorld не является коммерческой организацией и все покупки являются добровольными пожертвованиями.</p>
+                <p><strong>3.6</strong> Покупка платных групп не даёт привилегии на игнорирование/нарушение данных правил.</p>
+
+                <h3>4. Внутриигровое общение</h3>
+                <p><strong>4.1</strong> Запрещено флудить, отправлять больше 2-ух похожих по смыслу сообщений подряд <span class="penalty">[мут на 4 часа]</span></p>
+                <p><strong>4.2</strong> Запрещено флудить символами (более 10 символов) <span class="penalty">[мут на 4 часа]</span>. Злоупотребление капсом (более 50%) <span class="penalty">[мут на 4 часа]</span></p>
+                <p><strong>4.3</strong> Запрещено организовывать флуд опросами ("отправьте + в чат") <span class="penalty">[мут на 4 часа]</span></p>
+                <p><strong>4.4</strong> Неадекватное поведение, чрезмерные оскорбления и агрессия <span class="penalty">[мут на 12 часов]</span>. Оскорбления/угрозы <span class="penalty">[мут на 4 часа]</span>. Злоупотребление нецензурной лексикой <span class="penalty">[мут на 3 часа]</span>. Призывы к суициду <span class="penalty">[мут на 6 часов]</span></p>
+                <p><strong>4.5</strong> Оскорбление проекта <span class="penalty">[Бан на 30 дней]</span>. Публичная критика <span class="penalty">[мут на 3 дня]</span></p>
+                <p><strong>4.6</strong> Выпрашивание снятия/выдачи наказаний у Администрации <span class="penalty">[мут на 2 часа]</span>. Выпрашивание ресурсов у персонала <span class="penalty">[мут на 1 час]</span></p>
+                <p><strong>4.7</strong> Дезинформация игроков <span class="penalty">[мут на 12 часов / 4 дня]</span>. Внеигровой обман (Alt+F4) <span class="penalty">[мут на 6 часов]</span></p>
+                <p><strong>4.8</strong> Упоминание сторонних ресурсов <span class="penalty">[мут 1 день]</span>. Упоминание Discord/Telegram <span class="penalty">[бан на 2 дня]</span>. Реклама проектов <span class="penalty">[бан перманентно]</span>. Вредоносные ссылки <span class="penalty">[бан на 14 дней]</span></p>
+                <p><strong>4.9</strong> Оскорбление родителей <span class="penalty">[мут на 5 дней / 15 дней]</span></p>
+                <p><strong>4.10</strong> Затрагивание политики <span class="penalty">[бан на 3 дня / 7 дней]</span> или <span class="penalty">[мут на 2 дня]</span></p>
+                <p><strong>4.11</strong> Выдача себя за администрацию <span class="penalty">[бан на 3 дня]</span>. Угрозы баном <span class="penalty">[бан на 12 часов]</span></p>
+                <p><strong>4.12</strong> Оскорбление администрации <span class="penalty">[бан на 10 дней]</span>. Оскорбление родных админов <span class="penalty">[бан на 20 дней]</span>. Шутки в сторону админов <span class="penalty">[бан на 2 дня]</span></p>
+                <p><strong>4.13</strong> Оскорбление ютуберов <span class="penalty">[бан на 10 дней]</span>. Шутки в сторону ютуберов <span class="penalty">[бан на 2 дня]</span></p>
+                <p><strong>4.14</strong> Пропаганда нацизма/расизма/наркотиков <span class="penalty">[бан на 3 дня]</span>. Терроризма <span class="penalty">[бан на 7 дней]</span>. Оскорбление чувств верующих <span class="penalty">[бан на 3 дня]</span></p>
+                <p><strong>4.15</strong> Бартер между играми <span class="penalty">[бан на 4 дня]</span></p>
+                <p><strong>4.16</strong> Распространение личных данных (доксинг) <span class="penalty">[бан на 30 дней / Отключение аккаунта]</span></p>
+                <p><strong>4.17</strong> Провокация игроков на нарушение правил <span class="penalty">[бан на 2 дня / 4 дня]</span></p>
+                <p><strong>4.18</strong> Упоминание денежных операций с реальной валютой <span class="penalty">[мут на 2 дня]</span></p>
+                <p><strong>4.19</strong> Музыка в голосовой чат <span class="penalty">[мут на 6 часов]</span></p>
+                <p><strong>4.20</strong> Мошенничество, связанное с реальной жизнью <span class="penalty">[бан на 15 дней]</span></p>
+                <p><strong>4.21</strong> Проверка через удаленный доступ <span class="penalty">[бан на 20 дней]</span></p>
+
+                <h3>5. Запреты насчет использования ПО (Читы)</h3>
+                <p><strong>5.2</strong> Использование читерского ПО <span class="penalty">[бан на 50 дней]</span> + снос дома. Совместная игра с читером <span class="penalty">[бан на 47 дней]</span>. Признание на проверке <span class="penalty">[бан на 46 дней]</span>. Признание в чате <span class="penalty">[бан на 10 дней]</span>.</p>
+                <p><strong>5.2.4</strong> Обход блокировки <span class="penalty">[бан на 70 дней]</span></p>
+                <p><strong>5.2.6</strong> Auto-копатели/лесорубы <span class="penalty">[бан на 5 дней]</span></p>
+                <p><strong>5.2.7</strong> Боты/макросы <span class="penalty">[бан на 15 дней]</span></p>
+                <p><strong>5.3</strong> Запрещенные визуалы/клиенты <span class="penalty">[бан на 50 дней]</span></p>
+                <p><em>Разрешенные визуалы: ReallyVisuals, PulseVisuals, FlyVisuals.</em></p>
+                <p>Список запрещенных модов (ElytraSwap, ArmorHotSwap, Slippery Mod, StepUp, AFK-Fish, InvMove, Inventory Totem, TopkaAutoBuy, GoProne, CleanCut, Grass Bypass, TopkaCasino, Luminar, Enough Visuals, Plintus, FastExp и др.) караются баном от 5 до 50 дней в зависимости от тяжести.</p>
+
+                <h3>6. Игровой процесс</h3>
+                <p><strong>6.1.1</strong> Заливы и баги сервера <span class="penalty">[бан на 25 дней]</span></p>
+                <p><strong>6.1.1.2</strong> Багоюз <span class="penalty">[бан на 15 дней]</span></p>
+                <p><strong>6.1.2</strong> Лаг-машины <span class="penalty">[отключение аккаунта]</span></p>
+                <p><strong>6.1.3</strong> Ловушки без выхода <span class="penalty">[бан на 25 дней + снос]</span></p>
+                <p><strong>6.1.4</strong> Дюпы <span class="penalty">[отключение аккаунта]</span></p>
+                <p><strong>6.1.5</strong> Помеха работе персонала (фейк спек) <span class="penalty">[бан на 6 часов]</span></p>
+                <p><strong>6.2</strong> Флуд командами <span class="penalty">[кик, далее бан на 12 часов]</span></p>
+                <p><strong>6.3</strong> Некорректный текст на табличках <span class="penalty">[бан на 5 / 15 / 30 дней]</span></p>
+                <p><strong>6.5</strong> Реклама/продажа читов <span class="penalty">[перманентная блокировка]</span></p>
+                <p><strong>6.6</strong> Кланы с нарушением правил <span class="penalty">[удаление клана, бан создателя на 15 дней]</span></p>
+                <p><strong>6.7</strong> Помеха проверке <span class="penalty">[бан на 10 дней]</span></p>
+
+                <h3>7. Права модерации на проверке</h3>
+                <p><strong>7.1</strong> Проверка через Anydesk по регламенту. Только доступ к мыши и клавиатуре.</p>
+                <p><strong>7.2</strong> Проверка только через ПК. Скачивание программ самостоятельно (SystemInformer, Everything и др.).</p>
+                <p><strong>7.4</strong> Скачивание программ только с официальных сайтов.</p>
+
+                <h3>8. Правила для донатеров</h3>
+                <p><strong>8.1</strong> Использование /bc не по назначению <span class="penalty">[бан от 1 до 4 дней]</span></p>
+                <p><strong>8.2</strong> Кастомный префикс должен соответствовать правилам. Запрещены оскорбительные префиксы и имитация админских должностей. <span class="penalty">[Отказ в выдаче кастомного префикса без возврата рилликов]</span></p>
+                
+                <p style="margin-top: 30px; text-align: center; color: #64748b;">Соблюдайте правила, и игра будет в удовольствие! ❄️</p>
+            </div>
+        </div>
+    </div>
+
     <!-- СКРИПТЫ -->
     <script>
         // --- 1. УСИЛЕННЫЙ ГЕНЕРАТОР СНЕГА ---
@@ -672,12 +772,12 @@
             snowflake.innerHTML = '❄'; 
             snowflake.classList.add('snowflake');
             
-            const isBlurred = Math.random() > 0.6; // Больше размытых снежинок для глубины
+            const isBlurred = Math.random() > 0.6;
             
             snowflake.style.left = Math.random() * 100 + 'vw';
-            snowflake.style.animationDuration = Math.random() * 5 + 5 + 's'; // Медленнее падают
+            snowflake.style.animationDuration = Math.random() * 5 + 5 + 's';
             snowflake.style.opacity = Math.random() * 0.7 + 0.2;
-            snowflake.style.fontSize = Math.random() * 20 + 10 + 'px'; // Крупнее
+            snowflake.style.fontSize = Math.random() * 20 + 10 + 'px';
             
             if (isBlurred) {
                 snowflake.style.filter = 'blur(3px)';
@@ -688,10 +788,8 @@
             }
             
             snowContainer.appendChild(snowflake);
-            // Удаляем снежинку после падения (10 секунд)
             setTimeout(() => { snowflake.remove(); }, 10000);
         }
-        // Запускаем снег чаще (каждые 50 мс)
         setInterval(createSnow, 50);
 
 
@@ -719,7 +817,7 @@
         updateFeed();
 
 
-        // --- 3. ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК С АНИМАЦИЕЙ ---
+        // --- 3. ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ---
         function openTab(tabId, element) {
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => {
@@ -735,13 +833,33 @@
             activeTab.classList.add('active-tab');
             element.classList.add('active');
 
-            // Перезапуск анимации карточек при переключении вкладки
             const cards = activeTab.querySelectorAll('.card');
             cards.forEach(card => {
                 card.style.animation = 'none';
-                card.offsetHeight; /* trigger reflow */
+                card.offsetHeight;
                 card.style.animation = null; 
             });
+        }
+
+        // --- 4. УПРАВЛЕНИЕ МОДАЛЬНЫМ ОКНОМ ПРАВИЛ ---
+        function openRules() {
+            const modal = document.getElementById('rules-modal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Запрещаем скролл фона
+        }
+
+        function closeRules() {
+            const modal = document.getElementById('rules-modal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto'; // Возвращаем скролл
+        }
+
+        // Закрытие по клику вне окна
+        window.onclick = function(event) {
+            const modal = document.getElementById('rules-modal');
+            if (event.target == modal) {
+                closeRules();
+            }
         }
     </script>
 </body>
