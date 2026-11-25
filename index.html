@@ -1,640 +1,613 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f97316">
-    <title>ComfortWorld | Premium Store</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <style>
-        /* --- ПАЛИТРА --- */
-        :root {
-            --bg-body: #f0f4f8; /* Слегка голубоватый фон для зимнего вайба */
-            --bg-card: #ffffff;
-            --accent: #f97316; 
-            --accent-hover: #ea580c;
-            --accent-light: #ffedd5;
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
-            --border-color: #e5e7eb;
-            --success: #10b981;
-            --danger: #ef4444;
-            --dark-btn: #1f2937;
-            --discord: #5865F2;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ComfortWorld — Premium Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#090b10;
+  --panel:#11151e;
+  --panel2:#181e29;
+  --red:#e63240;
+  --red2:#ff5965;
+  --text:#f5f6fa;
+  --muted:#8992a3;
+  --border:#252c39;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Montserrat,sans-serif;
+  min-height:100vh;
+}
+button{font-family:inherit;cursor:pointer;border:0}
+a{text-decoration:none;color:inherit}
+.container{max-width:1450px;margin:auto;padding:0 35px}
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
-        
-        body {
-            background-color: var(--bg-body);
-            background-image: radial-gradient(circle at top, #ffffff 0%, var(--bg-body) 100%);
-            color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
+/* HEADER */
+header{
+  height:82px;
+  background:#0d1017;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+.header-inner{
+  max-width:1450px;
+  width:100%;
+  padding:0 35px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+.logo span{color:var(--red)}
+.logo small{
+  display:block;
+  font-size:9px;
+  color:var(--muted);
+  letter-spacing:3px;
+  margin-top:2px;
+}
+nav{display:flex;gap:34px;align-items:center}
+nav a{
+  font-size:13px;
+  color:#aeb5c3;
+  font-weight:700;
+  transition:.2s;
+}
+nav a:hover{color:white}
+.header-right{display:flex;align-items:center;gap:20px}
+.online{
+  color:var(--muted);
+  font-size:12px;
+}
+.online b{color:#42d69a}
+.cart-button{
+  background:var(--red);
+  color:white;
+  padding:13px 22px;
+  border-radius:8px;
+  font-weight:800;
+  font-size:13px;
+  transition:.2s;
+}
+.cart-button:hover{background:var(--red2);transform:translateY(-2px)}
 
-        a { text-decoration: none; color: inherit; }
-        button { font-family: inherit; cursor: pointer; border: none; outline: none; }
-        :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* HERO */
+.hero{
+  margin:35px auto 25px;
+  min-height:320px;
+  border:1px solid #54232c;
+  border-radius:17px;
+  overflow:hidden;
+  position:relative;
+  background:
+    radial-gradient(ellipse at 80% 50%,#71212d 0%,transparent 40%),
+    linear-gradient(110deg,#291016,#11151e 75%);
+  display:flex;
+  align-items:center;
+  padding:55px 65px;
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  right:8%;
+  top:-150px;
+  width:520px;
+  height:520px;
+  border:1px solid #ffffff12;
+  border-radius:50%;
+  box-shadow:0 0 0 45px #ffffff06,0 0 0 90px #ffffff04;
+}
+.hero-content{position:relative;z-index:2;max-width:650px}
+.hero-label{
+  color:#ff8790;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:18px;
+}
+.hero h1{
+  font-size:48px;
+  line-height:1.13;
+  font-weight:900;
+  margin-bottom:17px;
+}
+.hero h1 span{color:var(--red2)}
+.hero p{
+  color:#b7bdc9;
+  font-size:14px;
+  line-height:1.8;
+  max-width:540px;
+  margin-bottom:27px;
+}
+.hero-actions{display:flex;gap:12px}
+.primary-btn,.secondary-btn{
+  padding:15px 23px;
+  border-radius:7px;
+  font-weight:800;
+  font-size:12px;
+}
+.primary-btn{background:var(--red);color:white}
+.secondary-btn{
+  background:#ffffff0b;
+  border:1px solid #ffffff25;
+  color:white;
+}
+.primary-btn:hover{background:var(--red2)}
+.secondary-btn:hover{background:#ffffff18}
 
-        /* --- СНЕГ (3 СЛОЯ) --- */
-        #snow-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; overflow: hidden; }
-        .snowflake {
-            position: absolute; top: -10px; color: #fff; text-shadow: 0 0 5px rgba(0,0,0,0.1);
-            animation: fall linear forwards;
-        }
-        @keyframes fall {
-            to { transform: translate(30vw, 105vh) rotate(360deg); }
-        }
+/* INFO */
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-bottom:38px;
+}
+.info-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:19px 22px;
+  display:flex;
+  align-items:center;
+  gap:17px;
+}
+.info-icon{
+  width:45px;height:45px;
+  display:grid;place-items:center;
+  background:#e6324018;
+  border-radius:10px;
+  font-size:21px;
+}
+.info-card strong{font-size:14px;display:block;margin-bottom:5px}
+.info-card small{font-size:11px;color:var(--muted)}
 
-        /* --- СНЕГОВИКИ (SVG) --- */
-        .snowman-container {
-            position: absolute; z-index: 10; pointer-events: none;
-            animation: float 5s ease-in-out infinite;
-            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.15));
-        }
-        .snowman-container svg { width: 100%; height: 100%; }
-        .sm-1 { top: 15%; left: 2%; width: 80px; height: 120px; animation-delay: 0s; }
-        .sm-2 { top: 50%; right: 2%; width: 120px; height: 180px; animation-delay: 1.5s; }
-        .sm-3 { bottom: 5%; left: 8%; width: 60px; height: 90px; animation-delay: 2.5s; }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(-3deg); }
-            50% { transform: translateY(-25px) rotate(3deg); }
-        }
+/* SHOP */
+.shop-layout{
+  display:grid;
+  grid-template-columns:235px 1fr;
+  gap:25px;
+  padding-bottom:70px;
+}
+.sidebar{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:22px;
+  height:max-content;
+}
+.sidebar-title{
+  color:var(--muted);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:17px;
+}
+.side-btn{
+  display:flex;
+  width:100%;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  border-radius:8px;
+  color:#aab2c1;
+  background:transparent;
+  font-weight:700;
+  text-align:left;
+  font-size:12px;
+  margin-bottom:5px;
+}
+.side-btn:hover,.side-btn.active{
+  color:white;
+  background:#e632401b;
+}
+.side-btn.active{border-left:3px solid var(--red)}
+.side-bottom{
+  margin-top:25px;
+  border-top:1px solid var(--border);
+  padding-top:20px;
+}
+.side-bottom p{
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.8;
+  margin-bottom:13px;
+}
+.discord{
+  background:#5865f2;
+  color:white;
+  width:100%;
+  padding:12px;
+  border-radius:7px;
+  font-weight:800;
+  font-size:11px;
+}
 
-        /* --- ШАПКА --- */
-        header {
-            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
-        .header-content { max-width: 1300px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-        .logo { font-weight: 900; font-size: 20px; display: flex; align-items: center; gap: 8px; }
-        .logo img { height: 30px; border-radius: 6px; }
-        .logo span { color: var(--accent); }
-        
-        .nav-links { display: flex; gap: 24px; font-weight: 600; font-size: 14px; color: var(--text-muted); }
-        .nav-links a, .nav-links button { transition: color 0.2s; background: none; border: none; font-size: 14px; font-weight: 600; color: var(--text-muted); }
-        .nav-links a:hover, .nav-links button:hover { color: var(--accent); }
+/* CONTENT */
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:22px;
+}
+.section-head h2{font-size:25px;font-weight:900}
+.section-head p{color:var(--muted);font-size:11px;margin-top:7px}
+.search{
+  background:var(--panel);
+  border:1px solid var(--border);
+  color:white;
+  padding:13px 16px;
+  border-radius:8px;
+  width:230px;
+  outline:none;
+  font-family:inherit;
+  font-size:12px;
+}
+.search:focus{border-color:var(--red)}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:17px;
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  transition:.25s;
+  position:relative;
+  overflow:hidden;
+}
+.card:hover{
+  transform:translateY(-5px);
+  border-color:#a83440;
+  box-shadow:0 12px 35px #0008;
+}
+.rank-art{
+  height:145px;
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+}
+.rank-art:before{
+  content:"";
+  position:absolute;
+  width:190px;height:190px;
+  border:1px solid #ffffff22;
+  border-radius:50%;
+  box-shadow:0 0 0 25px #ffffff09,0 0 0 50px #ffffff06;
+}
+.rank-icon{
+  font-size:43px;
+  z-index:1;
+  filter:drop-shadow(0 5px 10px #0008);
+}
+.rank-name{
+  z-index:1;
+  font-size:17px;
+  font-weight:900;
+  margin-top:9px;
+  letter-spacing:2px;
+  text-shadow:0 3px 8px #0009;
+}
+.tag{
+  position:absolute;
+  top:24px;left:24px;
+  z-index:3;
+  background:var(--red);
+  color:white;
+  border-radius:4px;
+  font-size:9px;
+  font-weight:900;
+  padding:6px 9px;
+}
+.tag.hit{background:#159d72}
+.card-info{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 2px 13px;
+}
+.card-info span{font-size:10px;color:var(--muted)}
+.price{font-size:19px;font-weight:900}
+.old-price{
+  font-size:10px;
+  color:#737c8b;
+  text-decoration:line-through;
+  margin-left:5px;
+}
+.buy{
+  width:100%;
+  padding:12px;
+  background:#252c39;
+  color:white;
+  border-radius:7px;
+  font-weight:800;
+  font-size:11px;
+  transition:.2s;
+}
+.buy:hover{background:var(--red)}
+.empty{
+  color:var(--muted);
+  font-size:13px;
+  padding:40px;
+  text-align:center;
+  grid-column:1/-1;
+}
 
-        .header-right { display: flex; gap: 20px; align-items: center; }
-        .online-widget { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-muted); text-align: right; }
-        .online-text span { color: var(--text-main); }
-        .online-bar-bg { width: 120px; height: 6px; background: #e5e7eb; border-radius: 10px; overflow: hidden; }
-        .online-bar-fill { height: 100%; width: 84%; background: var(--accent); border-radius: 10px; animation: pulse-bar 3s infinite alternate; }
-        @keyframes pulse-bar { from { opacity: 1; } to { opacity: 0.7; } }
+/* FOOTER */
+footer{
+  background:#0d1017;
+  border-top:1px solid var(--border);
+  padding:35px 0;
+}
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+footer p{font-size:11px;color:var(--muted);line-height:1.8}
+.footer-logo{font-weight:900;font-size:19px}
+.footer-logo span{color:var(--red)}
 
-        .shop-btn-header {
-            background: var(--accent); color: #fff; padding: 10px 20px; border-radius: 8px;
-            font-weight: 700; font-size: 14px; transition: 0.2s; display: flex; align-items: center; gap: 8px;
-        }
-        .shop-btn-header:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); }
+/* TOAST */
+.toast{
+  position:fixed;
+  right:30px;
+  bottom:30px;
+  z-index:50;
+  background:#19212c;
+  border:1px solid #354052;
+  color:white;
+  padding:16px 22px;
+  border-radius:9px;
+  font-size:12px;
+  font-weight:700;
+  box-shadow:0 10px 40px #0009;
+  animation:appear .25s ease;
+}
+@keyframes appear{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
 
-        /* --- БАННЕР (HERO) --- */
-        .hero {
-            max-width: 1300px; margin: 24px auto; background: var(--accent);
-            border-radius: 20px; padding: 60px; display: flex; justify-content: space-between; align-items: center;
-            position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(249, 115, 22, 0.15);
-        }
-        .hero::before {
-            content: ''; position: absolute; inset: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1px);
-            background-size: 20px 20px; opacity: 0.5; pointer-events: none;
-        }
-        .hero-text { position: relative; z-index: 2; max-width: 600px; }
-        .hero-text h1 { font-size: 42px; font-weight: 900; margin-bottom: 16px; line-height: 1.1; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .hero-text p { font-size: 16px; color: rgba(255,255,255,0.9); margin-bottom: 32px; line-height: 1.5; font-weight: 500; }
-        
-        .ip-btn {
-            background: var(--dark-btn); color: #fff; padding: 12px 24px; border-radius: 30px;
-            font-weight: 700; font-size: 16px; transition: 0.2s; display: inline-flex; align-items: center; gap: 12px;
-            cursor: pointer; border: 2px solid transparent; animation: pulse-glow 2s infinite;
-        }
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 0 0 rgba(31, 41, 55, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(31, 41, 55, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(31, 41, 55, 0); }
-        }
-        .ip-btn:hover { transform: translateY(-2px) scale(1.02); background: #111827; animation: none; }
-        .ip-btn .icon-circle { background: #fff; color: var(--dark-btn); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-        
-        .hero-image { 
-            position: relative; z-index: 2; width: 300px; height: 300px; 
-            background: url('https://mc-heads.net/body/Notch/right') no-repeat center bottom; background-size: contain; 
-            animation: float 4s ease-in-out infinite;
-        }
-
-        /* --- ПРОМО БАННЕР --- */
-        .promo-banner {
-            max-width: 1300px; margin: 0 auto 24px; background: #fff; border: 1px solid var(--border-color);
-            border-radius: 12px; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        }
-        .promo-text { font-weight: 700; font-size: 16px; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
-        .promo-code { background: var(--accent-light); color: var(--accent); padding: 4px 10px; border-radius: 6px; font-family: monospace; font-size: 18px; }
-
-        /* --- ОСНОВНОЙ КОНТЕНТ --- */
-        .main-container { max-width: 1300px; margin: 0 auto 40px; display: flex; gap: 30px; padding: 0 24px; position: relative; z-index: 10; }
-
-        /* Сайдбар */
-        .sidebar { width: 260px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; }
-        .sidebar-menu { display: flex; flex-direction: column; gap: 8px; }
-        .sidebar-menu button {
-            padding: 14px 20px; border-radius: 12px; font-weight: 700; font-size: 15px; color: var(--text-muted);
-            display: flex; align-items: center; gap: 12px; transition: 0.2s; background: var(--bg-card); text-align: left;
-            border: 1px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
-        .sidebar-menu button:hover { background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transform: translateX(5px); }
-        .sidebar-menu button.active { background: var(--accent-light); color: var(--accent); border-color: rgba(249, 115, 22, 0.2); }
-        
-        /* Discord Card */
-        .discord-card {
-            background: var(--bg-card); border-radius: 16px; padding: 20px; text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--border-color);
-        }
-        .discord-card h4 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
-        .discord-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4; }
-        .discord-btn {
-            background: var(--discord); color: #fff; padding: 10px; border-radius: 8px; width: 100%;
-            font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s;
-        }
-        .discord-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4); }
-
-        /* Контент */
-        .content { flex-grow: 1; min-width: 0; }
-        h2.section-title { font-size: 32px; font-weight: 900; margin-bottom: 24px; color: var(--text-main); }
-
-        /* Лента */
-        .recent-purchases {
-            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; 
-            padding: 12px 20px; margin-bottom: 24px; font-size: 13px; color: var(--text-muted); 
-            display: flex; gap: 10px; overflow: hidden; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-        }
-        .recent-purchases b { color: var(--text-main); }
-        .recent-purchases .item { color: var(--accent); font-weight: 700; }
-
-        /* Сетка карточек */
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
-        
-        .card {
-            background: var(--bg-card); border-radius: 16px; padding: 16px;
-            display: flex; flex-direction: column; position: relative; transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid transparent;
-            animation: cardAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
-        }
-        @keyframes cardAppear { from { opacity: 0; transform: translateY(30px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        
-        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: var(--border-color); }
-        
-        /* Блик на карточке */
-        .card::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg); transition: 0.5s; pointer-events: none;
-        }
-        .card:hover::after { left: 200%; }
-
-        .sale-badge {
-            position: absolute; top: 12px; left: 12px; background: var(--danger); color: #fff;
-            font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; z-index: 2;
-            text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(239, 68, 68, 0.4);
-        }
-        .hit-badge { background: var(--success); box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4); }
-
-        .card-rank-badge {
-            width: 100%; height: 110px; border-radius: 12px; margin-bottom: 16px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.3); position: relative; overflow: hidden;
-        }
-        .card-rank-badge::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%); }
-        .card-rank-icon { font-size: 30px; margin-bottom: 4px; z-index: 1; }
-        .card-rank-text { font-weight: 900; font-size: 16px; letter-spacing: 1px; z-index: 1; text-transform: uppercase; }
-        
-        .price-box { margin-bottom: 16px; margin-top: auto; display: flex; align-items: baseline; gap: 8px; }
-        .current-price { font-size: 20px; font-weight: 800; color: var(--text-main); }
-        .old-price { font-size: 14px; color: var(--text-muted); text-decoration: line-through; font-weight: 600; }
-        
-        .buy-btn { 
-            background: var(--accent); color: #fff; border: none; padding: 12px; border-radius: 10px; 
-            font-weight: 800; font-size: 15px; cursor: pointer; width: 100%; transition: 0.2s; 
-            display: flex; justify-content: center; align-items: center; gap: 8px; position: relative; z-index: 2;
-        }
-        .buy-btn:hover { background: var(--accent-hover); transform: scale(1.02); box-shadow: 0 6px 15px rgba(249, 115, 22, 0.3); }
-
-        /* --- ПОДВАЛ (FOOTER) --- */
-        footer {
-            background: #fff; border-top: 1px solid var(--border-color); padding: 40px 24px; margin-top: auto; position: relative; z-index: 10;
-        }
-        .footer-content {
-            max-width: 1300px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;
-        }
-        .footer-col h3 { font-size: 16px; font-weight: 800; margin-bottom: 16px; color: var(--text-main); }
-        .footer-col a { display: block; color: var(--text-muted); font-size: 14px; margin-bottom: 10px; font-weight: 500; transition: 0.2s; }
-        .footer-col a:hover { color: var(--accent); transform: translateX(3px); }
-        .footer-bottom { max-width: 1300px; margin: 30px auto 0; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center; font-size: 13px; color: var(--text-muted); }
-
-        /* --- МОДАЛЬНЫЕ ОКНА И ТОСТЫ --- */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); z-index: 2000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.2s; }
-        .modal-overlay.show { display: flex; opacity: 1; }
-        .modal-content { background: var(--bg-card); border-radius: 16px; width: 90%; max-width: 600px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 40px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.3s; }
-        .modal-overlay.show .modal-content { transform: translateY(0); }
-        .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h2 { color: var(--text-main); font-size: 20px; font-weight: 800; }
-        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; transition: 0.2s; }
-        .close-btn:hover { color: var(--danger); }
-        .modal-body { padding: 24px; overflow-y: auto; font-size: 15px; line-height: 1.6; color: var(--text-muted); }
-        .modal-body p { margin-bottom: 12px; }
-        .penalty { color: var(--danger); font-weight: 700; }
-
-        .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 3000; display: flex; flex-direction: column; gap: 10px; }
-        .toast { background: var(--dark-btn); color: #fff; padding: 14px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideIn 0.3s ease-out; display: flex; align-items: center; gap: 10px; }
-        .toast.success { border-left: 4px solid var(--success); }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
-
-        @media (max-width: 992px) {
-            .main-container { flex-direction: column; }
-            .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
-            .sidebar-menu { flex: 1; flex-direction: row; }
-            .sidebar-menu button { flex: 1; justify-content: center; }
-            .discord-card { display: none; }
-            .hero { padding: 40px 20px; flex-direction: column; text-align: center; gap: 30px; }
-            .hero-text h1 { font-size: 32px; }
-            .hero-image { display: none; }
-            .cards-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-            .card-rank-badge { height: 90px; }
-            .promo-banner { flex-direction: column; text-align: center; gap: 10px; }
-        }
-    </style>
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hero h1{font-size:39px}
+}
+@media(max-width:800px){
+  .container{padding:0 16px}
+  .header-inner{padding:0 16px}
+  nav{display:none}
+  .online{display:none}
+  .hero{padding:35px 25px;min-height:280px}
+  .hero h1{font-size:32px}
+  .info-grid{grid-template-columns:1fr}
+  .shop-layout{grid-template-columns:1fr}
+  .sidebar{display:flex;gap:7px;overflow:auto;padding:10px}
+  .sidebar-title,.side-bottom{display:none}
+  .side-btn{white-space:nowrap;width:auto;margin:0}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .rank-art{height:115px}
+  .rank-name{font-size:13px}
+  .search{width:145px}
+  .section-head h2{font-size:19px}
+  .footer-inner{gap:15px;flex-direction:column;text-align:center}
+}
+@media(max-width:390px){
+  .cards{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
-    <!-- Снег -->
-    <div id="snow-container"></div>
-
-    <!-- Снеговики (SVG) -->
-    <div class="snowman-container sm-1">
-        <svg viewBox="0 0 100 150">
-            <circle cx="50" cy="120" r="30" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
-            <circle cx="50" cy="75" r="22" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
-            <circle cx="50" cy="35" r="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
-            <circle cx="43" cy="32" r="2.5" fill="#1f2937"/><circle cx="57" cy="32" r="2.5" fill="#1f2937"/>
-            <polygon points="50,38 65,40 50,42" fill="#f97316"/>
-            <rect x="35" y="5" width="30" height="15" fill="#1f2937"/><rect x="30" y="18" width="40" height="4" fill="#1f2937" rx="2"/>
-            <path d="M 30 50 Q 50 60 70 50 L 70 55 Q 50 65 30 55 Z" fill="#dc2626"/><rect x="60" y="50" width="8" height="20" fill="#dc2626" rx="2"/>
-            <circle cx="50" cy="70" r="2.5" fill="#1f2937"/><circle cx="50" cy="82" r="2.5" fill="#1f2937"/>
-            <line x1="25" y1="70" x2="5" y2="55" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
-            <line x1="75" y1="70" x2="95" y2="55" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
-        </svg>
+<header>
+  <div class="header-inner">
+    <div class="logo">COMFORT<span>WORLD</span><small>PREMIUM PROJECT</small></div>
+    <nav>
+      <a href="#home">ГЛАВНАЯ</a>
+      <a href="#shop">МАГАЗИН</a>
+      <a href="#about">О ПРОЕКТЕ</a>
+      <a href="#rules" onclick="showToast('Правила скоро будут добавлены')">ПРАВИЛА</a>
+    </nav>
+    <div class="header-right">
+      <div class="online">● <b>Сервер онлайн</b></div>
+      <button class="cart-button" onclick="showToast('Корзина пока демонстрационная')">🛒 КОРЗИНА <span id="cartCount">0</span></button>
     </div>
-    <div class="snowman-container sm-2">
-        <svg viewBox="0 0 100 150">
-            <circle cx="50" cy="120" r="30" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
-            <circle cx="50" cy="75" r="22" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
-            <circle cx="50" cy="35" r="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
-            <circle cx="43" cy="32" r="2.5" fill="#1f2937"/><circle cx="57" cy="32" r="2.5" fill="#1f2937"/>
-            <polygon points="50,38 65,40 50,42" fill="#f97316"/>
-            <rect x="35" y="5" width="30" height="15" fill="#1f2937"/><rect x="30" y="18" width="40" height="4" fill="#1f2937" rx="2"/>
-            <path d="M 30 50 Q 50 60 70 50 L 70 55 Q 50 65 30 55 Z" fill="#10b981"/><rect x="60" y="50" width="8" height="20" fill="#10b981" rx="2"/>
-            <circle cx="50" cy="70" r="2.5" fill="#1f2937"/><circle cx="50" cy="82" r="2.5" fill="#1f2937"/>
-            <line x1="25" y1="70" x2="5" y2="55" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
-            <line x1="75" y1="70" x2="95" y2="55" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
-        </svg>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-label">WELCOME TO COMFORTWORLD</div>
+      <h1>ТВОЙ МИР.<br><span>ТВОИ ПРАВИЛА.</span></h1>
+      <p>Открой для себя новый уровень Minecraft. Получай привилегии, развивайся, играй с друзьями и создавай собственную историю!</p>
+      <div class="hero-actions">
+        <button class="primary-btn" onclick="copyIP()">⛏ СКОПИРОВАТЬ IP</button>
+        <a href="#shop" class="secondary-btn">ОТКРЫТЬ МАГАЗИН →</a>
+      </div>
     </div>
-    <div class="snowman-container sm-3">
-        <svg viewBox="0 0 100 150">
-            <circle cx="50" cy="120" r="30" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
-            <circle cx="50" cy="75" r="22" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
-            <circle cx="50" cy="35" r="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
-            <circle cx="43" cy="32" r="2.5" fill="#1f2937"/><circle cx="57" cy="32" r="2.5" fill="#1f2937"/>
-            <polygon points="50,38 65,40 50,42" fill="#f97316"/>
-            <rect x="35" y="5" width="30" height="15" fill="#1f2937"/><rect x="30" y="18" width="40" height="4" fill="#1f2937" rx="2"/>
-            <path d="M 30 50 Q 50 60 70 50 L 70 55 Q 50 65 30 55 Z" fill="#3b82f6"/><rect x="60" y="50" width="8" height="20" fill="#3b82f6" rx="2"/>
-            <circle cx="50" cy="70" r="2.5" fill="#1f2937"/><circle cx="50" cy="82" r="2.5" fill="#1f2937"/>
-            <line x1="25" y1="70" x2="5" y2="55" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
-            <line x1="75" y1="70" x2="95" y2="55" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
-        </svg>
+  </section>
+
+  <section class="info-grid" id="about">
+    <div class="info-card">
+      <div class="info-icon">⚔️</div>
+      <div><strong>Уникальный сервер</strong><small>Новые возможности и приключения</small></div>
     </div>
-
-    <header>
-        <div class="header-content">
-            <div class="logo">
-                <img src="https://mc-heads.net/avatar/Notch/30" alt="logo">
-                Comfort<span>World</span>
-            </div>
-            <nav class="nav-links">
-                <a href="#" onclick="window.scrollTo(0,0)">Главная</a>
-                <a href="#">Описание</a>
-                <button onclick="openRules()">Правила</button>
-                <a href="#">Форум</a>
-            </nav>
-            <div class="header-right">
-                <div class="online-widget">
-                    <div class="online-text">Онлайн: <span>6318 / 7500</span></div>
-                    <div class="online-bar-bg"><div class="online-bar-fill"></div></div>
-                </div>
-                <button class="shop-btn-header" onclick="showToast('Вы уже в магазине!', 'success')">
-                    🛒 Магазин
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <section class="hero">
-        <div class="hero-text">
-            <h1>ComfortWorld — Начало<br>новой эры</h1>
-            <p>Открой для себя огромные миры, полные веселья и миллионов друзей!</p>
-            <button class="ip-btn" onclick="copyIp()">
-                <div class="icon-circle">⛏️</div>
-                Играть сейчас<br>
-                <span style="font-size: 13px; font-weight: 500; opacity: 0.8;">comfortworld.gigacube.host</span>
-            </button>
-        </div>
-        <div class="hero-image"></div>
-    </section>
-
-    <div class="promo-banner">
-        <div class="promo-text">🎄 Новогодняя распродажа! Скидки до 50% на все привилегии.</div>
-        <div class="promo-text">Промокод: <span class="promo-code">WINTER2026</span></div>
+    <div class="info-card">
+      <div class="info-icon">👑</div>
+      <div><strong>Привилегии</strong><small>Выбирай свой уровень</small></div>
     </div>
-
-    <main class="main-container">
-        <aside class="sidebar">
-            <div class="sidebar-menu">
-                <button onclick="openTab('privileges', this)" class="active">👑 Привилегии</button>
-                <button onclick="openTab('cases', this)">🎁 Сундуки</button>
-                <button onclick="openTab('services', this)">💎 Услуги</button>
-            </div>
-            <div class="discord-card">
-                <h4>Наше комьюнити</h4>
-                <p>Заходи в Discord, общайся с игроками и получай бонусы!</p>
-                <button class="discord-btn" onclick="showToast('Discord скоро появится!', 'info')">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05 0 .07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z"/></svg>
-                    Войти
-                </button>
-            </div>
-        </aside>
-
-        <div class="content">
-            <div class="recent-purchases" id="recent-feed">
-                Недавно купили: <b>Загрузка...</b>
-            </div>
-
-            <!-- ПРИВИЛЕГИИ -->
-            <div id="privileges" class="tab-content" style="display: block;">
-                <h2 class="section-title">Магазин доната</h2>
-                <div class="cards-grid" id="privileges-grid"></div>
-            </div>
-
-            <!-- СУНДУКИ -->
-            <div id="cases" class="tab-content" style="display: none;">
-                <h2 class="section-title">Сундуки</h2>
-                <div class="cards-grid">
-                    <div class="card" style="animation-delay: 0.1s;">
-                        <div class="card-rank-badge" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
-                            <div class="card-rank-icon">🎁</div>
-                            <div class="card-rank-text">СУПЕР ДОНАТ</div>
-                        </div>
-                        <div class="price-box"><div class="current-price">99 ₽</div></div>
-                        <button class="buy-btn" onclick="showToast('Кейс добавлен в корзину!', 'success')">Купить</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- УСЛУГИ -->
-            <div id="services" class="tab-content" style="display: none;">
-                <h2 class="section-title">Услуги</h2>
-                <div class="cards-grid">
-                    <div class="card" style="animation-delay: 0.1s;">
-                        <div class="card-rank-badge" style="background: linear-gradient(135deg, #6b7280, #374151);">
-                            <div class="card-rank-icon">🔓</div>
-                            <div class="card-rank-text">РАЗБАН</div>
-                        </div>
-                        <div class="price-box"><div class="current-price">199 ₽</div></div>
-                        <button class="buy-btn" onclick="showToast('Разбан добавлен в корзину!', 'success')">Купить</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- ПОДВАЛ -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-col">
-                <div class="logo">Comfort<span>World</span></div>
-                <p style="color:var(--text-muted); font-size:14px; margin-top:12px; max-width:250px; line-height:1.5;">Лучший проект с уникальными механиками и дружелюбным сообществом.</p>
-            </div>
-            <div class="footer-col">
-                <h3>Разделы</h3>
-                <a href="#">Главная</a>
-                <a href="#">Правила</a>
-                <a href="#">Форум</a>
-            </div>
-            <div class="footer-col">
-                <h3>Помощь</h3>
-                <a href="#">Поддержка</a>
-                <a href="#">Вопросы и ответы</a>
-                <a href="#">Гарантии</a>
-            </div>
-            <div class="footer-col">
-                <h3>Соцсети</h3>
-                <a href="#">Discord</a>
-                <a href="#">Telegram</a>
-                <a href="#">ВКонтакте</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2026 ComfortWorld. Все права защищены. Мы не связаны с Mojang AB.
-        </div>
-    </footer>
-
-    <!-- МОДАЛКА ПРАВИЛА -->
-    <div class="modal-overlay" id="rules-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>📜 Правила</h2>
-                <button class="close-btn" onclick="closeRules()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p><strong>1.4</strong> Решения администрации не обсуждаются.</p>
-                <p><strong>4.5</strong> Оскорбление проекта. <span class="penalty">[Бан на 30 дней]</span></p>
-                <p><strong>5.2</strong> Использование читов. <span class="penalty">[Бан на 50 дней]</span></p>
-            </div>
-        </div>
+    <div class="info-card">
+      <div class="info-icon">🛡️</div>
+      <div><strong>Поддержка</strong><small>Помощь игрокам проекта</small></div>
     </div>
+  </section>
 
-    <div class="toast-container" id="toast-container"></div>
+  <section class="shop-layout" id="shop">
+    <aside class="sidebar">
+      <div style="width:100%">
+        <div class="sidebar-title">КАТЕГОРИИ МАГАЗИНА</div>
+        <button class="side-btn active" onclick="switchTab('ranks',this)">👑 Привилегии</button>
+        <button class="side-btn" onclick="switchTab('cases',this)">🎁 Сундуки</button>
+        <button class="side-btn" onclick="switchTab('services',this)">💎 Услуги</button>
+      </div>
+      <div class="side-bottom">
+        <div class="sidebar-title">НАШЕ СООБЩЕСТВО</div>
+        <p>Присоединяйся к игрокам ComfortWorld и следи за новостями проекта.</p>
+        <button class="discord" onclick="showToast('Ссылка на Discord ещё не добавлена')">DISCORD</button>
+      </div>
+    </aside>
 
-    <script>
-        /* ================== ДАННЫЕ ================== */
-        const privileges = [
-            { name: 'VAMPIRE',   price: 29,  color1: '#991b1b', color2: '#7f1d1d', icon: '🩸', sale: false },
-            { name: 'GOD',       price: 49,  color1: '#eab308', color2: '#ca8a04', icon: '👑', sale: true  },
-            { name: 'DIABLO',    price: 59,  color1: '#b91c1c', color2: '#7f1d1d', icon: '👹', sale: true  },
-            { name: 'PEGAS',     price: 79,  color1: '#f97316', color2: '#c2410c', icon: '🦄', sale: false },
-            { name: 'RABBIT',    price: 99,  color1: '#9ca3af', color2: '#6b7280', icon: '🐰', sale: false },
-            { name: 'D.HELPER',  price: 129, color1: '#65a30d', color2: '#4d7c0f', icon: '🔨', sale: false },
-            { name: 'RAIN',      price: 159, color1: '#0284c7', color2: '#0369a1', icon: '💧', sale: false },
-            { name: 'SUMMER',    price: 199, color1: '#facc15', color2: '#eab308', icon: '☀️', sale: false },
-            { name: 'GRAPE',     price: 229, color1: '#9333ea', color2: '#7e22ce', icon: '🍇', sale: false },
-            { name: 'ANGEL',     price: 279, color1: '#c084fc', color2: '#a855f7', icon: '😇', sale: false },
-            { name: 'AURORA',    price: 319, color1: '#06b6d4', color2: '#0891b2', icon: '🌌', sale: false },
-            { name: 'PRIME',     price: 379, color1: '#ea580c', color2: '#c2410c', icon: '🔥', sale: false },
-            { name: 'ENIGMA',    price: 419, color1: '#db2777', color2: '#be185d', icon: '🧩', sale: true, hit: true },
-            { name: 'D.MODER',   price: 479, color1: '#2563eb', color2: '#1d4ed8', icon: '🛡️', sale: false },
-            { name: 'D.ST.MODER',price: 539, color1: '#78716c', color2: '#57534e', icon: '⚔️', sale: false },
-            { name: 'D.GL.MODER',price: 579, color1: '#78350f', color2: '#451a03', icon: '🗡️', sale: false },
-            { name: 'D.OWNER',   price: 699, color1: '#dc2626', color2: '#b91c1c', icon: '💎', sale: true, hit: true }
-        ];
+    <div>
+      <div class="section-head">
+        <div>
+          <h2 id="sectionTitle">Привилегии</h2>
+          <p id="sectionDesc">Выбери подходящую привилегию для своего аккаунта</p>
+        </div>
+        <input class="search" id="search" placeholder="⌕  Поиск..." oninput="render()">
+      </div>
+      <div class="cards" id="cards"></div>
+    </div>
+  </section>
+</main>
 
-        /* ================== РЕНДЕР ================== */
-        function renderPrivileges() {
-            const grid = document.getElementById('privileges-grid');
-            grid.innerHTML = '';
+<footer>
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-logo">COMFORT<span>WORLD</span></div>
+      <p>© 2026 ComfortWorld. Все права защищены.<br>Неофициальный Minecraft-проект.</p>
+    </div>
+    <p>МАГАЗИН · ПОДДЕРЖКА · ПРАВИЛА</p>
+  </div>
+</footer>
 
-            privileges.forEach((rank, index) => {
-                const oldPrice = Math.round(rank.price * 1.8); 
-                let badgesHTML = '';
-                if (rank.hit) badgesHTML += `<div class="sale-badge hit-badge">ХИТ</div>`;
-                else if (rank.sale) badgesHTML += `<div class="sale-badge">Скидка</div>`;
+<script>
+const IP = "comfortworld.gigacube.host";
 
-                const priceHTML = rank.sale 
-                    ? `<div class="current-price" style="color:var(--accent)">${rank.price} ₽</div><div class="old-price">${oldPrice} ₽</div>`
-                    : `<div class="current-price">${rank.price} ₽</div>`;
+const ranks = [
+  ["VAMPIRE",29,"🩸","#991b1b","#4c1018"],
+  ["GOD",49,"👑","#d6a51c","#76500b",1],
+  ["DIABLO",59,"👹","#bd3030","#5c1010",1],
+  ["PEGAS",79,"🦄","#e87936","#873d1a"],
+  ["RABBIT",99,"🐰","#9ca3af","#454b57"],
+  ["D.HELPER",129,"🔨","#65a30d","#294b08"],
+  ["RAIN",159,"💧","#0284c7","#063e67"],
+  ["SUMMER",199,"☀️","#eab308","#82500a"],
+  ["GRAPE",229,"🍇","#9333ea","#45116f"],
+  ["ANGEL",279,"😇","#c084fc","#63358a"],
+  ["AURORA",319,"🌌","#06b6d4","#07536d"],
+  ["PRIME",379,"🔥","#ea580c","#74220a"],
+  ["ENIGMA",419,"🧩","#db2777","#721044",1,1],
+  ["D.MODER",479,"🛡️","#2563eb","#102e78"],
+  ["D.ST.MODER",539,"⚔️","#78716c","#302d2a"],
+  ["D.GL.MODER",579,"🗡️","#78350f","#351b08"],
+  ["D.OWNER",699,"💎","#dc2626","#650d16",1,1]
+];
 
-                const card = document.createElement('div');
-                card.className = 'card';
-                // Задержка анимации для эффекта "каскада"
-                card.style.animationDelay = `${index * 0.04}s`; 
-                card.innerHTML = `
-                    ${badgesHTML}
-                    <div class="card-rank-badge" style="background: linear-gradient(135deg, ${rank.color1}, ${rank.color2});">
-                        <div class="card-rank-icon">${rank.icon}</div>
-                        <div class="card-rank-text">${rank.name}</div>
-                    </div>
-                    <div class="price-box">${priceHTML}</div>
-                    <button class="buy-btn" onclick="showToast('Привилегия ${rank.name} добавлена в корзину!', 'success')">Купить</button>
-                `;
-                grid.appendChild(card);
-            });
-        }
+const products = {
+  ranks:ranks.map(r=>({name:r[0],price:r[1],icon:r[2],c1:r[3],c2:r[4],sale:r[5],hit:r[6]})),
+  cases:[{name:"СУПЕР КЕЙС",price:99,icon:"🎁",c1:"#f59e0b",c2:"#713f12"}],
+  services:[{name:"РАЗБАН",price:199,icon:"🔓",c1:"#64748b",c2:"#1e293b"}]
+};
 
-        /* ================== ЗВУКИ ================== */
-        let audioCtx;
-        function playSound() {
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                const osc = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.05);
-                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-                osc.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.05);
-            } catch (e) {}
-        }
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('button, a, .ip-btn')) playSound();
-        });
+let currentTab="ranks";
+let cart=0;
 
-        /* ================== ТОСТЫ ================== */
-        function showToast(msg, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = type === 'success' ? `✅ ${msg}` : `ℹ️ ${msg}`;
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
+function render(){
+  const grid=document.getElementById("cards");
+  const query=document.getElementById("search").value.toLowerCase();
+  const list=products[currentTab].filter(p=>p.name.toLowerCase().includes(query));
+  grid.innerHTML="";
 
-        /* ================== СНЕГ ================== */
-        function createSnow() {
-            const container = document.getElementById('snow-container');
-            const snowflake = document.createElement('div');
-            snowflake.className = 'snowflake';
-            
-            // Разные символы для снежинок
-            const chars = ['❅', '❆', '❄', '•'];
-            snowflake.innerHTML = chars[Math.floor(Math.random() * chars.length)];
-            
-            const startLeft = Math.random() * 100;
-            const duration = Math.random() * 4 + 3; // 3-7 секунд
-            const size = Math.random() * 20 + 10; // 10-30px
-            const opacity = Math.random() * 0.6 + 0.2;
-            const blur = Math.random() > 0.7 ? 'blur(2px)' : 'none'; // Размытие для глубины
-            
-            snowflake.style.left = `${startLeft}vw`;
-            snowflake.style.animationDuration = `${duration}s`;
-            snowflake.style.fontSize = `${size}px`;
-            snowflake.style.opacity = opacity;
-            snowflake.style.filter = blur;
-            
-            // Разный цвет для фона
-            snowflake.style.color = Math.random() > 0.5 ? '#ffffff' : '#e2e8f0';
-            
-            container.appendChild(snowflake);
-            setTimeout(() => snowflake.remove(), duration * 1000);
-        }
-        setInterval(createSnow, 80); // Снег валит чаще!
+  if(!list.length){
+    grid.innerHTML='<div class="empty">Ничего не найдено</div>';
+    return;
+  }
 
-        /* ================== ЛЕНТА ================== */
-        const buyers = ['xX_Pro_Xx', 'Steve', 'Alex', 'NoobMaster', 'DragonSlayer', 'Ded_Mazay'];
-        function updateFeed() {
-            const feed = document.getElementById('recent-feed');
-            const buyer = buyers[Math.floor(Math.random() * buyers.length)];
-            const rank = privileges[Math.floor(Math.random() * privileges.length)];
-            feed.innerHTML = `Недавно купили: <b>${buyer}</b> — <span class="item">${rank.name}</span>`;
-        }
-        updateFeed();
-        setInterval(updateFeed, 5000);
+  list.forEach(p=>{
+    const card=document.createElement("article");
+    card.className="card";
+    const tag=p.hit?'<div class="tag hit">ХИТ ПРОДАЖ</div>':p.sale?'<div class="tag">СКИДКА</div>':"";
+    card.innerHTML=`
+      ${tag}
+      <div class="rank-art" style="background:radial-gradient(circle at 50% 20%,${p.c1},${p.c2})">
+        <div class="rank-icon">${p.icon}</div>
+        <div class="rank-name">${p.name}</div>
+      </div>
+      <div class="card-info">
+        <span>Стоимость</span>
+        <div class="price">${p.price} ₽</div>
+      </div>
+      <button class="buy" data-name="${p.name}">В КОРЗИНУ →</button>
+    `;
+    card.querySelector(".buy").addEventListener("click",()=>addCart(p.name));
+    grid.appendChild(card);
+  });
+}
 
-        /* ================== ВКЛАДКИ И МОДАЛКИ ================== */
-        function openTab(tabId, element) {
-            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-            document.querySelectorAll('.sidebar-menu button').forEach(l => l.classList.remove('active'));
-            document.getElementById(tabId).style.display = 'block';
-            element.classList.add('active');
-        }
+function switchTab(tab,button){
+  currentTab=tab;
+  document.querySelectorAll(".side-btn").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  document.getElementById("search").value="";
+  document.getElementById("sectionTitle").textContent=
+    tab==="ranks"?"Привилегии":tab==="cases"?"Сундуки":"Услуги";
+  document.getElementById("sectionDesc").textContent=
+    tab==="ranks"?"Выбери подходящую привилегию для своего аккаунта":
+    tab==="cases"?"Особые предметы и наборы":
+    "Дополнительные услуги проекта";
+  render();
+}
 
-        function openRules() { document.getElementById('rules-modal').classList.add('show'); }
-        function closeRules() { document.getElementById('rules-modal').classList.remove('show'); }
+function addCart(name){
+  cart++;
+  document.getElementById("cartCount").textContent=cart;
+  showToast(name+" добавлен в корзину (демо)");
+}
 
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', e => {
-                if (e.target === modal) modal.classList.remove('show');
-            });
-        });
+function showToast(message){
+  const old=document.querySelector(".toast");
+  if(old)old.remove();
+  const toast=document.createElement("div");
+  toast.className="toast";
+  toast.textContent="✓ "+message;
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(),2800);
+}
 
-        /* ================== КОПИРОВАНИЕ IP ================== */
-        const SERVER_IP = 'comfortworld.gigacube.host';
-        function copyIp() {
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(SERVER_IP).then(() => {
-                    showToast('IP скопирован в буфер обмена!', 'success');
-                });
-            } else {
-                const ta = document.createElement('textarea');
-                ta.value = SERVER_IP;
-                document.body.appendChild(ta);
-                ta.select();
-                try { document.execCommand('copy'); showToast('IP скопирован!', 'success'); } catch (e) {}
-                document.body.removeChild(ta);
-            }
-        }
+function copyIP(){
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(IP).then(
+      ()=>showToast("IP скопирован: "+IP),
+      ()=>showToast("IP сервера: "+IP)
+    );
+  }else{
+    showToast("IP сервера: "+IP);
+  }
+}
 
-        /* ================== СТАРТ ================== */
-        renderPrivileges();
-    </script>
+render();
+</script>
 </body>
 </html>
