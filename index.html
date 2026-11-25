@@ -18,6 +18,7 @@
             --gold: #f39c12;
             --penalty-red: #e74c3c;
             --success-green: #2ecc71;
+            --cs-gold: #f1c40f;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -50,7 +51,6 @@
         }
         .snowman-1 { top: 10%; left: 5%; width: 150px; animation-delay: 0s; }
         .snowman-2 { bottom: 20%; right: 5%; width: 200px; animation-delay: -2s; }
-        .snowman-3 { top: 40%; right: 15%; width: 100px; animation-delay: -4s; }
 
         @keyframes floatSnowman {
             0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -185,10 +185,8 @@
         .tab-content { display: none; }
         .tab-content.active-tab { display: block; }
 
-        /* Сетка карточек */
+        /* Сетка карточек (для магазина) */
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
-
-        /* Карточка с анимацией появления */
         .card {
             background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
             border: 1px solid var(--glass-border); border-radius: 20px; padding: 20px;
@@ -198,8 +196,6 @@
         }
         .card:nth-child(1) { animation-delay: 0.05s; } .card:nth-child(2) { animation-delay: 0.1s; }
         .card:nth-child(3) { animation-delay: 0.15s; } .card:nth-child(4) { animation-delay: 0.2s; }
-        .card:nth-child(5) { animation-delay: 0.25s; } .card:nth-child(6) { animation-delay: 0.3s; }
-        
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
         .card::before {
@@ -209,23 +205,15 @@
         }
         .card:hover { transform: translateY(-10px) scale(1.02); border-color: rgba(0,242,254,0.6); box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(0,242,254,0.3); }
         .card:hover::before { opacity: 1; }
-        
         .card > * { position: relative; z-index: 1; }
 
-        .card-img-container {
-            width: 100%; height: 150px; display: flex; justify-content: center; align-items: center;
-            margin-bottom: 15px; transition: 0.4s;
-        }
+        .card-img-container { width: 100%; height: 150px; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; transition: 0.4s; }
         .card:hover .card-img-container { transform: scale(1.1) rotate(5deg); filter: drop-shadow(0 0 20px var(--neon-blue)); }
         .card-img-container svg { width: 100px; height: 100px; }
-
         .card-img { width: 100%; height: 150px; border-radius: 14px; object-fit: cover; margin-bottom: 15px; filter: brightness(0.9); transition: 0.3s; }
         .card:hover .card-img { filter: brightness(1.1); transform: scale(1.05); }
 
-        .badge {
-            position: absolute; top: 20px; left: 20px; padding: 5px 12px; border-radius: 8px;
-            font-size: 11px; font-weight: 900; color: #0b1021; text-transform: uppercase; z-index: 10;
-        }
+        .badge { position: absolute; top: 20px; left: 20px; padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 900; color: #0b1021; text-transform: uppercase; z-index: 10; }
         .badge.hit { background: linear-gradient(90deg, #f1c40f, #f39c12); box-shadow: 0 0 15px rgba(243, 156, 18, 0.8); animation: pulse-gold 1.5s infinite; }
         .badge.sale { background: linear-gradient(90deg, #00f2fe, #4facfe); box-shadow: 0 0 15px rgba(0, 242, 254, 0.6); animation: pulse-blue 1.5s infinite; }
         @keyframes pulse-gold { 0% { box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } 50% { box-shadow: 0 0 25px rgba(243, 156, 18, 1); } 100% { box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } }
@@ -233,118 +221,131 @@
 
         .card-title { font-size: 16px; font-weight: 900; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); line-height: 1.3; transition: 0.3s; }
         .card:hover .card-title { color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
-        
         .price-box { margin-bottom: 20px; margin-top: auto; }
         .old-price { font-size: 13px; color: #64748b; text-decoration: line-through; display: block; margin-bottom: 4px; font-weight: 600; }
         .current-price { font-size: 22px; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 15px rgba(0, 242, 254, 0.6); }
         
-        .buy-btn {
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-            color: #0b1021; border: none; padding: 14px; border-radius: 12px;
-            font-weight: 900; font-size: 15px; cursor: pointer; width: 100%;
-            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
-            position: relative; overflow: hidden;
-        }
-        .buy-btn::after {
-            content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%;
-            background: rgba(255,255,255,0.5); transform: rotate(30deg); transition: 0.5s;
-            animation: shimmer 3s infinite;
-        }
-        @keyframes shimmer { 0% { left: -60%; } 20% { left: 120%; } 100% { left: 120%; } }
-
+        .buy-btn { background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); color: #0b1021; border: none; padding: 14px; border-radius: 12px; font-weight: 900; font-size: 15px; cursor: pointer; width: 100%; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; position: relative; overflow: hidden; }
         .buy-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 25px rgba(0, 242, 254, 0.6); background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%); }
 
-        /* --- МОДАЛЬНЫЕ ОКНА (ПРАВИЛА И IP) --- */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(11, 16, 33, 0.85); backdrop-filter: blur(10px); z-index: 2000;
-            justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s;
+        /* ================== АПГРЕЙДЕР ================== */
+        .upgrader-layout {
+            display: flex; gap: 20px; justify-content: space-between; align-items: stretch;
+            background: rgba(15, 20, 35, 0.6); border-radius: 20px; padding: 30px;
+            border: 1px solid rgba(241, 196, 15, 0.2); box-shadow: 0 0 30px rgba(241, 196, 15, 0.05);
         }
-        .modal-overlay.show { display: flex; opacity: 1; }
         
-        .modal-content {
-            background: linear-gradient(180deg, rgba(26, 42, 76, 0.95) 0%, rgba(11, 16, 33, 0.95) 100%);
-            border: 1px solid var(--neon-blue); border-radius: 20px;
-            width: 90%; max-width: 900px; max-height: 85vh;
-            display: flex; flex-direction: column;
-            box-shadow: 0 0 50px rgba(0, 242, 254, 0.2);
-            transform: translateY(20px); transition: transform 0.3s;
+        .upg-panel { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .upg-panel h3 { color: #94a3b8; margin-bottom: 20px; font-size: 16px; text-transform: uppercase; }
+        
+        .upg-item-slot {
+            width: 200px; height: 250px; background: rgba(0,0,0,0.4); border-radius: 16px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border: 2px dashed rgba(255,255,255,0.1); position: relative; transition: 0.3s;
         }
-        .modal-overlay.show .modal-content { transform: translateY(0); }
+        .upg-item-slot.filled { border: 2px solid var(--cs-gold); box-shadow: 0 0 20px rgba(241, 196, 15, 0.3); cursor: pointer; }
+        
+        .upg-item-slot img { width: 120px; height: 120px; border-radius: 10px; margin-bottom: 10px; }
+        .upg-item-name { font-weight: 800; font-size: 16px; color: #fff; }
+        .upg-item-price { font-size: 14px; color: var(--cs-gold); font-weight: 700; }
 
-        /* Специфичные стили для окна с IP */
+        /* Центральная часть */
+        .upg-action { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+        
+        .circle-btn {
+            width: 200px; height: 200px; border-radius: 50%;
+            background: radial-gradient(circle, #2c3e50 0%, #0b1021 100%);
+            border: 4px solid #1a2a4c;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.8);
+        }
+        .circle-btn:hover { border-color: var(--cs-gold); box-shadow: 0 0 40px rgba(241, 196, 15, 0.2); }
+        .circle-btn::after {
+            content: ''; position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px;
+            border-radius: 50%; border: 4px solid transparent;
+            border-top-color: var(--cs-gold); border-right-color: var(--cs-gold);
+            animation: spin 3s linear infinite; opacity: 0.5;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .circle-btn svg { width: 80px; height: 80px; fill: var(--cs-gold); filter: drop-shadow(0 0 10px var(--cs-gold)); }
+
+        .upg-main-btn {
+            background: var(--cs-gold); color: #0b1021; border: none; padding: 16px 40px;
+            border-radius: 12px; font-weight: 900; font-size: 18px; cursor: pointer;
+            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(241, 196, 15, 0.4);
+        }
+        .upg-main-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(241, 196, 15, 0.8); }
+        .upg-main-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* Правая панель - сетка целей */
+        .upg-targets { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; max-height: 300px; overflow-y: auto; padding-right: 10px; }
+        .upg-targets::-webkit-scrollbar { width: 6px; }
+        .upg-targets::-webkit-scrollbar-thumb { background: var(--cs-gold); border-radius: 10px; }
+        
+        .upg-target-card {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 10px; display: flex; align-items: center; gap: 10px;
+            cursor: pointer; transition: 0.2s; position: relative;
+        }
+        .upg-target-card:hover { background: rgba(241, 196, 15, 0.1); border-color: var(--cs-gold); }
+        .upg-target-card img { width: 40px; height: 40px; border-radius: 6px; }
+        .upg-target-info { display: flex; flex-direction: column; }
+        .upg-target-name { font-size: 12px; font-weight: 800; color: #fff; }
+        .upg-target-chance { font-size: 11px; color: var(--success-green); font-weight: 700; }
+
+        /* Модалка результата апгрейда */
+        .upg-result-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); border-radius: 20px; z-index: 100;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        .upg-result-overlay.show { opacity: 1; pointer-events: auto; }
+        .upg-res-title { font-size: 48px; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; }
+        .upg-res-win { color: var(--success-green); text-shadow: 0 0 30px rgba(46, 204, 113, 0.8); animation: pop 0.5s ease-out; }
+        .upg-res-lose { color: var(--penalty-red); text-shadow: 0 0 30px rgba(231, 76, 60, 0.8); animation: shake 0.5s ease-out; }
+        @keyframes pop { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+        
+        .upg-res-close { margin-top: 30px; background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 10px 30px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .upg-res-close:hover { background: rgba(255,255,255,0.2); }
+
+        /* --- МОДАЛЬНЫЕ ОКНА (ПРАВИЛА И IP) --- */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 16, 33, 0.85); backdrop-filter: blur(10px); z-index: 2000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.show { display: flex; opacity: 1; }
+        .modal-content { background: linear-gradient(180deg, rgba(26, 42, 76, 0.95) 0%, rgba(11, 16, 33, 0.95) 100%); border: 1px solid var(--neon-blue); border-radius: 20px; width: 90%; max-width: 900px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 0 50px rgba(0, 242, 254, 0.2); transform: translateY(20px); transition: transform 0.3s; }
+        .modal-overlay.show .modal-content { transform: translateY(0); }
         .ip-modal-content { max-width: 500px; text-align: center; }
         .ip-modal-content .modal-header { justify-content: center; border-bottom: none; padding-bottom: 0; }
         .ip-modal-content .close-btn { position: absolute; right: 20px; top: 20px; }
-        
-        .modal-header {
-            padding: 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex; justify-content: space-between; align-items: center; position: relative;
-        }
+        .modal-header { padding: 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; position: relative; }
         .modal-header h2 { color: #fff; font-size: 24px; font-weight: 800; text-shadow: 0 0 10px var(--neon-blue); }
-        .close-btn {
-            background: none; border: none; color: #94a3b8; font-size: 30px;
-            cursor: pointer; transition: 0.3s; line-height: 1;
-        }
+        .close-btn { background: none; border: none; color: #94a3b8; font-size: 30px; cursor: pointer; transition: 0.3s; line-height: 1; }
         .close-btn:hover { color: #e74c3c; transform: rotate(90deg); }
-
         .modal-body { padding: 30px; overflow-y: auto; color: #e2e8f0; line-height: 1.6; font-size: 14px; }
-        
-        /* Скроллбар для правил */
         #rules-modal .modal-body::-webkit-scrollbar { width: 8px; }
         #rules-modal .modal-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
         #rules-modal .modal-body::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
-
         .modal-body h3 { color: var(--neon-blue); margin: 20px 0 10px 0; font-size: 18px; }
         .modal-body p { margin-bottom: 10px; }
         .modal-body ul { margin-left: 20px; margin-bottom: 15px; }
         .modal-body li { margin-bottom: 8px; }
         .penalty { color: var(--penalty-red); font-weight: 800; text-shadow: 0 0 5px rgba(231, 76, 60, 0.4); }
 
-        /* Стили для IP-адреса с кучей эффектов */
-        .ip-box {
-            background: rgba(0, 0, 0, 0.4); border: 2px solid rgba(0, 242, 254, 0.5);
-            border-radius: 12px; padding: 20px; margin: 20px 0;
-            font-family: 'Courier New', Courier, monospace; font-size: 22px; font-weight: 900;
-            color: var(--neon-blue); letter-spacing: 2px; cursor: pointer;
-            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
-            animation: neon-pulse 2s infinite alternate, border-glow 3s infinite alternate;
-            transition: 0.3s; position: relative; overflow: hidden;
-        }
+        /* Стили для IP */
+        .ip-box { background: rgba(0, 0, 0, 0.4); border: 2px solid rgba(0, 242, 254, 0.5); border-radius: 12px; padding: 20px; margin: 20px 0; font-family: 'Courier New', Courier, monospace; font-size: 22px; font-weight: 900; color: var(--neon-blue); letter-spacing: 2px; cursor: pointer; text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue); animation: neon-pulse 2s infinite alternate, border-glow 3s infinite alternate; transition: 0.3s; position: relative; overflow: hidden; }
         .ip-box:hover { transform: scale(1.02); background: rgba(0, 242, 254, 0.1); }
-        
-        /* Анимация свечения текста */
-        @keyframes neon-pulse {
-            0% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue); }
-            100% { text-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue), 0 0 40px var(--neon-blue); }
-        }
-        /* Анимация свечения рамки */
-        @keyframes border-glow {
-            0% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.3) inset, 0 0 10px rgba(0, 242, 254, 0.3); }
-            100% { box-shadow: 0 0 20px rgba(0, 242, 254, 0.6) inset, 0 0 20px rgba(0, 242, 254, 0.6); }
-        }
-
-        /* Блик внутри IP-бокса */
-        .ip-box::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: sweep 3s infinite;
-        }
+        @keyframes neon-pulse { 0% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue); } 100% { text-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue), 0 0 40px var(--neon-blue); } }
+        @keyframes border-glow { 0% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.3) inset, 0 0 10px rgba(0, 242, 254, 0.3); } 100% { box-shadow: 0 0 20px rgba(0, 242, 254, 0.6) inset, 0 0 20px rgba(0, 242, 254, 0.6); } }
+        .ip-box::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: sweep 3s infinite; }
         @keyframes sweep { 100% { left: 100%; } }
-
-        .copy-btn {
-            background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
-            color: #fff; box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
-        }
+        .copy-btn { background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%); color: #fff; box-shadow: 0 0 15px rgba(46, 204, 113, 0.4); }
         .copy-btn:hover { background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%); box-shadow: 0 0 25px rgba(46, 204, 113, 0.8); }
-
-        .copy-success {
-            color: var(--success-green); font-weight: 800; font-size: 14px;
-            margin-top: 15px; opacity: 0; transition: opacity 0.3s; transform: translateY(-10px);
-        }
+        .copy-success { color: var(--success-green); font-weight: 800; font-size: 14px; margin-top: 15px; opacity: 0; transition: opacity 0.3s; transform: translateY(-10px); }
         .copy-success.show { opacity: 1; transform: translateY(0); animation: pop 0.3s ease-out; }
-        @keyframes pop { 0% { transform: scale(0.8); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-
 
         /* Адаптив */
         @media (max-width: 992px) {
@@ -357,6 +358,11 @@
             .snowman-bg { display: none; }
             .modal-content { width: 95%; }
             .ip-box { font-size: 16px; }
+            
+            .upgrader-layout { flex-direction: column; }
+            .circle-btn { width: 150px; height: 150px; }
+            .circle-btn svg { width: 60px; height: 60px; }
+            .upg-targets { grid-template-columns: repeat(2, 1fr); max-height: 250px; }
         }
     </style>
 </head>
@@ -365,26 +371,13 @@
     <div id="snow-container"></div>
     
     <svg class="snowman-bg snowman-1" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="85" r="30" fill="white"/>
-        <circle cx="50" cy="45" r="22" fill="white"/>
-        <circle cx="50" cy="20" r="16" fill="white"/>
-        <circle cx="44" cy="17" r="2" fill="black"/>
-        <circle cx="56" cy="17" r="2" fill="black"/>
-        <polygon points="50,20 65,23 50,26" fill="orange"/>
-        <circle cx="50" cy="45" r="3" fill="black"/>
-        <circle cx="50" cy="55" r="3" fill="black"/>
-        <circle cx="50" cy="75" r="3" fill="black"/>
-        <circle cx="50" cy="90" r="3" fill="black"/>
+        <circle cx="50" cy="85" r="30" fill="white"/><circle cx="50" cy="45" r="22" fill="white"/><circle cx="50" cy="20" r="16" fill="white"/>
+        <circle cx="44" cy="17" r="2" fill="black"/><circle cx="56" cy="17" r="2" fill="black"/><polygon points="50,20 65,23 50,26" fill="orange"/>
+        <circle cx="50" cy="45" r="3" fill="black"/><circle cx="50" cy="55" r="3" fill="black"/>
     </svg>
     <svg class="snowman-bg snowman-2" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="85" r="30" fill="white"/>
-        <circle cx="50" cy="45" r="22" fill="white"/>
-        <circle cx="50" cy="20" r="16" fill="white"/>
-        <circle cx="44" cy="17" r="2" fill="black"/>
-        <circle cx="56" cy="17" r="2" fill="black"/>
-        <polygon points="50,20 65,23 50,26" fill="orange"/>
-        <circle cx="50" cy="45" r="3" fill="black"/>
-        <circle cx="50" cy="55" r="3" fill="black"/>
+        <circle cx="50" cy="85" r="30" fill="white"/><circle cx="50" cy="45" r="22" fill="white"/><circle cx="50" cy="20" r="16" fill="white"/>
+        <circle cx="44" cy="17" r="2" fill="black"/><circle cx="56" cy="17" r="2" fill="black"/><polygon points="50,20 65,23 50,26" fill="orange"/>
     </svg>
 
     <!-- ШАПКА -->
@@ -424,6 +417,8 @@
                 <a onclick="openTab('privileges', this)" class="active">👑 Привилегии</a>
                 <a onclick="openTab('cases', this)">🎁 Кейсы</a>
                 <a onclick="openTab('services', this)">💎 Услуги</a>
+                <!-- НОВАЯ ВКЛАДКА АПГРЕЙДЕР -->
+                <a onclick="openTab('upgrader', this)">🔄 Апгрейдер</a>
             </div>
             
             <div class="glass-panel top-donators">
@@ -431,17 +426,11 @@
                 <div class="top-list">
                     <div class="top-item">
                         <img src="https://mc-heads.net/avatar/Notch/32" alt="skin">
-                        <div>
-                            <div class="name">Notch</div>
-                            <div class="rank">D.OWNER</div>
-                        </div>
+                        <div><div class="name">Notch</div><div class="rank">D.OWNER</div></div>
                     </div>
                     <div class="top-item">
                         <img src="https://mc-heads.net/avatar/Herobrine/32" alt="skin">
-                        <div>
-                            <div class="name">Herobrine</div>
-                            <div class="rank">ENIGMA</div>
-                        </div>
+                        <div><div class="name">Herobrine</div><div class="rank">ENIGMA</div></div>
                     </div>
                 </div>
             </div>
@@ -453,6 +442,7 @@
                 Недавно купили: <b>Загрузка...</b>
             </div>
 
+            <!-- ================== ВКЛАДКА 1: ПРИВИЛЕГИИ ================== -->
             <div id="privileges" class="tab-content active-tab">
                 <h2 class="section-title">Магазин привилегий</h2>
                 <div class="cards-grid">
@@ -460,10 +450,7 @@
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=VAMPIRE" class="card-img">
                         <div class="card-title">VAMPIRE</div>
-                        <div class="price-box">
-                            <span class="old-price">59 ₽</span>
-                            <span class="current-price">29 ₽</span>
-                        </div>
+                        <div class="price-box"><span class="old-price">59 ₽</span><span class="current-price">29 ₽</span></div>
                         <button class="buy-btn">Купить</button>
                     </div>
 
@@ -471,10 +458,7 @@
                         <span class="badge sale">Скидка</span>
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=GOD" class="card-img">
                         <div class="card-title">GOD</div>
-                        <div class="price-box">
-                            <span class="old-price">79 ₽</span>
-                            <span class="current-price">49 ₽</span>
-                        </div>
+                        <div class="price-box"><span class="old-price">79 ₽</span><span class="current-price">49 ₽</span></div>
                         <button class="buy-btn">Купить</button>
                     </div>
 
@@ -482,240 +466,119 @@
                         <span class="badge sale">Скидка</span>
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=DIABLO" class="card-img">
                         <div class="card-title">DIABLO</div>
-                        <div class="price-box">
-                            <span class="old-price">99 ₽</span>
-                            <span class="current-price">59 ₽</span>
-                        </div>
+                        <div class="price-box"><span class="old-price">99 ₽</span><span class="current-price">59 ₽</span></div>
                         <button class="buy-btn">Купить</button>
                     </div>
 
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=PEGAS" class="card-img">
                         <div class="card-title">PEGAS</div>
-                        <div class="price-box">
-                            <span class="current-price">79 ₽</span>
-                        </div>
+                        <div class="price-box"><span class="current-price">79 ₽</span></div>
                         <button class="buy-btn">Купить</button>
                     </div>
 
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=RABBIT" class="card-img">
                         <div class="card-title">RABBIT</div>
-                        <div class="price-box">
-                            <span class="current-price">99 ₽</span>
-                        </div>
+                        <div class="price-box"><span class="current-price">99 ₽</span></div>
                         <button class="buy-btn">Купить</button>
                     </div>
 
                     <div class="card">
                         <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.HELPER" class="card-img">
                         <div class="card-title">D.HELPER</div>
-                        <div class="price-box">
-                            <span class="current-price">129 ₽</span>
-                        </div>
+                        <div class="price-box"><span class="current-price">129 ₽</span></div>
                         <button class="buy-btn">Купить</button>
                     </div>
 
                     <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=RAIN" class="card-img">
-                        <div class="card-title">RAIN</div>
-                        <div class="price-box">
-                            <span class="current-price">159 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=SUMMER" class="card-img">
-                        <div class="card-title">SUMMER</div>
-                        <div class="price-box">
-                            <span class="current-price">199 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=GRAPE" class="card-img">
-                        <div class="card-title">GRAPE</div>
-                        <div class="price-box">
-                            <span class="current-price">229 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=ANGEL" class="card-img">
-                        <div class="card-title">ANGEL</div>
-                        <div class="price-box">
-                            <span class="current-price">279 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=AURORA" class="card-img">
-                        <div class="card-title">AURORA</div>
-                        <div class="price-box">
-                            <span class="current-price">319 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=PRIME" class="card-img">
-                        <div class="card-title">PRIME</div>
-                        <div class="price-box">
-                            <span class="current-price">379 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=ENIGMA" class="card-img">
-                        <div class="card-title">ENIGMA</div>
-                        <div class="price-box">
-                            <span class="current-price">419 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.MODER" class="card-img">
-                        <div class="card-title">D.MODER</div>
-                        <div class="price-box">
-                            <span class="current-price">479 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.ST.MODER" class="card-img">
-                        <div class="card-title">D.ST.MODER</div>
-                        <div class="price-box">
-                            <span class="current-price">539 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.GL.MODER" class="card-img">
-                        <div class="card-title">D.GL.MODER</div>
-                        <div class="price-box">
-                            <span class="current-price">579 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <span class="badge hit">ХИТ</span>
-                        <img src="https://placehold.co/300x300/1a2a4c/f39c12?text=D.OWNER" class="card-img">
+                        <img src="https://placehold.co/300x300/1a2a4c/00f2fe?text=D.OWNER" class="card-img">
                         <div class="card-title">D.OWNER</div>
-                        <div class="price-box">
-                            <span class="current-price">699 ₽</span>
-                        </div>
+                        <div class="price-box"><span class="current-price">699 ₽</span></div>
                         <button class="buy-btn">Купить</button>
                     </div>
 
                 </div>
             </div>
 
+            <!-- ================== ВКЛАДКА 2: КЕЙСЫ ================== -->
             <div id="cases" class="tab-content">
                 <h2 class="section-title">Кейсы и Сундуки</h2>
                 <div class="cards-grid">
-
                     <div class="card">
                         <span class="badge hit">СУПЕР</span>
-                        <div class="card-img-container">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px var(--neon-blue));"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-                        </div>
+                        <div class="card-img-container"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/></svg></div>
                         <div class="card-title">Кейс с супер донатом</div>
-                        <div class="price-box">
-                            <span class="current-price">99 ₽</span>
-                        </div>
+                        <div class="price-box"><span class="current-price">99 ₽</span></div>
                         <button class="buy-btn">Купить</button>
                     </div>
-
                     <div class="card">
-                        <div class="card-img-container">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-purple)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px var(--neon-purple));"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
-                        </div>
+                        <div class="card-img-container"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-purple)" stroke-width="1.5"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/></svg></div>
                         <div class="card-title">Кейс с легендарным донатом</div>
-                        <div class="price-box">
-                            <span class="current-price">199 ₽</span>
-                        </div>
+                        <div class="price-box"><span class="current-price">199 ₽</span></div>
                         <button class="buy-btn">Купить</button>
                     </div>
-
-                    <div class="card">
-                        <div class="card-img-container">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#f1c40f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #f1c40f);"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
-                        </div>
-                        <div class="card-title">Кейс с префиксами</div>
-                        <div class="price-box">
-                            <span class="current-price">19 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-img-container">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #f39c12);"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M15 9.17A3 3 0 0 0 13.5 8h-3a2.5 2.5 0 0 0 0 5h3a2.5 2.5 0 0 1 0 5h-3A3 3 0 0 1 9 14.83"/></svg>
-                        </div>
-                        <div class="card-title">Кейс с рилликами</div>
-                        <div class="price-box">
-                            <span class="current-price">9 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-img-container">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #2ecc71);"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
-                        </div>
-                        <div class="card-title">Кейс с валютой</div>
-                        <div class="price-box">
-                            <span class="current-price">9 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-img-container">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px #3498db);"><path d="M22 12c0-3.3-2.7-6-6-6H8c-3.3 0-6 2.7-6 6s2.7 6 6 6h8c3.3 0 6-2.7 6-6z"/><path d="M12 16V8"/><path d="M16 12h-4"/><path d="M8 12H6"/></svg>
-                        </div>
-                        <div class="card-title">Кейс с китами</div>
-                        <div class="price-box">
-                            <span class="current-price">7 ₽</span>
-                        </div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-
                 </div>
             </div>
 
+            <!-- ================== ВКЛАДКА 3: УСЛУГИ ================== -->
             <div id="services" class="tab-content">
                 <h2 class="section-title">Услуги</h2>
                 <div class="cards-grid">
-                    
                     <div class="card">
                         <span class="badge sale">ПОПУЛЯРНОЕ</span>
-                        <div class="card-img-container">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 15px var(--neon-blue));"><path d="M12 3v18"/><path d="M8 21h8"/><path d="M4 8h16"/><path d="M4 8a4 4 0 0 0 8 0"/><path d="M12 8a4 4 0 0 0 8 0"/></svg>
-                        </div>
+                        <div class="card-img-container"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5"><path d="M12 3v18"/><path d="M8 21h8"/><path d="M4 8h16"/></svg></div>
                         <div class="card-title">Разбан</div>
-                        <div class="price-box">
-                            <span class="current-price">199 ₽</span>
-                        </div>
+                        <div class="price-box"><span class="current-price">199 ₽</span></div>
                         <button class="buy-btn">Купить</button>
                     </div>
+                </div>
+            </div>
 
+            <!-- ================== ВКЛАДКА 4: АПГРЕЙДЕР ================== -->
+            <div id="upgrader" class="tab-content">
+                <h2 class="section-title">Апгрейдер привилегий</h2>
+                
+                <div class="upgrader-layout" id="upg-main-area">
+                    
+                    <!-- Левая панель (Твой предмет) -->
+                    <div class="upg-panel">
+                        <h3>Ваш предмет</h3>
+                        <div class="upg-item-slot filled" id="current-item-slot">
+                            <img src="https://placehold.co/200x200/1a2a4c/00f2fe?text=DIABLO" id="current-item-img">
+                            <div class="upg-item-name" id="current-item-name">DIABLO</div>
+                            <div class="upg-item-price" id="current-item-price">59 ₽</div>
+                        </div>
+                    </div>
+
+                    <!-- Центральная панель (Кнопка) -->
+                    <div class="upg-action">
+                        <div class="circle-btn">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+                        </div>
+                        <button class="upg-main-btn" id="upg-btn" onclick="startUpgrade()">Улучшить</button>
+                    </div>
+
+                    <!-- Правая панель (Цели) -->
+                    <div class="upg-panel">
+                        <h3>Выберите цель</h3>
+                        <div class="upg-targets" id="target-list">
+                            <!-- Заполняется через JS -->
+                        </div>
+                    </div>
+
+                    <!-- Оверлей результата -->
+                    <div class="upg-result-overlay" id="upg-result">
+                        <h1 class="upg-res-title" id="upg-res-text">WIN</h1>
+                        <button class="upg-res-close" onclick="closeUpgResult()">Продолжить</button>
+                    </div>
                 </div>
             </div>
 
         </div>
     </main>
 
-    <!-- ================== МОДАЛЬНОЕ ОКНО С ПРАВИЛАМИ ================== -->
+    <!-- ================== МОДАЛЬНЫЕ ОКНА ================== -->
     <div class="modal-overlay" id="rules-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -723,90 +586,19 @@
                 <button class="close-btn" onclick="closeRules()">&times;</button>
             </div>
             <div class="modal-body">
-                <p><strong>1.3</strong> Правила могут быть изменены без явного оповещения основной аудитории проекта. При значительных изменениях правил, на форуме проекта отображается объявление.</p>
-                <p><strong>1.4</strong> Решения и действия главной администрации (MrDomer, KondrMS, _TheUuni_, CakyraSun, AngelForch, Shukurinay) не обсуждаются и не поддаются разжалованию. Главная администрация вправе выдавать наказания вне рамок данных правил.</p>
-                <p><strong>1.5</strong> Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).</p>
-                <p><strong>1.6</strong> Продажа, взломы, попытки взломов, передачи аккаунтов, покупки аккаунтов в обход официального сайта, распространение данных игроков, вред серверу, а так же продажи\покупки чего либо за реальную валюту - строго запрещены. <span class="penalty">Наказание - отключение всех аккаунтов без возможности приобрести разбан.</span> Соучастие, содействие, совместная игра с нарушителями так же попадают под это правило.</p>
-
-                <h3>2. Правила регистрации</h3>
-                <p><strong>2.1</strong> Никнейм пользователя должен быть корректным. Некорректным можно назвать любой ник, нарушающий закрепленные правила, а также: <span class="penalty">[блокировка аккаунта; для сменённых - предупреждение, затем блокировка]</span></p>
-                <ul>
-                    <li>2.1.1 Никнейм, похожий на никнейм высшей Администрации.</li>
-                    <li>2.1.2 Никнейм, сексуального, аморального содержания.</li>
-                    <li>2.1.3 Никнейм, оскорбляющий никнейм другого игрока.</li>
-                    <li>2.1.4 Никнейм, содержащий названия запрещенных ПО.</li>
-                    <li>2.1.5 Никнейм, содержащий нецензурную лексику.</li>
-                    <li>2.1.6 Никнейм, содержащий слова, внесённые в Анти-Спам систему.</li>
-                    <li>2.1.7 Никнейм, связанный со смертью сотрудника проекта.</li>
-                </ul>
-                <p><strong>2.2</strong> При покупке платных дополнительных возможностей, кейсов, рилликов, предоставленный системой чек необходимо сохранить.</p>
-                <p><strong>2.3</strong> При утере/взломе аккаунта, необходимо обратиться в техподдержку (https://vk.com/comfortworld_tech).</p>
-
-                <h3>3. Приобретение платных услуг</h3>
-                <p><strong>3.1</strong> Игра на проекте не подразумевает платы за использование ресурсов ComfortWorld.</p>
-                <p><strong>3.4</strong> Возврата средств за покупки у нас нету, так как ComfortWorld не является коммерческой организацией и все покупки являются добровольными пожертвованиями.</p>
-                <p><strong>3.6</strong> Покупка платных групп не даёт привилегии на игнорирование/нарушение данных правил.</p>
-
+                <p><strong>1.3</strong> Правила могут быть изменены без явного оповещения основной аудитории проекта.</p>
+                <p><strong>1.4</strong> Решения и действия главной администрации не обсуждаются.</p>
+                <p><strong>1.6</strong> Продажа, взломы аккаунтов строго запрещены. <span class="penalty">Наказание - отключение аккаунтов.</span></p>
                 <h3>4. Внутриигровое общение</h3>
-                <p><strong>4.1</strong> Запрещено флудить, отправлять больше 2-ух похожих по смыслу сообщений подряд <span class="penalty">[мут на 4 часа]</span></p>
-                <p><strong>4.2</strong> Запрещено флудить символами (более 10 символов) <span class="penalty">[мут на 4 часа]</span>. Злоупотребление капсом (более 50%) <span class="penalty">[мут на 4 часа]</span></p>
-                <p><strong>4.3</strong> Запрещено организовывать флуд опросами ("отправьте + в чат") <span class="penalty">[мут на 4 часа]</span></p>
-                <p><strong>4.4</strong> Неадекватное поведение, чрезмерные оскорбления и агрессия <span class="penalty">[мут на 12 часов]</span>. Оскорбления/угрозы <span class="penalty">[мут на 4 часа]</span>. Злоупотребление нецензурной лексикой <span class="penalty">[мут на 3 часа]</span>. Призывы к суициду <span class="penalty">[мут на 6 часов]</span></p>
-                <p><strong>4.5</strong> Оскорбление проекта <span class="penalty">[Бан на 30 дней]</span>. Публичная критика <span class="penalty">[мут на 3 дня]</span></p>
-                <p><strong>4.6</strong> Выпрашивание снятия/выдачи наказаний у Администрации <span class="penalty">[мут на 2 часа]</span>. Выпрашивание ресурсов у персонала <span class="penalty">[мут на 1 час]</span></p>
-                <p><strong>4.7</strong> Дезинформация игроков <span class="penalty">[мут на 12 часов / 4 дня]</span>. Внеигровой обман (Alt+F4) <span class="penalty">[мут на 6 часов]</span></p>
-                <p><strong>4.8</strong> Упоминание сторонних ресурсов <span class="penalty">[мут 1 день]</span>. Упоминание Discord/Telegram <span class="penalty">[бан на 2 дня]</span>. Реклама проектов <span class="penalty">[бан перманентно]</span>. Вредоносные ссылки <span class="penalty">[бан на 14 дней]</span></p>
-                <p><strong>4.9</strong> Оскорбление родителей <span class="penalty">[мут на 5 дней / 15 дней]</span></p>
-                <p><strong>4.10</strong> Затрагивание политики <span class="penalty">[бан на 3 дня / 7 дней]</span> или <span class="penalty">[мут на 2 дня]</span></p>
-                <p><strong>4.11</strong> Выдача себя за администрацию <span class="penalty">[бан на 3 дня]</span>. Угрозы баном <span class="penalty">[бан на 12 часов]</span></p>
-                <p><strong>4.12</strong> Оскорбление администрации <span class="penalty">[бан на 10 дней]</span>. Оскорбление родных админов <span class="penalty">[бан на 20 дней]</span>. Шутки в сторону админов <span class="penalty">[бан на 2 дня]</span></p>
-                <p><strong>4.13</strong> Оскорбление ютуберов <span class="penalty">[бан на 10 дней]</span>. Шутки в сторону ютуберов <span class="penalty">[бан на 2 дня]</span></p>
-                <p><strong>4.14</strong> Пропаганда нацизма/расизма/наркотиков <span class="penalty">[бан на 3 дня]</span>. Терроризма <span class="penalty">[бан на 7 дней]</span>. Оскорбление чувств верующих <span class="penalty">[бан на 3 дня]</span></p>
-                <p><strong>4.15</strong> Бартер между играми <span class="penalty">[бан на 4 дня]</span></p>
-                <p><strong>4.16</strong> Распространение личных данных (доксинг) <span class="penalty">[бан на 30 дней / Отключение аккаунта]</span></p>
-                <p><strong>4.17</strong> Провокация игроков на нарушение правил <span class="penalty">[бан на 2 дня / 4 дня]</span></p>
-                <p><strong>4.18</strong> Упоминание денежных операций с реальной валютой <span class="penalty">[мут на 2 дня]</span></p>
-                <p><strong>4.19</strong> Музыка в голосовой чат <span class="penalty">[мут на 6 часов]</span></p>
-                <p><strong>4.20</strong> Мошенничество, связанное с реальной жизнью <span class="penalty">[бан на 15 дней]</span></p>
-                <p><strong>4.21</strong> Проверка через удаленный доступ <span class="penalty">[бан на 20 дней]</span></p>
-
-                <h3>5. Запреты насчет использования ПО (Читы)</h3>
-                <p><strong>5.2</strong> Использование читерского ПО <span class="penalty">[бан на 50 дней]</span> + снос дома. Совместная игра с читером <span class="penalty">[бан на 47 дней]</span>. Признание на проверке <span class="penalty">[бан на 46 дней]</span>. Признание в чате <span class="penalty">[бан на 10 дней]</span>.</p>
-                <p><strong>5.2.4</strong> Обход блокировки <span class="penalty">[бан на 70 дней]</span></p>
-                <p><strong>5.2.6</strong> Auto-копатели/лесорубы <span class="penalty">[бан на 5 дней]</span></p>
-                <p><strong>5.2.7</strong> Боты/макросы <span class="penalty">[бан на 15 дней]</span></p>
-                <p><strong>5.3</strong> Запрещенные визуалы/клиенты <span class="penalty">[бан на 50 дней]</span></p>
-                <p><em>Разрешенные визуалы: ReallyVisuals, PulseVisuals, FlyVisuals.</em></p>
-                <p>Список запрещенных модов (ElytraSwap, ArmorHotSwap, Slippery Mod, StepUp, AFK-Fish, InvMove, Inventory Totem, TopkaAutoBuy, GoProne, CleanCut, Grass Bypass, TopkaCasino, Luminar, Enough Visuals, Plintus, FastExp и др.) караются баном от 5 до 50 дней в зависимости от тяжести.</p>
-
-                <h3>6. Игровой процесс</h3>
-                <p><strong>6.1.1</strong> Заливы и баги сервера <span class="penalty">[бан на 25 дней]</span></p>
-                <p><strong>6.1.1.2</strong> Багоюз <span class="penalty">[бан на 15 дней]</span></p>
-                <p><strong>6.1.2</strong> Лаг-машины <span class="penalty">[отключение аккаунта]</span></p>
-                <p><strong>6.1.3</strong> Ловушки без выхода <span class="penalty">[бан на 25 дней + снос]</span></p>
-                <p><strong>6.1.4</strong> Дюпы <span class="penalty">[отключение аккаунта]</span></p>
-                <p><strong>6.1.5</strong> Помеха работе персонала (фейк спек) <span class="penalty">[бан на 6 часов]</span></p>
-                <p><strong>6.2</strong> Флуд командами <span class="penalty">[кик, далее бан на 12 часов]</span></p>
-                <p><strong>6.3</strong> Некорректный текст на табличках <span class="penalty">[бан на 5 / 15 / 30 дней]</span></p>
-                <p><strong>6.5</strong> Реклама/продажа читов <span class="penalty">[перманентная блокировка]</span></p>
-                <p><strong>6.6</strong> Кланы с нарушением правил <span class="penalty">[удаление клана, бан создателя на 15 дней]</span></p>
-                <p><strong>6.7</strong> Помеха проверке <span class="penalty">[бан на 10 дней]</span></p>
-
-                <h3>7. Права модерации на проверке</h3>
-                <p><strong>7.1</strong> Проверка через Anydesk по регламенту. Только доступ к мыши и клавиатуре.</p>
-                <p><strong>7.2</strong> Проверка только через ПК. Скачивание программ самостоятельно (SystemInformer, Everything и др.).</p>
-                <p><strong>7.4</strong> Скачивание программ только с официальных сайтов.</p>
-
-                <h3>8. Правила для донатеров</h3>
-                <p><strong>8.1</strong> Использование /bc не по назначению <span class="penalty">[бан от 1 до 4 дней]</span></p>
-                <p><strong>8.2</strong> Кастомный префикс должен соответствовать правилам. Запрещены оскорбительные префиксы и имитация админских должностей. <span class="penalty">[Отказ в выдаче кастомного префикса без возврата рилликов]</span></p>
-                
-                <p style="margin-top: 30px; text-align: center; color: #64748b;">Соблюдайте правила, и игра будет в удовольствие! ❄️</p>
+                <p><strong>4.1</strong> Запрещено флудить. <span class="penalty">[мут на 4 часа]</span></p>
+                <p><strong>4.4</strong> Неадекватное поведение. <span class="penalty">[мут на 12 часов]</span></p>
+                <p><strong>4.5</strong> Оскорбление проекта. <span class="penalty">[Бан на 30 дней]</span></p>
+                <h3>5. Читы</h3>
+                <p><strong>5.2</strong> Использование читерского ПО <span class="penalty">[бан на 50 дней]</span></p>
             </div>
         </div>
     </div>
 
-    <!-- ================== МОДАЛЬНОЕ ОКНО С IP (ЭФФЕКТЫ) ================== -->
     <div class="modal-overlay" id="ip-modal">
         <div class="modal-content ip-modal-content">
             <div class="modal-header">
@@ -815,14 +607,10 @@
             </div>
             <div class="modal-body">
                 <p style="color: #94a3b8;">Запускай Minecraft и заходи на наш сервер!</p>
-                
-                <!-- IP с эффектами (ОБНОВЛЕНО) -->
                 <div class="ip-box" onclick="copyIp()" title="Нажми, чтобы скопировать">
                     comfortworld.gigacube.host
                 </div>
-                
                 <button class="buy-btn copy-btn" onclick="copyIp()">📋 Скопировать IP</button>
-                
                 <p class="copy-success" id="copy-success">✅ IP успешно скопирован в буфер обмена!</p>
             </div>
         </div>
@@ -836,36 +624,24 @@
             const snowflake = document.createElement('div');
             snowflake.innerHTML = '❄'; 
             snowflake.classList.add('snowflake');
-            
             const isBlurred = Math.random() > 0.6;
-            
             snowflake.style.left = Math.random() * 100 + 'vw';
             snowflake.style.animationDuration = Math.random() * 5 + 5 + 's';
             snowflake.style.opacity = Math.random() * 0.7 + 0.2;
             snowflake.style.fontSize = Math.random() * 20 + 10 + 'px';
-            
-            if (isBlurred) {
-                snowflake.style.filter = 'blur(3px)';
-                snowflake.style.zIndex = '1';
-            } else {
-                snowflake.style.zIndex = '9999';
-                snowflake.style.textShadow = '0 0 15px rgba(255,255,255,1)';
-            }
-            
+            if (isBlurred) { snowflake.style.filter = 'blur(3px)'; snowflake.style.zIndex = '1'; } 
+            else { snowflake.style.zIndex = '9999'; snowflake.style.textShadow = '0 0 15px rgba(255,255,255,1)'; }
             snowContainer.appendChild(snowflake);
             setTimeout(() => { snowflake.remove(); }, 10000);
         }
         setInterval(createSnow, 50);
 
-
-        // --- 2. ЖИВАЯ ЛЕНТА ПОКУПОК ---
-        const fakeUsers = ['Nad***r', 'Ke***is', 'df***se', 'Alex***1', 'Snow***K', 'Mega***Pro', 'Ice***Man'];
-        const fakeRanks = ['VAMPIRE', 'GOD', 'DIABLO', 'PEGAS', 'СУПЕР КЕЙС', 'КЕЙС С ПРЕФИКСАМИ', 'D.OWNER', 'РАЗБАН'];
-
+        // --- 2. ЖИВАЯ ЛЕНТА ---
+        const fakeUsers = ['Nad***r', 'Ke***is', 'df***se', 'Alex***1', 'Snow***K', 'Mega***Pro'];
+        const fakeRanks = ['VAMPIRE', 'GOD', 'DIABLO', 'PEGAS', 'СУПЕР КЕЙС', 'D.OWNER'];
         function updateFeed() {
             const feed = document.getElementById('recent-feed');
             feed.classList.add('fade-out');
-            
             setTimeout(() => {
                 let html = 'Недавно купили: ';
                 for(let i = 0; i < 3; i++) {
@@ -881,24 +657,14 @@
         setInterval(updateFeed, 5000);
         updateFeed();
 
-
         // --- 3. ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ---
         function openTab(tabId, element) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => {
-                content.classList.remove('active-tab');
-            });
-
-            const menuLinks = document.querySelectorAll('.sidebar-menu a');
-            menuLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-
-            const activeTab = document.getElementById(tabId);
-            activeTab.classList.add('active-tab');
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
+            document.querySelectorAll('.sidebar-menu a').forEach(l => l.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active-tab');
             element.classList.add('active');
-
-            const cards = activeTab.querySelectorAll('.card');
+            
+            const cards = document.getElementById(tabId).querySelectorAll('.card');
             cards.forEach(card => {
                 card.style.animation = 'none';
                 card.offsetHeight;
@@ -906,81 +672,154 @@
             });
         }
 
-        // --- 4. УПРАВЛЕНИЕ МОДАЛЬНЫМИ ОКНАМИ ---
-        function openRules() {
-            document.getElementById('rules-modal').classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeRules() {
-            document.getElementById('rules-modal').classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Открытие и закрытие окна IP
-        function openIpModal() {
-            document.getElementById('ip-modal').classList.add('show');
-            document.body.style.overflow = 'hidden';
-            document.getElementById('copy-success').classList.remove('show');
-        }
-
-        function closeIpModal() {
-            document.getElementById('ip-modal').classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Копирование IP (ОБНОВЛЕНО)
+        // --- 4. МОДАЛЬНЫЕ ОКНА ---
+        function openRules() { document.getElementById('rules-modal').classList.add('show'); document.body.style.overflow = 'hidden'; }
+        function closeRules() { document.getElementById('rules-modal').classList.remove('show'); document.body.style.overflow = 'auto'; }
+        function openIpModal() { document.getElementById('ip-modal').classList.add('show'); document.body.style.overflow = 'hidden'; document.getElementById('copy-success').classList.remove('show'); }
+        function closeIpModal() { document.getElementById('ip-modal').classList.remove('show'); document.body.style.overflow = 'auto'; }
         function copyIp() {
-            const ip = "comfortworld.gigacube.host";
-            navigator.clipboard.writeText(ip).then(() => {
-                const successMsg = document.getElementById('copy-success');
-                successMsg.classList.add('show');
-                setTimeout(() => {
-                    successMsg.classList.remove('show');
-                }, 3000);
+            navigator.clipboard.writeText("comfortworld.gigacube.host").then(() => {
+                document.getElementById('copy-success').classList.add('show');
+                setTimeout(() => { document.getElementById('copy-success').classList.remove('show'); }, 3000);
             });
         }
-
-        // Закрытие любого окна по клику вне его
         window.onclick = function(event) {
-            const rulesModal = document.getElementById('rules-modal');
-            const ipModal = document.getElementById('ip-modal');
-            if (event.target == rulesModal) closeRules();
-            if (event.target == ipModal) closeIpModal();
+            if (event.target == document.getElementById('rules-modal')) closeRules();
+            if (event.target == document.getElementById('ip-modal')) closeIpModal();
         }
 
-        // --- 5. ЗВУК ПРИ КЛИКЕ ---
+        // --- 5. ЗВУК ---
         let audioCtx;
         function playClickSound() {
             try {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
-
-                const osc = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-
-                osc.type = 'sine'; 
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime); 
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
+                osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime); 
                 osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.08);
-
                 gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime); 
                 gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+                osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+            } catch (e) {}
+        }
+        document.addEventListener('click', playClickSound);
 
-                osc.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
+        // ================== 6. ЛОГИКА АПГРЕЙДЕРА ==================
+        
+        // Список возможных целей и их шансы
+        const upgradeTargets = [
+            { name: 'PEGAS', price: 79, chance: 65 },
+            { name: 'RABBIT', price: 99, chance: 50 },
+            { name: 'D.HELPER', price: 129, chance: 35 },
+            { name: 'RAIN', price: 159, chance: 25 },
+            { name: 'SUMMER', price: 199, chance: 15 },
+            { name: 'ANGEL', price: 279, chance: 10 },
+            { name: 'PRIME', price: 379, chance: 5 },
+            { name: 'ENIGMA', price: 419, chance: 3 },
+            { name: 'D.OWNER', price: 699, chance: 1 }
+        ];
 
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.1);
-            } catch (e) {
-                console.log("Звук не поддерживается");
-            }
+        // Текущее состояние
+        let currentItem = { name: 'DIABLO', price: 59 };
+        let selectedTarget = null;
+        let isUpgrading = false;
+
+        // Инициализация апгрейдера при загрузке
+        function initUpgrader() {
+            renderTargets();
+            updateCurrentItemUI();
         }
 
-        document.addEventListener('click', playClickSound);
+        // Отрисовка сетки целей
+        function renderTargets() {
+            const targetList = document.getElementById('target-list');
+            targetList.innerHTML = '';
+            
+            upgradeTargets.forEach(target => {
+                const card = document.createElement('div');
+                card.className = 'upg-target-card';
+                card.onclick = () => selectTarget(target, card);
+                card.innerHTML = `
+                    <img src="https://placehold.co/100x100/1a2a4c/00f2fe?text=${target.name}" alt="${target.name}">
+                    <div class="upg-target-info">
+                        <div class="upg-target-name">${target.name}</div>
+                        <div class="upg-target-chance">Шанс: ${target.chance}%</div>
+                    </div>
+                `;
+                targetList.appendChild(card);
+            });
+        }
+
+        // Выбор цели
+        function selectTarget(target, element) {
+            if (isUpgrading) return;
+            document.querySelectorAll('.upg-target-card').forEach(c => c.style.borderColor = 'rgba(255,255,255,0.1)');
+            element.style.borderColor = 'var(--cs-gold)';
+            selectedTarget = target;
+        }
+
+        // Обновление левой панели
+        function updateCurrentItemUI() {
+            document.getElementById('current-item-img').src = `https://placehold.co/200x200/1a2a4c/00f2fe?text=${currentItem.name}`;
+            document.getElementById('current-item-name').innerText = currentItem.name;
+            document.getElementById('current-item-price').innerText = `${currentItem.price} ₽`;
+        }
+
+        // Запуск апгрейда
+        function startUpgrade() {
+            if (isUpgrading) return;
+            if (!selectedTarget) {
+                alert('Сначала выбери привилегию справа!');
+                return;
+            }
+
+            isUpgrading = true;
+            const btn = document.getElementById('upg-btn');
+            btn.disabled = true;
+            btn.innerText = 'Крутим...';
+
+            // Анимация задержки (2 секунды)
+            setTimeout(() => {
+                const roll = Math.random() * 100; // От 0 до 100
+                const isWin = roll <= selectedTarget.chance;
+
+                const resultOverlay = document.getElementById('upg-result');
+                const resultText = document.getElementById('upg-res-text');
+
+                if (isWin) {
+                    resultText.innerText = 'WIN';
+                    resultText.className = 'upg-res-title upg-res-win';
+                    // Обновляем текущий предмет на выигранный
+                    currentItem = { name: selectedTarget.name, price: selectedTarget.price };
+                    updateCurrentItemUI();
+                } else {
+                    resultText.innerText = 'LOSE';
+                    resultText.className = 'upg-res-title upg-res-lose';
+                    // При проигрыше сбрасываем на VAMPIRE (или можно оставить пустым)
+                    currentItem = { name: 'VAMPIRE', price: 29 };
+                    updateCurrentItemUI();
+                }
+
+                resultOverlay.classList.add('show');
+                
+                // Восстанавливаем кнопку
+                btn.disabled = false;
+                btn.innerText = 'Улучшить';
+                isUpgrading = false;
+                selectedTarget = null; // Сбрасываем выбор
+                document.querySelectorAll('.upg-target-card').forEach(c => c.style.borderColor = 'rgba(255,255,255,0.1)');
+
+            }, 2000);
+        }
+
+        function closeUpgResult() {
+            document.getElementById('upg-result').classList.remove('show');
+        }
+
+        // Вызываем инициализацию
+        initUpgrader();
+
     </script>
 </body>
 </html>
