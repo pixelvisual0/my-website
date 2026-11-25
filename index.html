@@ -3,209 +3,293 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ComfortWorld — Твой мир, твои правила</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
 
+:root {
+ --red:#ff2346;
+ --purple:#8b55ff;
+ --blue:#526cff;
+ --panel:rgba(12,14,38,.91);
+ --border:rgba(139,115,255,.35);
+}
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  font-family:Montserrat,Arial,sans-serif;
-  color:white;
-  min-height:100vh;
-  background:
-    radial-gradient(ellipse at 50% 5%,#252e75 0%,transparent 48%),
-    radial-gradient(ellipse at 90% 60%,#451b67 0%,transparent 40%),
-    linear-gradient(135deg,#07091c,#10132d 55%,#08091a);
-  overflow-x:hidden;
+ background:#080b20;color:#fff;
+ font-family:Montserrat,Arial,sans-serif;
+ overflow-x:hidden;
 }
+button{font-family:inherit;cursor:pointer;color:white}
+button:active{transform:scale(.96)}
 body:before{
- content:"❄     ✦       ❄       ✧       ❄     ✦";
- position:fixed;inset:0;pointer-events:none;
- color:#aebfff;opacity:.18;font-size:35px;
- word-spacing:65px;line-height:100px;
- animation:snow 18s linear infinite;z-index:-1;
-}
-@keyframes snow{from{transform:translateY(-100px)}to{transform:translateY(100vh)}}
-button{font-family:inherit;cursor:pointer;color:white;border:0}
-button:active{transform:scale(.95)}
-header{
- max-width:1500px;margin:auto;padding:15px 25px;
- display:flex;align-items:center;justify-content:space-between;gap:20px;
-}
-.logo{font-size:27px;font-weight:900;white-space:nowrap}
-.logo span{color:#ff304c}
-.logo small{display:block;font-size:9px;letter-spacing:3px;text-align:center;color:#aaa}
-nav{display:flex;gap:5px;padding:7px;background:#101329dd;border:1px solid #34375d;border-radius:18px}
-nav button{background:transparent;padding:13px 17px;border-radius:12px;font-weight:700}
-nav button.active,nav button:hover{background:#e91d39;box-shadow:0 0 20px #ff254a77}
-.status,.cart{
- background:#101329;border:1px solid #35385f;
- padding:15px;border-radius:15px;font-size:12px;
-}
-.status span{color:#21df88}
-.cart{background:#ed203c;font-weight:800;box-shadow:0 0 20px #ff234c55}
-main{max-width:1450px;margin:auto;padding:10px 25px 60px}
-.hero{
- min-height:350px;border:1px solid #37365f;border-radius:25px;
- overflow:hidden;position:relative;display:flex;align-items:center;
+ content:"";position:fixed;inset:0;z-index:-2;
  background:
- radial-gradient(circle at 75% 40%,#9e77ff66,transparent 24%),
- linear-gradient(90deg,#090c22 0%,#101638bb 47%,#12173566),
- linear-gradient(0deg,#080b20,#24336b);
- box-shadow:0 15px 50px #0008;
+ radial-gradient(ellipse at 50% 30%,#172d75 0%,transparent 50%),
+ radial-gradient(ellipse at 95% 90%,#39185c,transparent 45%),
+ linear-gradient(#07091b,#11122e);
+}
+.snow{
+ position:fixed;inset:0;pointer-events:none;z-index:10;
+ background-image:
+ radial-gradient(2px 2px at 20px 30px,#fff,transparent),
+ radial-gradient(2px 2px at 100px 150px,#b8d5ff,transparent),
+ radial-gradient(3px 3px at 250px 80px,#fff,transparent),
+ radial-gradient(2px 2px at 400px 230px,#fff,transparent);
+ background-size:450px 300px;
+ animation:snow 15s linear infinite;
+ opacity:.4;
+}
+@keyframes snow{to{background-position:0 600px}}
+header{
+ max-width:1600px;margin:auto;padding:14px 25px;
+ display:flex;align-items:center;justify-content:space-between;gap:18px;
+ position:relative;z-index:5;
+}
+.logo{font-size:29px;font-weight:900;white-space:nowrap}
+.logo span{color:var(--red)}
+.logo small{display:block;font-size:9px;letter-spacing:3px;text-align:center;color:#bdc5e8}
+nav{
+ display:flex;align-items:center;gap:5px;
+ padding:7px;background:#0c1029eF;
+ border:1px solid var(--border);border-radius:18px;
+}
+nav button{
+ background:transparent;border:0;padding:14px 17px;
+ border-radius:12px;font-weight:700;font-size:13px;
+}
+nav button:hover,nav button.active{
+ background:var(--red);box-shadow:0 0 22px #ff234477;
+}
+.status,.cart{
+ background:#10142e;border:1px solid var(--border);
+ border-radius:15px;padding:13px 17px;font-size:12px;
+}
+.status span{color:#00e89a}
+.cart{
+ background:var(--red);font-weight:800;
+ box-shadow:0 0 20px #ff234466;border:0;
+}
+main{max-width:1550px;margin:auto;padding:10px 25px 50px}
+
+/* БОЛЬШОЙ ЗИМНИЙ БАННЕР */
+.hero{
+ height:360px;border:1px solid #51418a;
+ border-radius:25px;overflow:hidden;position:relative;
+ background:
+ radial-gradient(circle at 75% 25%,#a3c8ff55,transparent 5%),
+ radial-gradient(ellipse at 72% 100%,#c22bff66,transparent 40%),
+ linear-gradient(90deg,#070a22 0%,#101943 50%,#121c50 100%);
+ box-shadow:0 15px 55px #0009;
 }
 .hero:before{
- content:"❄";position:absolute;right:25%;top:5px;
- font-size:190px;color:#c7d8ff;opacity:.12;
+ content:"";position:absolute;inset:0;
+ background:
+ linear-gradient(0deg,#090b25 0%,transparent 35%),
+ repeating-linear-gradient(110deg,transparent 0 80px,#384b9230 81px 83px);
 }
-.hero:after{
- content:"🏰";position:absolute;right:17%;bottom:5px;
- font-size:180px;filter:drop-shadow(0 0 30px #809bff);
+.mountains{
+ position:absolute;bottom:0;width:100%;height:180px;
+ background:
+ linear-gradient(135deg,transparent 35%,#273b78 36% 55%,transparent 56%) 0 0/300px 180px,
+ linear-gradient(45deg,transparent 35%,#182957 36% 55%,transparent 56%) 100px 0/300px 180px;
+ opacity:.8;
 }
-.hero-content{position:relative;z-index:2;padding:45px;max-width:650px}
-.tag{background:#7d2348;padding:8px 16px;border-radius:20px;font-size:12px;letter-spacing:2px}
-.hero h1{font-size:48px;line-height:1.12;margin:25px 0 12px;font-weight:900}
-.hero h1 span{color:#ff2949}
-.hero p{color:#c6c8df;line-height:1.7}
-.actions{display:flex;gap:15px;margin-top:22px;flex-wrap:wrap}
+.hero-content{position:absolute;z-index:2;left:45px;top:35px;width:48%}
+.tag{
+ display:inline-block;background:#8a194c;
+ padding:9px 16px;border-radius:30px;
+ font-size:11px;letter-spacing:2px;font-weight:800;
+ box-shadow:0 0 20px #ff285544;
+}
+.hero h1{font-size:51px;line-height:1.08;font-weight:900;margin:22px 0 12px}
+.hero h1 span{color:var(--red)}
+.hero p{font-size:15px;color:#d3d9f5;line-height:1.7}
+.actions{display:flex;gap:14px;margin-top:20px}
 .primary,.secondary{
  padding:16px 23px;border-radius:13px;font-weight:800;
- transition:.2s;
+ border:0;transition:.2s;
 }
-.primary{background:#f02240;box-shadow:0 0 25px #ff234a66}
-.secondary{background:#171a38;border:1px solid #5550a1}
-.primary:hover,.secondary:hover{filter:brightness(1.25);transform:translateY(-3px)}
-.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:15px 0 22px}
+.primary{background:var(--red);box-shadow:0 0 25px #ff234477}
+.secondary{background:#151638;border:1px solid #7054d7}
+.primary:hover,.secondary:hover{transform:translateY(-3px);filter:brightness(1.2)}
+.hero-logo{
+ position:absolute;right:14%;top:34%;z-index:2;
+ font-size:55px;font-weight:900;color:#c3d8ff;
+ text-shadow:0 0 8px #fff,0 0 25px #386bff,4px 5px #243ca1;
+ letter-spacing:-3px;
+}
+.hero-logo small{display:block;text-align:center;font-size:35px}
+.hero-character{
+ position:absolute;right:4%;bottom:32px;font-size:105px;
+ filter:drop-shadow(0 0 25px #ff3e91);
+}
+.hero-house{
+ position:absolute;right:34%;bottom:30px;font-size:100px;
+ filter:drop-shadow(0 0 25px #ff9c48);
+}
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:16px 0 22px}
 .benefit{
- background:#151831dd;border:1px solid #38395e;
- padding:17px;border-radius:17px;display:flex;align-items:center;gap:18px
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:17px;padding:18px;display:flex;align-items:center;gap:18px;
 }
-.benefit b{font-size:14px}.benefit small{display:block;color:#aaa;margin-top:5px}
-.benefit i{font-style:normal;font-size:35px}
+.benefit i{font-size:34px;font-style:normal}
+.benefit b{font-size:14px}
+.benefit small{display:block;color:#aeb6d7;margin-top:5px}
+
+/* МАГАЗИН */
 .layout{display:grid;grid-template-columns:255px 1fr;gap:20px}
 .sidebar,.shop{
- background:#101329eF;border:1px solid #37385e;
- border-radius:20px;padding:20px;
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:20px;padding:19px;
 }
-.side-title{font-weight:900;margin-bottom:17px}
+.side-title{font-size:17px;font-weight:900;margin-bottom:16px}
 .side-btn{
- width:100%;text-align:left;padding:14px;border-radius:12px;
- background:transparent;margin-bottom:5px;color:#c4c6dc;font-weight:600;
+ width:100%;background:transparent;border:0;color:#d5d9f0;
+ padding:14px;text-align:left;border-radius:12px;
+ font-weight:700;margin-bottom:4px;
 }
-.side-btn:hover,.side-btn.selected{background:#ed203e;color:white;box-shadow:0 0 17px #ff264c55}
+.side-btn:hover,.side-btn.selected{
+ background:linear-gradient(90deg,#ff1743,#b41439);
+ box-shadow:0 0 20px #ff234455;color:white;
+}
 .community{
- margin-top:20px;padding:15px;border-radius:15px;
- background:linear-gradient(135deg,#31165b,#151a3b);
- text-align:center;
+ margin-top:18px;text-align:center;padding:18px;
+ border-radius:16px;background:linear-gradient(140deg,#35115e,#151638);
 }
-.community .chest{font-size:55px}
-.community p{font-size:12px;margin:10px}
-.discord{background:#6437ee;padding:12px 20px;border-radius:25px;font-weight:800}
-.shop-head{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:20px}
-.shop-head h2{font-size:24px}
-.shop-head p{font-size:12px;color:#aaa;margin-top:5px}
+.community .gift{font-size:55px}
+.community p{font-size:12px;margin:10px;color:#d5d5ed}
+.discord{background:#6338ec;border:0;padding:12px 22px;border-radius:25px;font-weight:800}
+.sound{
+ position:fixed;bottom:15px;left:15px;z-index:20;
+ background:#10132d;border:1px solid #6753a5;
+ padding:12px 17px;border-radius:30px;font-size:12px;
+}
+.shop-head{
+ display:flex;justify-content:space-between;align-items:center;
+ gap:15px;flex-wrap:wrap;margin-bottom:20px;
+}
+.shop-head h2{font-size:25px}
+.shop-head p{font-size:12px;color:#aeb5d6;margin-top:5px}
 .search{
- background:#080b20;border:1px solid #45466e;color:white;
- border-radius:25px;padding:13px 17px;outline:none;width:270px;
+ background:#080b20;border:1px solid #58558c;color:white;
+ padding:14px 18px;border-radius:25px;width:280px;outline:none;
 }
-.search:focus{border-color:#a17cff}
-.products{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:13px}
+.search:focus{border-color:#a88cff;box-shadow:0 0 15px #7545ff44}
+.products{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
 .product{
- background:linear-gradient(145deg,#191d42,#0c1027);
- border:1px solid #48416e;border-radius:17px;padding:10px;
- text-align:center;position:relative;overflow:hidden;
- transition:.25s;
+ background:linear-gradient(150deg,#1b1c45,#0c102b);
+ border:1px solid #514180;border-radius:17px;
+ padding:10px;position:relative;text-align:center;
+ transition:.25s;overflow:hidden;
 }
-.product:hover{transform:translateY(-6px);border-color:#a17aff;box-shadow:0 10px 30px #8b4cff30}
-.product-art{
- height:125px;border-radius:12px;display:grid;place-items:center;
- font-size:72px;position:relative;overflow:hidden;
- background:radial-gradient(circle,#9c55ff77,transparent 70%),#21143e;
+.product:hover{
+ transform:translateY(-6px);
+ border-color:#b77aff;
+ box-shadow:0 10px 30px #883dff35;
 }
-.product:nth-child(5n+2) .product-art{background:radial-gradient(circle,#ffc23f99,transparent 70%),#382510}
-.product:nth-child(5n+3) .product-art{background:radial-gradient(circle,#ff344e88,transparent 70%),#32101e}
-.product:nth-child(5n+4) .product-art{background:radial-gradient(circle,#327bff99,transparent 70%),#101c43}
-.product:nth-child(5n+5) .product-art{background:radial-gradient(circle,#f1baff88,transparent 70%),#27152f}
+.art{
+ height:145px;border-radius:12px;display:grid;
+ place-items:center;position:relative;overflow:hidden;
+ background:radial-gradient(circle,#ef48b888,transparent 70%),#291038;
+}
+.art svg{width:100px;height:105px;filter:drop-shadow(0 0 15px currentColor)}
+.product:nth-child(5n+2) .art{background:radial-gradient(circle,#ffbe37aa,transparent 70%),#38250e}
+.product:nth-child(5n+3) .art{background:radial-gradient(circle,#ff344eaa,transparent 70%),#350d20}
+.product:nth-child(5n+4) .art{background:radial-gradient(circle,#397bffaa,transparent 70%),#101e48}
+.product:nth-child(5n+5) .art{background:radial-gradient(circle,#e9baffaa,transparent 70%),#26152e}
 .product h3{font-size:16px;margin:10px 0 5px}
-.product p{font-size:10px;color:#aaa;min-height:14px}
-.price-row{display:flex;justify-content:space-between;align-items:center;margin-top:13px;gap:5px}
-.price{font-size:19px;font-weight:900}
-.add{background:#ed203e;padding:10px 12px;border-radius:10px;font-size:11px;font-weight:800}
-.add:hover{background:#ff4660}
+.product p{font-size:11px;color:#c3c4dc}
 .label{
- position:absolute;top:9px;left:9px;background:#f02042;
- border-radius:7px;padding:5px 9px;font-size:10px;font-weight:900;
+ position:absolute;top:9px;left:9px;
+ background:#ff2346;border-radius:7px;
+ padding:5px 9px;font-size:10px;font-weight:900;z-index:2;
 }
-.label.green{background:#13bb74}
+.label.green{background:#0ebd78}
+.price-row{display:flex;justify-content:space-between;align-items:center;gap:4px;margin-top:13px}
+.price{font-size:19px;font-weight:900}
+.add{background:var(--red);border:0;border-radius:10px;padding:10px 12px;font-size:11px;font-weight:800}
+.add:hover{box-shadow:0 0 18px #ff2344}
 .hidden{display:none!important}
 .toast{
- position:fixed;right:20px;bottom:20px;background:#171b38;
- border:1px solid #514c7c;padding:17px 22px;border-radius:14px;
- box-shadow:0 5px 30px #0008;z-index:20;
- animation:appear .3s ease;
+ position:fixed;bottom:22px;right:22px;z-index:40;
+ padding:17px 23px;border-radius:15px;
+ background:#171c3a;border:1px solid #62569a;
+ box-shadow:0 10px 30px #0009;animation:pop .3s;
 }
-@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .modal-bg{
  display:none;position:fixed;inset:0;background:#000b;
- z-index:30;align-items:center;justify-content:center;padding:20px;
+ z-index:50;align-items:center;justify-content:center;padding:20px;
 }
 .modal-bg.show{display:flex}
 .modal{
- width:440px;max-width:100%;background:#151832;
- border:1px solid #56517d;border-radius:20px;padding:25px;
- max-height:85vh;overflow:auto;
+ width:450px;max-width:100%;max-height:85vh;overflow:auto;
+ background:#151831;border:1px solid #6854a5;
+ border-radius:20px;padding:25px;
 }
 .modal h2{margin-bottom:18px}
-.modal button.close{float:right;background:#343655;padding:8px 12px;border-radius:8px}
+.close{float:right;background:#383959;border:0;border-radius:8px;padding:8px}
 .cart-line{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #393958}
-.cart-line button{background:#e92342;border-radius:7px;padding:5px 9px}
-.total{font-size:22px;font-weight:900;margin:20px 0}
-footer{text-align:center;padding:35px;color:#8589ad;font-size:12px}
-@media(max-width:1050px){
- header{flex-wrap:wrap}nav{order:3;width:100%;justify-content:center;flex-wrap:wrap}
+.cart-line button{background:#ed2344;border:0;border-radius:8px;padding:6px 10px}
+.total{font-size:23px;font-weight:900;margin:20px 0}
+footer{text-align:center;color:#858eaf;font-size:12px;padding:35px}
+@media(max-width:1150px){
+ header{flex-wrap:wrap}
+ nav{order:3;width:100%;justify-content:center;flex-wrap:wrap}
  .products{grid-template-columns:repeat(3,1fr)}
+ .hero-logo{font-size:38px}
 }
 @media(max-width:750px){
  main{padding:10px}
  .layout{grid-template-columns:1fr}
  .benefits{grid-template-columns:1fr}
- .hero-content{padding:25px}
- .hero h1{font-size:34px}
- .hero:after{right:0;font-size:110px;opacity:.5}
+ .hero{height:420px}
+ .hero-content{left:20px;top:25px;width:90%}
+ .hero h1{font-size:36px}
+ .hero-logo{display:none}
+ .hero-character{font-size:65px}
+ .hero-house{font-size:65px;right:30%}
  .products{grid-template-columns:repeat(2,minmax(0,1fr))}
  .status{display:none}
  .search{width:100%}
 }
-@media(max-width:390px){.products{grid-template-columns:1fr}}
+@media(max-width:400px){.products{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+<div class="snow"></div>
 
 <header>
- <div class="logo">☃ Comfort<span>World</span><small>ТВОЙ МИР. ТВОИ ПРАВИЛА.</small></div>
+ <div class="logo">❄ Comfort<span>World</span>
+ <small>ТВОЙ МИР. ТВОИ ПРАВИЛА.</small></div>
  <nav>
-  <button class="active" onclick="showPage('home',this)">⌂ Главная</button>
-  <button onclick="showPage('shop',this)">🛒 Магазин</button>
-  <button onclick="info('О проекте','ComfortWorld — мир комфортной игры Minecraft!')">● О проекте</button>
-  <button onclick="info('Правила','Соблюдай правила проекта и уважай других игроков.')">▤ Правила</button>
-  <button onclick="info('Поддержка','Наша команда поддержки всегда готова помочь!')">☏ Поддержка</button>
+  <button class="active" onclick="page('home',this)">⌂ Главная</button>
+  <button onclick="page('shop',this)">🛒 Магазин</button>
+  <button onclick="info('О проекте','Добро пожаловать в ComfortWorld!')">● О проекте</button>
+  <button onclick="info('Правила','Соблюдай правила нашего проекта!')">▤ Правила</button>
+  <button onclick="info('Поддержка','Наша поддержка всегда готова помочь.')">☏ Поддержка</button>
  </nav>
  <div class="status"><span>●</span> Сервер онлайн<br>142/1000</div>
- <button class="cart" onclick="openCart()">🛒 Корзина (<span id="cartCount">0</span>)</button>
+ <button class="cart" onclick="openCart()">🛒 Корзина (<span id="count">0</span>)</button>
 </header>
 
 <main>
 <section class="hero" id="home">
+ <div class="mountains"></div>
  <div class="hero-content">
   <span class="tag">✦ WELCOME TO COMFORTWORLD</span>
   <h1>ТВОЙ МИР.<br><span>ТВОИ ПРАВИЛА.</span></h1>
   <p>Открой для себя новый уровень Minecraft. Покупай привилегии и развивайся вместе с нами!</p>
   <div class="actions">
    <button class="primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">🛒 Перейти в магазин →</button>
-   <button class="secondary" onclick="info('Наш Discord','Здесь будет ссылка на твой Discord-сервер.')">🎮 Наш Discord</button>
+   <button class="secondary" onclick="info('Discord','Добавь ссылку своего Discord-сервера.')">🎮 Наш Discord</button>
   </div>
  </div>
+ <div class="hero-logo">ComfortWorld<small>❄</small></div>
+ <div class="hero-house">🏰</div>
+ <div class="hero-character">👑</div>
 </section>
 
 <section class="benefits">
@@ -221,16 +305,16 @@ footer{text-align:center;padding:35px;color:#8589ad;font-size:12px}
   <button class="side-btn" onclick="filter('chest',this)">🎁 Сундуки　›</button>
   <button class="side-btn" onclick="filter('service',this)">⚙ Услуги　›</button>
   <div class="community">
-   <div class="chest">🎁</div>
+   <div class="gift">🎁</div>
    <b>Присоединяйся</b>
    <p>к нашему сообществу!</p>
-   <button class="discord" onclick="info('Discord','Добавь сюда приглашение на свой сервер.')">🎮 Discord</button>
+   <button class="discord" onclick="info('Discord','Здесь будет приглашение на Discord.')">🎮 Discord</button>
   </div>
  </aside>
 
  <section class="shop">
   <div class="shop-head">
-   <div><h2 id="catalogTitle">👑 Привилегии</h2><p>Лучшие товары для комфортной игры</p></div>
+   <div><h2 id="title">👑 Привилегии</h2><p>Лучшие привилегии для комфортной игры</p></div>
    <input class="search" id="search" placeholder="⌕ Поиск по товарам..." oninput="render()">
   </div>
   <div class="products" id="products"></div>
@@ -238,114 +322,112 @@ footer{text-align:center;padding:35px;color:#8589ad;font-size:12px}
 </div>
 </main>
 
-<footer>© 2026 ComfortWorld. Все права защищены. <br>Твой мир. Твои правила. ❄️</footer>
+<footer>© 2026 ComfortWorld. Все права защищены.<br>Твой мир. Твои правила.</footer>
 
-<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
+<button class="sound" id="sound" onclick="toggleSound()">◖ Звук выключен</button>
+
+<div class="modal-bg" id="bg" onclick="if(event.target===this)closeModal()">
  <div class="modal" id="modal"></div>
 </div>
 
 <script>
+const icons={
+ VAMPIRE:`<svg viewBox="0 0 100 100" fill="none"><path d="M50 28L9 8 21 58 42 46 50 78 58 46 79 58 91 8Z" fill="#17122f" stroke="#d95aff" stroke-width="4"/><circle cx="39" cy="43" r="5" fill="#ff244b"/><circle cx="61" cy="43" r="5" fill="#ff244b"/><path d="M38 60L50 75 62 60" stroke="#fff" stroke-width="4"/></svg>`,
+ GOD:`<svg viewBox="0 0 100 100" fill="none"><path d="M13 34L32 48 50 10 68 48 87 34 81 76 19 76Z" fill="#ffbd36" stroke="#fff0a0" stroke-width="4"/><path d="M19 77H81V89H19Z" fill="#e88c15"/><circle cx="50" cy="44" r="8" fill="#fff5bd"/><circle cx="31" cy="55" r="5" fill="#fff"/></svg>`,
+ DIABLO:`<svg viewBox="0 0 100 100" fill="none"><path d="M18 35Q-2 0 4 4Q38 7 42 33M82 35Q102 0 96 4Q62 7 58 33" fill="#ed183e" stroke="#ff7080" stroke-width="4"/><path d="M50 22L80 42 73 80 50 96 27 80 20 42Z" fill="#391020" stroke="#ff304f" stroke-width="4"/><path d="M31 53L44 60 35 68M69 53L56 60 65 68" stroke="#ff3155" stroke-width="7"/></svg>`,
+ PEGAS:`<svg viewBox="0 0 100 100" fill="none"><path d="M35 49Q3 1 10 35Q10 55 37 67M65 49Q97 1 90 35Q90 55 63 67" fill="#b8e5ff" stroke="#fff" stroke-width="4"/><path d="M50 23Q79 30 68 61Q59 82 37 70Q21 58 34 38Z" fill="#d9f5ff" stroke="#579cff" stroke-width="3"/><path d="M37 38L28 25 45 31 56 18 60 35" fill="#fff"/><circle cx="56" cy="46" r="3" fill="#293d83"/></svg>`,
+ RABBIT:`<svg viewBox="0 0 100 100" fill="none"><path d="M34 45Q16 -9 29 4Q46 12 47 42M58 42Q59 -12 73 4Q83 22 68 47" fill="#fff" stroke="#c9b7ff" stroke-width="4"/><circle cx="50" cy="61" r="31" fill="#fff" stroke="#c9b7ff" stroke-width="4"/><circle cx="40" cy="57" r="4" fill="#17152c"/><circle cx="60" cy="57" r="4" fill="#17152c"/><path d="M46 68Q50 75 54 68" stroke="#ff6e9c" stroke-width="4"/></svg>`,
+ PHANTOM:`<svg viewBox="0 0 100 100"><path d="M50 5Q90 20 83 65L90 90 68 80 50 95 32 80 10 90 17 65Q10 20 50 5Z" fill="#b9b6ff" stroke="#7161ff" stroke-width="4"/><circle cx="37" cy="50" r="6" fill="#3532a0"/><circle cx="63" cy="50" r="6" fill="#3532a0"/></svg>`,
+ CRYSTAL:`<svg viewBox="0 0 100 100"><path d="M50 5L88 37 50 95 12 37Z" fill="#53caff" stroke="#d8f7ff" stroke-width="4"/><path d="M50 5V95M12 37H88M50 5L35 37 50 95 65 37Z" stroke="#fff" stroke-width="3"/></svg>`,
+ LEGEND:`<svg viewBox="0 0 100 100"><path d="M50 4L64 30 94 36 72 58 77 90 50 75 23 90 28 58 6 36 36 30Z" fill="#ffdc67" stroke="#fff" stroke-width="4"/><circle cx="50" cy="49" r="13" fill="#ff8d24"/></svg>`,
+ MAGIC:`<svg viewBox="0 0 100 100"><path d="M50 3L60 36 94 50 60 62 50 97 38 63 5 50 38 37Z" fill="#be76ff" stroke="#fff" stroke-width="4"/></svg>`,
+ ULTRA:`<svg viewBox="0 0 100 100"><path d="M50 4L91 50 50 96 9 50Z" fill="#8e66ff" stroke="#fff" stroke-width="4"/><path d="M50 4V96M9 50H91" stroke="#e9dfff" stroke-width="4"/></svg>`
+};
 const items=[
- {name:'VAMPIRE',desc:'Особая привилегия',price:29,icon:'🦇',type:'priv',label:'ХИТ'},
- {name:'GOD',desc:'Премиум привилегия',price:49,icon:'👑',type:'priv',label:'ТОП'},
- {name:'DIABLO',desc:'Премиум привилегия',price:59,icon:'😈',type:'priv'},
- {name:'PEGAS',desc:'Премиум привилегия',price:79,icon:'🦄',type:'priv'},
- {name:'RABBIT',desc:'Премиум привилегия',price:99,icon:'🐰',type:'priv'},
- {name:'PHANTOM',desc:'Редкая привилегия',price:119,icon:'👻',type:'priv'},
- {name:'CRYSTAL',desc:'Кристальная привилегия',price:149,icon:'💎',type:'priv'},
- {name:'LEGEND',desc:'Легендарная привилегия',price:199,icon:'🔮',type:'priv'},
- {name:'MAGIC',desc:'Магическая привилегия',price:249,icon:'✨',type:'priv'},
- {name:'ULTRA',desc:'Максимальный уровень',price:299,icon:'🌌',type:'priv'},
- {name:'Маленький сундук',desc:'Набор наград',price:19,icon:'📦',type:'chest'},
- {name:'Большой сундук',desc:'Большой набор наград',price:49,icon:'🎁',type:'chest'},
- {name:'Магический сундук',desc:'Особые награды',price:99,icon:'🧰',type:'chest'},
- {name:'Смена ника',desc:'Измени свой ник',price:39,icon:'✏️',type:'service'},
- {name:'Разбан',desc:'Услуга проекта',price:149,icon:'🔓',type:'service'}
+ ['VAMPIRE','Особая привилегия',29,'priv','ХИТ'],
+ ['GOD','Премиум привилегия',49,'priv','ТОП'],
+ ['DIABLO','Премиум привилегия',59,'priv',''],
+ ['PEGAS','Премиум привилегия',79,'priv',''],
+ ['RABBIT','Премиум привилегия',99,'priv',''],
+ ['PHANTOM','Редкая привилегия',119,'priv',''],
+ ['CRYSTAL','Кристальная привилегия',149,'priv',''],
+ ['LEGEND','Легендарная привилегия',199,'priv',''],
+ ['MAGIC','Магическая привилегия',249,'priv',''],
+ ['ULTRA','Максимальный уровень',299,'priv',''],
+ ['Маленький сундук','Набор наград',19,'chest',''],
+ ['Большой сундук','Большой набор наград',49,'chest',''],
+ ['Магический сундук','Особые награды',99,'chest',''],
+ ['Смена ника','Измени свой ник',39,'service',''],
+ ['Разбан','Услуга проекта',149,'service','']
 ];
-let category='priv';
-let cart=[];
-let audioCtx;
-
-function sound(freq=550){
- try{
-  audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();
-  let o=audioCtx.createOscillator(),g=audioCtx.createGain();
-  o.connect(g);g.connect(audioCtx.destination);
-  o.frequency.value=freq;o.type='sine';
-  g.gain.setValueAtTime(.045,audioCtx.currentTime);
-  g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.12);
-  o.start();o.stop(audioCtx.currentTime+.12);
- }catch(e){}
-}
-document.addEventListener('click',e=>{
- if(e.target.closest('button'))sound();
-});
+let category='priv',cart=[],soundOn=false,ctx;
 
 function render(){
- let query=document.getElementById('search').value.toLowerCase();
- let list=items.filter(x=>x.type===category&&x.name.toLowerCase().includes(query));
+ const q=document.getElementById('search').value.toLowerCase();
+ const list=items.filter(x=>x[3]===category&&x[0].toLowerCase().includes(q));
  document.getElementById('products').innerHTML=list.map(x=>`
  <article class="product">
-  ${x.label?`<span class="label ${x.label==='ТОП'?'green':''}">${x.label}</span>`:''}
-  <div class="product-art">${x.icon}</div>
-  <h3>${x.name}</h3>
-  <p>${x.desc}</p>
-  <div class="price-row">
-   <span class="price">${x.price} ₽</span>
-   <button class="add" onclick="add('${x.name}')">🛒 В корзину</button>
-  </div>
- </article>`).join('');
+ ${x[4]?`<span class="label ${x[4]==='ТОП'?'green':''}">${x[4]}</span>`:''}
+ <div class="art">${icons[x[0]]||'<span style="font-size:70px">▣</span>'}</div>
+ <h3>${x[0]}</h3><p>${x[1]}</p>
+ <div class="price-row"><span class="price">${x[2]} ₽</span>
+ <button class="add" onclick="add('${x[0]}')">🛒 В корзину</button></div>
+ </article>`).join('')||'<p>Ничего не найдено.</p>';
 }
 function filter(type,btn){
  category=type;
  document.querySelectorAll('.side-btn').forEach(x=>x.classList.remove('selected'));
  btn.classList.add('selected');
- document.getElementById('catalogTitle').textContent=
- type==='priv'?'👑 Привилегии':type==='chest'?'🎁 Сундуки':'⚙ Услуги';
+ document.getElementById('title').textContent=type==='priv'?'👑 Привилегии':type==='chest'?'🎁 Сундуки':'⚙ Услуги';
  render();
 }
 function add(name){
- let item=items.find(x=>x.name===name);
- cart.push(item);
- updateCart();
- toast('Успешно!','Товар добавлен в корзину');
+ cart.push(items.find(x=>x[0]===name));
+ update();toast('Успешно!','Товар добавлен в корзину');
 }
-function updateCart(){
- document.getElementById('cartCount').textContent=cart.length;
-}
+function update(){document.getElementById('count').textContent=cart.length}
 function openCart(){
- let total=cart.reduce((s,x)=>s+x.price,0);
+ const total=cart.reduce((s,x)=>s+x[2],0);
  document.getElementById('modal').innerHTML=`
- <button class="close" onclick="closeModal()">✕</button>
- <h2>🛒 Твоя корзина</h2>
- ${cart.length?cart.map((x,i)=>`
- <div class="cart-line"><span>${x.icon} ${x.name} — ${x.price} ₽</span>
- <button onclick="removeItem(${i})">✕</button></div>`).join(''):'<p>Корзина пока пустая.</p>'}
+ <button class="close" onclick="closeModal()">✕</button><h2>🛒 Твоя корзина</h2>
+ ${cart.length?cart.map((x,i)=>`<div class="cart-line"><span>${x[0]} — ${x[2]} ₽</span><button onclick="removeItem(${i})">✕</button></div>`).join(''):'<p>Корзина пока пустая.</p>'}
  <div class="total">Итого: ${total} ₽</div>
- <button class="primary" onclick="info('Оформление заказа','Демо-магазин. Для настоящей оплаты нужно подключить платёжную систему.')">Оформить заказ →</button>`;
+ <button class="primary" onclick="info('Оформление заказа','Это демонстрационная корзина. Настоящую оплату нужно подключить отдельно.')">Оформить заказ →</button>`;
  showModal();
 }
-function removeItem(i){cart.splice(i,1);updateCart();openCart()}
-function info(title,text){
- document.getElementById('modal').innerHTML=`
- <button class="close" onclick="closeModal()">✕</button>
- <h2>${title}</h2><p style="line-height:1.8;color:#c7c8dd">${text}</p>`;
+function removeItem(i){cart.splice(i,1);update();openCart()}
+function info(title,msg){
+ document.getElementById('modal').innerHTML=`<button class="close" onclick="closeModal()">✕</button><h2>${title}</h2><p style="line-height:1.8;color:#c8cbea">${msg}</p>`;
  showModal();
 }
-function showModal(){document.getElementById('modalBg').classList.add('show')}
-function closeModal(){document.getElementById('modalBg').classList.remove('show')}
+function showModal(){document.getElementById('bg').classList.add('show')}
+function closeModal(){document.getElementById('bg').classList.remove('show')}
 function toast(title,msg){
- let t=document.createElement('div');
- t.className='toast';t.innerHTML=`<b>✅ ${title}</b><br><small>${msg}</small>`;
- document.body.appendChild(t);
- setTimeout(()=>t.remove(),2400);
+ const t=document.createElement('div');
+ t.className='toast';t.innerHTML=`<b>✓ ${title}</b><br><small>${msg}</small>`;
+ document.body.appendChild(t);setTimeout(()=>t.remove(),2500);
 }
-function showPage(page,btn){
+function page(p,btn){
  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
  btn.classList.add('active');
- if(page==='shop')document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
+ if(p==='shop')document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
  else window.scrollTo({top:0,behavior:'smooth'});
 }
+function toggleSound(){
+ soundOn=!soundOn;
+ document.getElementById('sound').textContent=soundOn?'◖ Звук включен':'◖ Звук выключен';
+}
+document.addEventListener('click',e=>{
+ if(!soundOn||!e.target.closest('button'))return;
+ try{
+ ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();
+ const o=ctx.createOscillator(),g=ctx.createGain();
+ o.connect(g);g.connect(ctx.destination);
+ o.frequency.value=550;g.gain.value=.035;
+ g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.1);
+ o.start();o.stop(ctx.currentTime+.1);
+ }catch(e){}
+});
 render();
 </script>
 </body>
