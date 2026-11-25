@@ -3,319 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f97316">
     <title>ComfortWorld | Premium Store</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- ЦВЕТОВАЯ ПАЛИТРА (Строгий гейминг) --- */
+        /* --- ЦВЕТОВАЯ ПАЛИТРА (Светлая, ReallyWorld Style) --- */
         :root {
-            --bg-dark: #0f1115;       /* Глубокий темно-серый */
-            --bg-panel: #181b22;      /* Цвет панелей */
-            --bg-hover: #22262f;
-            --accent: #facc15;        /* Неоново-желтый (как в CS2) */
-            --accent-hover: #eab308;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --danger: #ef4444;
+            --bg-body: #f8f9fa;
+            --bg-card: #ffffff;
+            --accent: #f97316; /* Оранжевый */
+            --accent-hover: #ea580c;
+            --accent-light: #ffedd5;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
             --success: #10b981;
-            --border-color: rgba(255, 255, 255, 0.08);
+            --danger: #ef4444;
+            --dark-btn: #1f2937;
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+        
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-body);
             color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 0%, #1f2430 0%, var(--bg-dark) 70%);
+            position: relative;
         }
+
         a { text-decoration: none; color: inherit; }
+        button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+        /* --- СНЕГ (ФОН) --- */
+        #snow-container {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: #fff;
+            font-size: 1.5em;
+            opacity: 0.8;
+            animation: fall linear forwards;
+            text-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
+        }
+
+        /* --- СНЕГОВИКИ --- */
+        .snowman {
+            position: absolute;
+            font-size: 40px;
+            animation: float 4s ease-in-out infinite;
+            z-index: 10;
+            user-select: none;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
+        }
+        .snowman-1 { top: 15%; left: 5%; }
+        .snowman-2 { top: 40%; right: 4%; animation-delay: 1s; font-size: 50px; }
+        .snowman-3 { bottom: 10%; left: 10%; animation-delay: 2s; font-size: 35px; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
 
         /* --- ШАПКА --- */
         header {
-            background: rgba(15, 17, 21, 0.85);
-            backdrop-filter: blur(12px);
+            background: var(--bg-card);
             position: sticky; top: 0; z-index: 1000;
             border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
         .header-content {
-            max-width: 1300px; margin: 0 auto; padding: 16px 24px;
-            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1300px; margin: 0 auto; padding: 12px 24px;
+            display: flex; align-items: center; justify-content: space-between; gap: 20px;
         }
-        .logo { font-weight: 900; font-size: 22px; display: flex; align-items: center; gap: 10px; letter-spacing: 0.5px; }
+        .logo { font-weight: 900; font-size: 20px; display: flex; align-items: center; gap: 8px; }
+        .logo img { height: 30px; }
         .logo span { color: var(--accent); }
-        .nav-links { display: flex; gap: 32px; font-weight: 600; font-size: 14px; color: var(--text-muted); }
-        .nav-links a { transition: 0.2s; cursor: pointer; }
-        .nav-links a:hover { color: var(--accent); }
         
-        .header-right { display: flex; gap: 16px; align-items: center; }
-        .online-status {
-            background: rgba(16, 185, 129, 0.1); padding: 8px 16px; border-radius: 8px;
-            font-size: 13px; font-weight: 700; color: var(--success); border: 1px solid rgba(16, 185, 129, 0.2);
-            display: flex; align-items: center; gap: 8px;
-        }
-        .online-status::before { content: ''; width: 6px; height: 6px; background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success); }
+        .nav-links { display: flex; gap: 24px; font-weight: 600; font-size: 14px; color: var(--text-muted); }
+        .nav-links a, .nav-links button { transition: color 0.2s; background: none; border: none; font-size: 14px; font-weight: 600; color: var(--text-muted); }
+        .nav-links a:hover, .nav-links button:hover { color: var(--accent); }
+
+        .header-right { display: flex; gap: 20px; align-items: center; }
         
+        /* Онлайн статус с полоской */
+        .online-widget { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-muted); text-align: right; }
+        .online-text span { color: var(--text-main); }
+        .online-bar-bg { width: 120px; height: 6px; background: #e5e7eb; border-radius: 10px; overflow: hidden; }
+        .online-bar-fill { height: 100%; width: 84%; background: var(--accent); border-radius: 10px; transition: width 1s ease; }
+
         .shop-btn-header {
-            background: var(--accent); color: var(--bg-dark); padding: 10px 20px; border-radius: 8px;
-            font-weight: 800; font-size: 14px; transition: 0.2s; border: none; cursor: pointer;
+            background: var(--accent); color: #fff; padding: 10px 20px; border-radius: 8px;
+            font-weight: 700; font-size: 14px; transition: 0.2s; display: flex; align-items: center; gap: 8px;
         }
-        .shop-btn-header:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        .shop-btn-header:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); }
 
         /* --- БАННЕР (HERO) --- */
         .hero {
             max-width: 1300px; margin: 24px auto;
-            background: linear-gradient(to right, rgba(15, 17, 21, 0.9) 0%, rgba(15, 17, 21, 0.6) 100%), url('bg.jpg') center/cover no-repeat;
-            background-color: var(--bg-panel);
-            border-radius: 20px; padding: 80px 60px;
-            display: flex; flex-direction: column; justify-content: center;
-            border: 1px solid var(--border-color);
+            background: var(--accent);
+            border-radius: 20px; padding: 60px;
+            display: flex; justify-content: space-between; align-items: center;
             position: relative; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(249, 115, 22, 0.15);
         }
-        .hero-text { position: relative; z-index: 1; max-width: 600px; }
-        .hero-text h1 { font-size: 48px; font-weight: 900; margin-bottom: 16px; line-height: 1.1; letter-spacing: -1px; }
-        .hero-text h1 span { color: var(--accent); }
-        .hero-text p { font-size: 16px; color: var(--text-muted); margin-bottom: 32px; line-height: 1.6; }
+        /* Паттерн на фоне */
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 20px 20px; opacity: 0.5; pointer-events: none;
+        }
+        .hero-text { position: relative; z-index: 2; max-width: 600px; }
+        .hero-text h1 { font-size: 42px; font-weight: 900; margin-bottom: 16px; line-height: 1.1; color: #fff; }
+        .hero-text p { font-size: 16px; color: rgba(255,255,255,0.9); margin-bottom: 32px; line-height: 1.5; font-weight: 500; }
         
-        .hero-buttons { display: flex; gap: 16px; }
-        .play-btn {
-            background: var(--accent); color: var(--bg-dark); padding: 16px 32px; border-radius: 10px;
-            font-weight: 800; font-size: 16px; transition: 0.2s; border: none; cursor: pointer;
-            display: flex; align-items: center; gap: 8px;
+        .ip-btn {
+            background: var(--dark-btn); color: #fff; padding: 12px 24px; border-radius: 30px;
+            font-weight: 700; font-size: 16px; transition: 0.2s; display: inline-flex; align-items: center; gap: 12px;
+            cursor: pointer; border: 2px solid transparent;
         }
-        .play-btn:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(250, 204, 21, 0.2); }
-        .discord-btn {
-            background: rgba(255, 255, 255, 0.05); color: var(--text-main); padding: 16px 32px; border-radius: 10px;
-            font-weight: 700; font-size: 16px; transition: 0.2s; border: 1px solid var(--border-color); cursor: pointer;
-        }
-        .discord-btn:hover { background: rgba(255, 255, 255, 0.1); }
+        .ip-btn:hover { transform: translateY(-2px); background: #111827; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .ip-btn .icon-circle { background: #fff; color: var(--dark-btn); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+        
+        .hero-image { position: relative; z-index: 2; width: 300px; height: 300px; background: url('https://mc-heads.net/body/Notch/right') no-repeat center bottom; background-size: contain; }
 
         /* --- ОСНОВНОЙ КОНТЕНТ --- */
-        .main-container { max-width: 1300px; margin: 30px auto; display: flex; gap: 24px; padding: 0 24px; }
+        .main-container { max-width: 1300px; margin: 30px auto; display: flex; gap: 30px; padding: 0 24px; position: relative; z-index: 10; }
 
         /* Сайдбар */
-        .sidebar { width: 260px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
-        .panel {
-            background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px;
+        .sidebar { width: 240px; flex-shrink: 0; display: flex; flex-direction: column; gap: 24px; }
+        .sidebar-menu { display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-menu button {
+            padding: 14px 20px; border-radius: 12px; font-weight: 700; font-size: 15px; color: var(--text-muted);
+            display: flex; align-items: center; gap: 12px; transition: 0.2s; background: var(--bg-card); text-align: left;
+            border: 1px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .sidebar-menu button:hover { background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transform: translateX(5px); }
+        .sidebar-menu button.active {
+            background: var(--accent-light); color: var(--accent); border-color: rgba(249, 115, 22, 0.2);
         }
         
-        .sidebar-menu { display: flex; flex-direction: column; gap: 6px; }
-        .sidebar-menu a {
-            padding: 14px 16px; border-radius: 10px; font-weight: 600; font-size: 15px; color: var(--text-muted);
-            display: flex; align-items: center; gap: 12px; transition: 0.2s; cursor: pointer;
-        }
-        .sidebar-menu a:hover { background: var(--bg-hover); color: var(--text-main); }
-        .sidebar-menu a.active {
-            background: rgba(250, 204, 21, 0.1); color: var(--accent); font-weight: 700;
-            border-left: 3px solid var(--accent);
-        }
-
-        /* Топ донатеров */
-        .top-donators h3 { font-size: 14px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 1px; }
-        .top-list { display: flex; flex-direction: column; gap: 10px; }
-        .top-item { display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: 8px; transition: 0.2s; }
-        .top-item:hover { background: var(--bg-hover); }
-        .top-item img { width: 36px; height: 36px; border-radius: 6px; }
-        .top-item .name { font-size: 14px; font-weight: 700; }
-        .top-item .rank { font-size: 11px; color: var(--accent); font-weight: 800; text-transform: uppercase; }
-
         /* Контент */
         .content { flex-grow: 1; min-width: 0; }
         
+        h2.section-title { font-size: 32px; font-weight: 900; margin-bottom: 24px; color: var(--text-main); }
+
         /* Лента */
         .recent-purchases {
-            background: var(--bg-panel); border: 1px solid var(--border-color);
-            border-radius: 12px; padding: 16px 20px; margin-bottom: 24px;
-            font-size: 14px; color: var(--text-muted); display: flex; gap: 10px; overflow: hidden; white-space: nowrap;
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 12px 20px; margin-bottom: 24px;
+            font-size: 13px; color: var(--text-muted); display: flex; gap: 10px; overflow: hidden; white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
         .recent-purchases b { color: var(--text-main); }
+        .recent-purchases .item { color: var(--accent); font-weight: 700; }
+
+        /* Сетка карточек */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 24px; }
         
-        h2.section-title { font-size: 28px; font-weight: 800; margin-bottom: 24px; color: var(--text-main); }
-
-        /* --- ВКЛАДКИ --- */
-        .tab-content { display: none; animation: fadeIn 0.3s ease-out; }
-        .tab-content.active-tab { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Сетка карточек (Магазин) */
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
         .card {
-            background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px;
+            background: var(--bg-card); border-radius: 16px; padding: 16px;
             display: flex; flex-direction: column; position: relative; transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid transparent; overflow: hidden;
         }
-        .card:hover { transform: translateY(-5px); border-color: rgba(250, 204, 21, 0.4); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: var(--border-color); }
         
-        .card-img { width: 100%; height: 160px; border-radius: 10px; object-fit: cover; margin-bottom: 16px; }
-        .card-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: var(--text-main); }
-        .price-box { margin-bottom: 20px; margin-top: auto; }
-        .old-price { font-size: 13px; color: var(--text-muted); text-decoration: line-through; margin-right: 8px; }
-        .current-price { font-size: 20px; font-weight: 800; color: var(--accent); }
+        .sale-badge {
+            position: absolute; top: 12px; left: 12px; background: var(--danger); color: #fff;
+            font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; z-index: 2;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .card-img-wrap {
+            width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; margin-bottom: 16px;
+            background: var(--accent-light); display: flex; align-items: center; justify-content: center;
+        }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .card:hover .card-img { transform: scale(1.05); }
+        
+        .card-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; color: var(--text-main); }
+        
+        .price-box { margin-bottom: 20px; margin-top: auto; display: flex; align-items: baseline; gap: 8px; }
+        .current-price { font-size: 18px; font-weight: 800; color: var(--text-main); }
+        .current-price span { font-size: 14px; color: var(--text-muted); font-weight: 600; }
+        .old-price { font-size: 13px; color: var(--text-muted); text-decoration: line-through; font-weight: 600; }
         
         .buy-btn { 
-            background: var(--accent); color: var(--bg-dark); border: none; padding: 12px; border-radius: 8px; 
+            background: var(--accent); color: #fff; border: none; padding: 14px; border-radius: 10px; 
             font-weight: 800; font-size: 15px; cursor: pointer; width: 100%; transition: 0.2s; 
+            display: flex; justify-content: center; align-items: center; gap: 8px;
         }
-        .buy-btn:hover { background: var(--accent-hover); }
-
-        /* ================== АПГРЕЙДЕР (CS2 STYLE) ================== */
-        .upg-container { position: relative; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 20px; padding: 30px; }
-        
-        .upg-top-area { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; gap: 20px; }
-
-        .upg-item-box {
-            flex: 1; background: #111317; border-radius: 12px; padding: 20px;
-            display: flex; flex-direction: column; align-items: center; position: relative;
-            border: 2px solid transparent; transition: 0.3s; min-width: 200px;
-        }
-        .upg-item-box.active { border-color: var(--accent); box-shadow: 0 0 20px rgba(250, 204, 21, 0.1); }
-        .upg-item-box img { width: 120px; height: 120px; border-radius: 8px; margin-bottom: 12px; }
-        .upg-item-name { font-weight: 800; font-size: 18px; color: var(--text-main); }
-        .upg-item-price { font-size: 15px; color: var(--accent); font-weight: 700; margin-top: 4px; }
-
-        /* Центральный круг */
-        .upg-center-area { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .upg-circle {
-            width: 140px; height: 140px; border-radius: 50%;
-            background: #111317; border: 4px solid #2a2e38;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            position: relative; transition: 0.3s;
-        }
-        .upg-circle.warning { border-color: var(--danger); animation: pulse-red 1s infinite; }
-        
-        .upg-chance-text { font-size: 28px; font-weight: 900; color: var(--accent); }
-        .upg-chance-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; letter-spacing: 1px; }
-
-        .upg-main-btn {
-            margin-top: 20px; background: var(--accent); color: var(--bg-dark);
-            border: none; padding: 14px 32px; border-radius: 8px; 
-            font-weight: 800; font-size: 16px; cursor: pointer; transition: 0.2s; width: 180px;
-        }
-        .upg-main-btn:hover { background: var(--accent-hover); transform: scale(1.02); }
-        .upg-main-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-        /* Нижняя панель - Инвентарь */
-        .upg-inventory-title { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
-        .upg-inventory {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px;
-            max-height: 240px; overflow-y: auto; padding-right: 8px;
-        }
-        .upg-inventory::-webkit-scrollbar { width: 6px; }
-        .upg-inventory::-webkit-scrollbar-thumb { background: #2a2e38; border-radius: 10px; }
-        
-        .inv-item {
-            background: #111317; border: 1px solid var(--border-color);
-            border-radius: 10px; padding: 12px; display: flex; flex-direction: column; align-items: center;
-            cursor: pointer; transition: 0.2s;
-        }
-        .inv-item:hover { background: var(--bg-hover); border-color: rgba(250, 204, 21, 0.5); }
-        .inv-item img { width: 50px; height: 50px; border-radius: 6px; margin-bottom: 8px; }
-        .inv-item .name { font-size: 12px; font-weight: 700; color: var(--text-main); text-align: center; }
-        .inv-item .chance { font-size: 11px; color: var(--accent); font-weight: 800; margin-top: 4px; }
-
-        /* Оверлей результата */
-        .upg-result-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 17, 21, 0.95); border-radius: 20px; z-index: 100;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s;
-        }
-        .upg-result-overlay.show { opacity: 1; pointer-events: auto; }
-        
-        .upg-res-title { font-size: 64px; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; }
-        .upg-res-win { color: var(--success); animation: bounceIn 0.5s ease-out; }
-        .upg-res-lose { color: var(--danger); animation: shakeHard 0.5s ease-out; }
-        
-        @keyframes bounceIn { 0% { transform: scale(0.5); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        @keyframes shakeHard { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-15px); } 75% { transform: translateX(15px); } }
-        
-        .upg-res-close { 
-            background: var(--bg-panel); color: var(--text-main); border: 1px solid var(--border-color); 
-            padding: 12px 40px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; 
-        }
-        .upg-res-close:hover { background: var(--bg-hover); }
+        .buy-btn:hover { background: var(--accent-hover); transform: scale(1.02); box-shadow: 0 6px 15px rgba(249, 115, 22, 0.3); }
 
         /* --- МОДАЛЬНЫЕ ОКНА --- */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 17, 21, 0.85); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.2s; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); z-index: 2000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.2s; }
         .modal-overlay.show { display: flex; opacity: 1; }
-        .modal-content { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 16px; width: 90%; max-width: 800px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-        .ip-modal-content { max-width: 450px; text-align: center; }
+        .modal-content { background: var(--bg-card); border-radius: 16px; width: 90%; max-width: 600px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 40px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.3s; }
+        .modal-overlay.show .modal-content { transform: translateY(0); }
         .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
         .modal-header h2 { color: var(--text-main); font-size: 20px; font-weight: 800; }
         .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; transition: 0.2s; }
-        .close-btn:hover { color: var(--text-main); }
-        .modal-body { padding: 24px; overflow-y: auto; font-size: 14px; line-height: 1.6; color: var(--text-muted); }
-        .modal-body h3 { color: var(--text-main); margin: 20px 0 10px 0; font-size: 16px; }
+        .close-btn:hover { color: var(--danger); }
+        .modal-body { padding: 24px; overflow-y: auto; font-size: 15px; line-height: 1.6; color: var(--text-muted); }
+        .modal-body p { margin-bottom: 12px; }
         .penalty { color: var(--danger); font-weight: 700; }
         
-        /* IP Блок */
-        .ip-box { background: #111317; border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; margin: 20px 0; font-family: monospace; font-size: 20px; font-weight: 900; color: var(--accent); cursor: pointer; transition: 0.2s; }
-        .ip-box:hover { border-color: var(--accent); }
-        .copy-btn { background: var(--accent); color: var(--bg-dark); font-weight: 800; }
-        .copy-success { color: var(--success); font-weight: 700; margin-top: 12px; opacity: 0; transition: 0.2s; }
-        .copy-success.show { opacity: 1; }
+        /* Тост */
+        .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 3000; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: var(--dark-btn); color: #fff; padding: 14px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideIn 0.3s ease-out; display: flex; align-items: center; gap: 10px; }
+        .toast.success { border-left: 4px solid var(--success); }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
 
         @media (max-width: 992px) {
             .main-container { flex-direction: column; }
             .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
-            .panel { flex: 1; min-width: 250px; }
-            .hero { padding: 40px 20px; text-align: center; }
+            .sidebar-menu button { flex: 1; justify-content: center; }
+            .hero { padding: 40px 20px; flex-direction: column; text-align: center; gap: 30px; }
             .hero-text h1 { font-size: 32px; }
-            .hero-buttons { justify-content: center; flex-direction: column; }
-            .upg-top-area { flex-direction: column; }
-            .upg-item-box { width: 100%; }
+            .hero-image { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Контейнер для снега -->
+    <div id="snow-container"></div>
+
+    <!-- Снеговики на фоне -->
+    <div class="snowman snowman-1">⛄</div>
+    <div class="snowman snowman-2">☃️</div>
+    <div class="snowman snowman-3">⛄</div>
+
     <header>
         <div class="header-content">
-            <div class="logo">Comfort<span>World</span></div>
+            <div class="logo">
+                <img src="https://mc-heads.net/avatar/Notch/30" alt="logo" style="border-radius: 6px;">
+                Comfort<span>World</span>
+            </div>
             <nav class="nav-links">
                 <a href="#" onclick="window.scrollTo(0,0)">Главная</a>
-                <a href="#">Описание</a>
-                <a onclick="openRules()">Правила</a>
+                <a href="#">Описание привилегий</a>
+                <button onclick="openRules()">Правила</button>
                 <a href="#">Форум</a>
             </nav>
             <div class="header-right">
-                <div class="online-status">Онлайн: 4485</div>
-                <button class="shop-btn-header">Магазин 🛒</button>
+                <div class="online-widget">
+                    <div class="online-text">Онлайн: <span>6318 / 7500</span></div>
+                    <div class="online-bar-bg"><div class="online-bar-fill"></div></div>
+                </div>
+                <button class="shop-btn-header" onclick="showToast('Вы уже в магазине!', 'success')">
+                    🛒 Магазин
+                </button>
             </div>
         </div>
     </header>
 
     <section class="hero">
         <div class="hero-text">
-            <h1>Добро пожаловать в <span>ComfortWorld</span></h1>
-            <p>Начни свое выживание с комфортом. Уникальные механики, дружелюбное сообщество и лучший донат на сервере.</p>
-            <div class="hero-buttons">
-                <button onclick="openIpModal()" class="play-btn">▶ Играть сейчас</button>
-                <button class="discord-btn">Discord 💬</button>
-            </div>
+            <h1>ComfortWorld — Начало<br>новой эры</h1>
+            <p>Открой для себя огромные миры, полные веселья и миллионов друзей!</p>
+            <button class="ip-btn" onclick="copyIp()">
+                <div class="icon-circle">⛏️</div>
+                Играть сейчас<br>
+                <span style="font-size: 13px; font-weight: 500; opacity: 0.8;">comfortworld.gigacube.host</span>
+            </button>
         </div>
+        <div class="hero-image"></div>
     </section>
 
     <main class="main-container">
         <aside class="sidebar">
-            <div class="panel sidebar-menu">
-                <a onclick="openTab('privileges', this)" class="active">👑 Привилегии</a>
-                <a onclick="openTab('cases', this)">🎁 Кейсы</a>
-                <a onclick="openTab('services', this)">💎 Услуги</a>
-                <a onclick="openTab('upgrader', this)">🔄 Апгрейдер</a>
-            </div>
-            
-            <div class="panel top-donators">
-                <h3>Топ Донатеров</h3>
-                <div class="top-list">
-                    <div class="top-item">
-                        <img src="https://mc-heads.net/avatar/Notch/32" alt="skin">
-                        <div><div class="name">Notch</div><div class="rank">D.OWNER</div></div>
-                    </div>
-                    <div class="top-item">
-                        <img src="https://mc-heads.net/avatar/Herobrine/32" alt="skin">
-                        <div><div class="name">Herobrine</div><div class="rank">ENIGMA</div></div>
-                    </div>
-                </div>
+            <div class="sidebar-menu">
+                <button onclick="openTab('privileges', this)" class="active">👑 Привилегии</button>
+                <button onclick="openTab('cases', this)">🎁 Сундуки</button>
+                <button onclick="openTab('services', this)">💎 Услуги</button>
             </div>
         </aside>
 
@@ -325,99 +297,98 @@
             </div>
 
             <!-- ПРИВИЛЕГИИ -->
-            <div id="privileges" class="tab-content active-tab">
-                <h2 class="section-title">Магазин привилегий</h2>
+            <div id="privileges" class="tab-content" style="display: block;">
+                <h2 class="section-title">Магазин доната</h2>
                 <div class="cards-grid">
+                    
                     <div class="card">
-                        <img src="https://placehold.co/300x300/181b22/facc15?text=VAMPIRE" class="card-img">
-                        <div class="card-title">VAMPIRE</div>
-                        <div class="price-box"><span class="old-price">59 ₽</span><span class="current-price">29 ₽</span></div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-                    <div class="card">
-                        <img src="https://placehold.co/300x300/181b22/facc15?text=GOD" class="card-img">
+                        <div class="sale-badge">Скидка</div>
+                        <div class="card-img-wrap">
+                            <img src="https://placehold.co/400x400/ffedd5/f97316?text=GOD" alt="GOD" class="card-img" loading="lazy">
+                        </div>
                         <div class="card-title">GOD</div>
-                        <div class="price-box"><span class="old-price">79 ₽</span><span class="current-price">49 ₽</span></div>
-                        <button class="buy-btn">Купить</button>
+                        <div class="price-box">
+                            <div class="current-price">1499 ₽ <span>/ мес</span></div>
+                            <div class="old-price">4999 ₽</div>
+                        </div>
+                        <button class="buy-btn" onclick="showToast('GOD добавлен в корзину!', 'success')">Купить</button>
                     </div>
+
                     <div class="card">
-                        <img src="https://placehold.co/300x300/181b22/facc15?text=DIABLO" class="card-img">
+                        <div class="sale-badge">Скидка</div>
+                        <div class="card-img-wrap">
+                            <img src="https://placehold.co/400x400/ffedd5/f97316?text=DIABLO" alt="DIABLO" class="card-img" loading="lazy">
+                        </div>
                         <div class="card-title">DIABLO</div>
-                        <div class="price-box"><span class="old-price">99 ₽</span><span class="current-price">59 ₽</span></div>
-                        <button class="buy-btn">Купить</button>
+                        <div class="price-box">
+                            <div class="current-price">1299 ₽ <span>/ мес</span></div>
+                            <div class="old-price">4339 ₽</div>
+                        </div>
+                        <button class="buy-btn" onclick="showToast('DIABLO добавлен в корзину!', 'success')">Купить</button>
                     </div>
+
                     <div class="card">
-                        <img src="https://placehold.co/300x300/181b22/facc15?text=D.OWNER" class="card-img">
-                        <div class="card-title">D.OWNER</div>
-                        <div class="price-box"><span class="current-price">699 ₽</span></div>
-                        <button class="buy-btn">Купить</button>
+                        <div class="card-img-wrap">
+                            <img src="https://placehold.co/400x400/ffedd5/f97316?text=HELPER" alt="HELPER" class="card-img" loading="lazy">
+                        </div>
+                        <div class="card-title">HELPER</div>
+                        <div class="price-box">
+                            <div class="current-price">6666 ₽</div>
+                        </div>
+                        <button class="buy-btn" onclick="showToast('HELPER добавлен в корзину!', 'success')">Купить</button>
                     </div>
+
+                    <div class="card">
+                        <div class="card-img-wrap">
+                            <img src="https://placehold.co/400x400/ffedd5/f97316?text=DRAGON" alt="DRAGON" class="card-img" loading="lazy">
+                        </div>
+                        <div class="card-title">DRAGON</div>
+                        <div class="price-box">
+                            <div class="current-price">679 ₽ <span>/ мес</span></div>
+                            <div class="old-price">2249 ₽</div>
+                        </div>
+                        <button class="buy-btn" onclick="showToast('DRAGON добавлен в корзину!', 'success')">Купить</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="sale-badge" style="background: var(--success);">ХИТ</div>
+                        <div class="card-img-wrap">
+                            <img src="https://placehold.co/400x400/ffedd5/f97316?text=IMPERATOR" alt="IMPERATOR" class="card-img" loading="lazy">
+                        </div>
+                        <div class="card-title">IMPERATOR</div>
+                        <div class="price-box">
+                            <div class="current-price">419 ₽ <span>/ мес</span></div>
+                            <div class="old-price">1399 ₽</div>
+                        </div>
+                        <button class="buy-btn" onclick="showToast('IMPERATOR добавлен в корзину!', 'success')">Купить</button>
+                    </div>
+
                 </div>
             </div>
 
-            <!-- КЕЙСЫ -->
-            <div id="cases" class="tab-content">
-                <h2 class="section-title">Кейсы и Сундуки</h2>
+            <!-- СУНДУКИ -->
+            <div id="cases" class="tab-content" style="display: none;">
+                <h2 class="section-title">Сундуки</h2>
                 <div class="cards-grid">
                     <div class="card">
+                        <div class="card-img-wrap">
+                            <img src="https://placehold.co/400x400/ffedd5/f97316?text=CHEST" alt="Кейс" class="card-img">
+                        </div>
                         <div class="card-title">Кейс с супер донатом</div>
-                        <div class="price-box"><span class="current-price">99 ₽</span></div>
-                        <button class="buy-btn">Купить</button>
+                        <div class="price-box"><div class="current-price">99 ₽</div></div>
+                        <button class="buy-btn" onclick="showToast('Кейс добавлен в корзину!', 'success')">Купить</button>
                     </div>
                 </div>
             </div>
 
             <!-- УСЛУГИ -->
-            <div id="services" class="tab-content">
+            <div id="services" class="tab-content" style="display: none;">
                 <h2 class="section-title">Услуги</h2>
                 <div class="cards-grid">
                     <div class="card">
                         <div class="card-title">Разбан</div>
-                        <div class="price-box"><span class="current-price">199 ₽</span></div>
-                        <button class="buy-btn">Купить</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- АПГРЕЙДЕР -->
-            <div id="upgrader" class="tab-content">
-                <h2 class="section-title">Апгрейдер</h2>
-                
-                <div class="upg-container" id="upg-main-area">
-                    
-                    <div class="upg-top-area">
-                        <!-- Твой предмет -->
-                        <div class="upg-item-box active" id="left-item-box">
-                            <img src="https://placehold.co/200x200/111317/facc15?text=DIABLO" id="current-item-img">
-                            <div class="upg-item-name" id="current-item-name">DIABLO</div>
-                            <div class="upg-item-price" id="current-item-price">59 ₽</div>
-                        </div>
-
-                        <!-- Центр -->
-                        <div class="upg-center-area">
-                            <div class="upg-circle" id="upg-circle">
-                                <div class="upg-chance-text" id="center-chance">0%</div>
-                                <div class="upg-chance-label">Шанс</div>
-                            </div>
-                            <button class="upg-main-btn" id="upg-btn" onclick="startUpgrade()">Улучшить</button>
-                        </div>
-
-                        <!-- Цель -->
-                        <div class="upg-item-box" id="right-item-box">
-                            <img src="https://placehold.co/200x200/111317/9ca3af?text=?" id="target-item-img">
-                            <div class="upg-item-name" id="target-item-name">Выберите цель</div>
-                            <div class="upg-item-price" id="target-item-price">- ₽</div>
-                        </div>
-                    </div>
-
-                    <!-- Инвентарь -->
-                    <div class="upg-inventory-title">Инвентарь</div>
-                    <div class="upg-inventory" id="target-list"></div>
-
-                    <!-- Результат -->
-                    <div class="upg-result-overlay" id="upg-result">
-                        <h1 class="upg-res-title" id="upg-res-text">WIN</h1>
-                        <button class="upg-res-close" onclick="closeUpgResult()">Продолжить</button>
+                        <div class="price-box"><div class="current-price">199 ₽</div></div>
+                        <button class="buy-btn" onclick="showToast('Разбан добавлен в корзину!', 'success')">Купить</button>
                     </div>
                 </div>
             </div>
@@ -425,7 +396,7 @@
         </div>
     </main>
 
-    <!-- МОДАЛКИ -->
+    <!-- МОДАЛКА ПРАВИЛА -->
     <div class="modal-overlay" id="rules-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -435,216 +406,136 @@
             <div class="modal-body">
                 <p><strong>1.4</strong> Решения администрации не обсуждаются.</p>
                 <p><strong>4.5</strong> Оскорбление проекта. <span class="penalty">[Бан на 30 дней]</span></p>
-                <p><strong>5.2</strong> Использование читов. <span class="penalty">[бан на 50 дней]</span></p>
+                <p><strong>5.2</strong> Использование читов. <span class="penalty">[Бан на 50 дней]</span></p>
             </div>
         </div>
     </div>
 
-    <div class="modal-overlay" id="ip-modal">
-        <div class="modal-content ip-modal-content">
-            <div class="modal-header">
-                <h2>✨ Подключение</h2>
-                <button class="close-btn" onclick="closeIpModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="ip-box" onclick="copyIp()" title="Скопировать">
-                    comfortworld.gigacube.host
-                </div>
-                <button class="buy-btn copy-btn" onclick="copyIp()">📋 Скопировать IP</button>
-                <p class="copy-success" id="copy-success">✅ IP скопирован!</p>
-            </div>
-        </div>
-    </div>
+    <div class="toast-container" id="toast-container"></div>
 
     <script>
-        // --- ЛЕНТА ---
-        function updateFeed() {
-            const feed = document.getElementById('recent-feed');
-            feed.style.opacity = '0.5';
-            setTimeout(() => {
-                feed.innerHTML = 'Недавно купили: <b>Nad***r</b> — <span style="color:var(--accent)">D.OWNER</span>';
-                feed.style.opacity = '1';
-            }, 300); 
-        }
-        setInterval(updateFeed, 5000);
-
-        // --- ВКЛАДКИ ---
-        function openTab(tabId, element) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
-            document.querySelectorAll('.sidebar-menu a').forEach(l => l.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active-tab');
-            element.classList.add('active');
-        }
-
-        // --- МОДАЛКИ ---
-        function openRules() { document.getElementById('rules-modal').classList.add('show'); }
-        function closeRules() { document.getElementById('rules-modal').classList.remove('show'); }
-        function openIpModal() { document.getElementById('ip-modal').classList.add('show'); }
-        function closeIpModal() { document.getElementById('ip-modal').classList.remove('show'); }
-        function copyIp() {
-            navigator.clipboard.writeText("comfortworld.gigacube.host").then(() => {
-                document.getElementById('copy-success').classList.add('show');
-                setTimeout(() => { document.getElementById('copy-success').classList.remove('show'); }, 2000);
-            });
-        }
-
-        // --- ЗВУК (Клики) ---
+        /* --- ЗВУКИ (Web Audio API) --- */
         let audioCtx;
-        function playSound(type) {
+        function playSound() {
             try {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') audioCtx.resume();
-                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-                if (type === 'click') {
-                    osc.type = 'sine'; osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.05);
-                    gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-                } else if (type === 'win') {
-                    osc.type = 'triangle'; osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-                    osc.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.2); osc.frequency.linearRampToValueAtTime(1200, audioCtx.currentTime + 0.4);
-                    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime); gainNode.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
-                } else if (type === 'lose') {
-                    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(250, audioCtx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.4);
-                    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-                }
-                osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.6);
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                // Мягкий звук "поп" / клика
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.05);
+                
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.05);
             } catch (e) {}
         }
-        document.addEventListener('click', () => playSound('click'));
-
-        // ================== ЛОГИКА АПГРЕЙДЕРА ==================
-        const upgradeTargets = [
-            { name: 'PEGAS', price: 79, chance: 80 },
-            { name: 'RABBIT', price: 99, chance: 65 },
-            { name: 'D.HELPER', price: 129, chance: 50 },
-            { name: 'RAIN', price: 159, chance: 35 },
-            { name: 'SUMMER', price: 199, chance: 25 },
-            { name: 'ANGEL', price: 279, chance: 15 },
-            { name: 'PRIME', price: 379, chance: 10 },
-            { name: 'ENIGMA', price: 419, chance: 5 },
-            { name: 'D.OWNER', price: 699, chance: 2 }
-        ];
-
-        let currentItem = { name: 'DIABLO', price: 59 };
-        let selectedTarget = null;
-        let isUpgrading = false;
-        let attemptCount = 0; // Счетчик 3-го раза
-
-        function initUpgrader() {
-            renderInventory();
-            updateCurrentItemUI();
-        }
-
-        function renderInventory() {
-            const targetList = document.getElementById('target-list');
-            targetList.innerHTML = '';
-            upgradeTargets.forEach(target => {
-                const card = document.createElement('div');
-                card.className = 'inv-item';
-                card.onclick = () => selectTarget(target);
-                card.innerHTML = `
-                    <img src="https://placehold.co/100x100/111317/facc15?text=${target.name}" alt="${target.name}">
-                    <div class="name">${target.name}</div>
-                    <div class="chance">${target.chance}%</div>
-                `;
-                targetList.appendChild(card);
-            });
-        }
-
-        function selectTarget(target) {
-            if (isUpgrading) return;
-            selectedTarget = target;
-            
-            document.getElementById('target-item-img').src = `https://placehold.co/200x200/111317/facc15?text=${target.name}`;
-            document.getElementById('target-item-name').innerText = target.name;
-            document.getElementById('target-item-price').innerText = `${target.price} ₽`;
-            document.getElementById('right-item-box').classList.add('active');
-
-            const chanceDisplay = document.getElementById('center-chance');
-            chanceDisplay.innerText = `${target.chance}%`;
-            chanceDisplay.style.color = 'var(--accent)';
-            document.getElementById('upg-circle').classList.remove('warning');
-        }
-
-        function updateCurrentItemUI(name = null, price = null) {
-            if (name) currentItem.name = name;
-            if (price) currentItem.price = price;
-            
-            document.getElementById('current-item-img').src = `https://placehold.co/200x200/111317/facc15?text=${currentItem.name}`;
-            document.getElementById('current-item-name').innerText = currentItem.name;
-            document.getElementById('current-item-price').innerText = `${currentItem.price} ₽`;
-        }
-
-        function startUpgrade() {
-            if (isUpgrading) return;
-            if (!selectedTarget) { alert('Выберите цель в инвентаре!'); return; }
-
-            isUpgrading = true;
-            attemptCount++;
-
-            const btn = document.getElementById('upg-btn');
-            const circle = document.getElementById('upg-circle');
-            const chanceDisplay = document.getElementById('center-chance');
-            
-            btn.disabled = true;
-            btn.innerText = 'Крутим...';
-
-            let finalChance = selectedTarget.chance;
-            
-            // МЕХАНИКА 3-ГО РАЗА (срыв, но не всегда)
-            if (attemptCount === 3) {
-                finalChance = finalChance * 0.4; // Шанс падает на 60%
-                circle.classList.add('warning');
-                chanceDisplay.style.color = 'var(--danger)';
-                chanceDisplay.innerText = `${Math.round(finalChance)}%`;
-            } else {
-                circle.classList.remove('warning');
-                chanceDisplay.style.color = 'var(--accent)';
+        
+        // Вешаем звук на все клики по интерактивным элементам
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('button, a, .ip-btn')) {
+                playSound();
             }
+        });
 
+        /* --- УВЕДОМЛЕНИЯ (ТОСТЫ) --- */
+        function showToast(msg, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = type === 'success' ? `✅ ${msg}` : `ℹ️ ${msg}`;
+            container.appendChild(toast);
             setTimeout(() => {
-                circle.classList.remove('warning');
-                const roll = Math.random() * 100;
-                const isWin = roll <= finalChance;
-
-                const resultOverlay = document.getElementById('upg-result');
-                const resultText = document.getElementById('upg-res-text');
-
-                if (isWin) {
-                    resultText.innerText = 'WIN';
-                    resultText.className = 'upg-res-title upg-res-win';
-                    updateCurrentItemUI(selectedTarget.name, selectedTarget.price);
-                    playSound('win');
-                } else {
-                    resultText.innerText = 'LOSE';
-                    resultText.className = 'upg-res-title upg-res-lose';
-                    updateCurrentItemUI('VAMPIRE', 29);
-                    playSound('lose');
-                }
-
-                if (attemptCount >= 3) attemptCount = 0; // Сброс
-
-                resultOverlay.classList.add('show');
-                
-                btn.disabled = false;
-                btn.innerText = 'Улучшить';
-                isUpgrading = false;
-                selectedTarget = null;
-                document.getElementById('right-item-box').classList.remove('active');
-                
-                chanceDisplay.innerText = '0%';
-                chanceDisplay.style.color = 'var(--accent)';
-
-            }, 2000);
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
 
-        function closeUpgResult() {
-            document.getElementById('upg-result').classList.remove('show');
+        /* --- СНЕГ --- */
+        function createSnow() {
+            const container = document.getElementById('snow-container');
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.innerHTML = '❄';
+            
+            // Случайные параметры
+            const startLeft = Math.random() * 100;
+            const duration = Math.random() * 3 + 3; // от 3 до 6 секунд
+            const size = Math.random() * 15 + 10;
+            const opacity = Math.random() * 0.5 + 0.3;
+            
+            snowflake.style.left = `${startLeft}vw`;
+            snowflake.style.animationDuration = `${duration}s`;
+            snowflake.style.fontSize = `${size}px`;
+            snowflake.style.opacity = opacity;
+            
+            container.appendChild(snowflake);
+            
+            // Удаляем после падения
+            setTimeout(() => {
+                snowflake.remove();
+            }, duration * 1000);
+        }
+        
+        // Создаем снежинки постоянно
+        setInterval(createSnow, 150);
+
+        /* --- ЛЕНТА --- */
+        const buyers = ['xX_Pro_Xx', 'Steve', 'Alex', 'NoobMaster', 'DragonSlayer'];
+        const items = ['GOD', 'DIABLO', 'DRAGON', 'Кейс', 'Разбан'];
+        function updateFeed() {
+            const feed = document.getElementById('recent-feed');
+            const buyer = buyers[Math.floor(Math.random() * buyers.length)];
+            const item = items[Math.floor(Math.random() * items.length)];
+            feed.innerHTML = `Недавно купили: <b>${buyer}</b> — <span class="item">${item}</span>`;
+        }
+        updateFeed();
+        setInterval(updateFeed, 5000);
+
+        /* --- ВКЛАДКИ --- */
+        function openTab(tabId, element) {
+            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+            document.querySelectorAll('.sidebar-menu button').forEach(l => l.classList.remove('active'));
+            
+            document.getElementById(tabId).style.display = 'block';
+            element.classList.add('active');
         }
 
-        initUpgrader();
+        /* --- МОДАЛКИ --- */
+        function openRules() { document.getElementById('rules-modal').classList.add('show'); }
+        function closeRules() { document.getElementById('rules-modal').classList.remove('show'); }
+
+        // Закрытие по клику на фон
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', e => {
+                if (e.target === modal) modal.classList.remove('show');
+            });
+        });
+
+        /* --- КОПИРОВАНИЕ IP --- */
+        const SERVER_IP = 'comfortworld.gigacube.host';
+        function copyIp() {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(SERVER_IP).then(() => {
+                    showToast('IP скопирован в буфер обмена!', 'success');
+                });
+            } else {
+                // Fallback
+                const ta = document.createElement('textarea');
+                ta.value = SERVER_IP;
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); showToast('IP скопирован!', 'success'); } catch (e) {}
+                document.body.removeChild(ta);
+            }
+        }
     </script>
 </body>
 </html>
