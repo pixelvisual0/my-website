@@ -1,434 +1,1218 @@
+DOCTYPE html>
+html lang="ru">
+head>
+    meta charset="UTF-8">
+    meta name="viewport" content="width=device-width, initial-scale=1.0">
+    title>ComfortWorld - Minecraft Магазинtitle>
+    link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ComfortWorld — Твой мир, твои правила</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+        :root {
+            --primary-dark: #0a0e27;
+            --primary-blue: #1a1f4e;
+            --primary-purple: #4a1a8a;
+            --accent-purple: #8a3ab9;
+            --accent-violet: #b44aff;
+            --accent-blue: #2a5aff;
+            --text-light: #e0e0ff;
+            --text-muted: #a0a0c0;
+            --card-bg: rgba(26, 31, 78, 0.8);
+            --card-border: rgba(138, 58, 185, 0.3);
+            --btn-primary: linear-gradient(135deg, #8a3ab9, #4a1a8a);
+            --btn-hover: linear-gradient(135deg, #b44aff, #8a3ab9);
+            --success: #00cc66;
+            --warning: #ffaa00;
+            --danger: #ff4444;
+        }
 
-:root {
- --red:#ff2346;
- --purple:#8b55ff;
- --blue:#526cff;
- --panel:rgba(12,14,38,.91);
- --border:rgba(139,115,255,.35);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
- background:#080b20;color:#fff;
- font-family:Montserrat,Arial,sans-serif;
- overflow-x:hidden;
-}
-button{font-family:inherit;cursor:pointer;color:white}
-button:active{transform:scale(.96)}
-body:before{
- content:"";position:fixed;inset:0;z-index:-2;
- background:
- radial-gradient(ellipse at 50% 30%,#172d75 0%,transparent 50%),
- radial-gradient(ellipse at 95% 90%,#39185c,transparent 45%),
- linear-gradient(#07091b,#11122e);
-}
-.snow{
- position:fixed;inset:0;pointer-events:none;z-index:10;
- background-image:
- radial-gradient(2px 2px at 20px 30px,#fff,transparent),
- radial-gradient(2px 2px at 100px 150px,#b8d5ff,transparent),
- radial-gradient(3px 3px at 250px 80px,#fff,transparent),
- radial-gradient(2px 2px at 400px 230px,#fff,transparent);
- background-size:450px 300px;
- animation:snow 15s linear infinite;
- opacity:.4;
-}
-@keyframes snow{to{background-position:0 600px}}
-header{
- max-width:1600px;margin:auto;padding:14px 25px;
- display:flex;align-items:center;justify-content:space-between;gap:18px;
- position:relative;z-index:5;
-}
-.logo{font-size:29px;font-weight:900;white-space:nowrap}
-.logo span{color:var(--red)}
-.logo small{display:block;font-size:9px;letter-spacing:3px;text-align:center;color:#bdc5e8}
-nav{
- display:flex;align-items:center;gap:5px;
- padding:7px;background:#0c1029eF;
- border:1px solid var(--border);border-radius:18px;
-}
-nav button{
- background:transparent;border:0;padding:14px 17px;
- border-radius:12px;font-weight:700;font-size:13px;
-}
-nav button:hover,nav button.active{
- background:var(--red);box-shadow:0 0 22px #ff234477;
-}
-.status,.cart{
- background:#10142e;border:1px solid var(--border);
- border-radius:15px;padding:13px 17px;font-size:12px;
-}
-.status span{color:#00e89a}
-.cart{
- background:var(--red);font-weight:800;
- box-shadow:0 0 20px #ff234466;border:0;
-}
-main{max-width:1550px;margin:auto;padding:10px 25px 50px}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #050818 0%, #0a0e27 30%, #1a0a3a 70%, #0a0e27 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-/* БОЛЬШОЙ ЗИМНИЙ БАННЕР */
-.hero{
- height:360px;border:1px solid #51418a;
- border-radius:25px;overflow:hidden;position:relative;
- background:
- radial-gradient(circle at 75% 25%,#a3c8ff55,transparent 5%),
- radial-gradient(ellipse at 72% 100%,#c22bff66,transparent 40%),
- linear-gradient(90deg,#070a22 0%,#101943 50%,#121c50 100%);
- box-shadow:0 15px 55px #0009;
-}
-.hero:before{
- content:"";position:absolute;inset:0;
- background:
- linear-gradient(0deg,#090b25 0%,transparent 35%),
- repeating-linear-gradient(110deg,transparent 0 80px,#384b9230 81px 83px);
-}
-.mountains{
- position:absolute;bottom:0;width:100%;height:180px;
- background:
- linear-gradient(135deg,transparent 35%,#273b78 36% 55%,transparent 56%) 0 0/300px 180px,
- linear-gradient(45deg,transparent 35%,#182957 36% 55%,transparent 56%) 100px 0/300px 180px;
- opacity:.8;
-}
-.hero-content{position:absolute;z-index:2;left:45px;top:35px;width:48%}
-.tag{
- display:inline-block;background:#8a194c;
- padding:9px 16px;border-radius:30px;
- font-size:11px;letter-spacing:2px;font-weight:800;
- box-shadow:0 0 20px #ff285544;
-}
-.hero h1{font-size:51px;line-height:1.08;font-weight:900;margin:22px 0 12px}
-.hero h1 span{color:var(--red)}
-.hero p{font-size:15px;color:#d3d9f5;line-height:1.7}
-.actions{display:flex;gap:14px;margin-top:20px}
-.primary,.secondary{
- padding:16px 23px;border-radius:13px;font-weight:800;
- border:0;transition:.2s;
-}
-.primary{background:var(--red);box-shadow:0 0 25px #ff234477}
-.secondary{background:#151638;border:1px solid #7054d7}
-.primary:hover,.secondary:hover{transform:translateY(-3px);filter:brightness(1.2)}
-.hero-logo{
- position:absolute;right:14%;top:34%;z-index:2;
- font-size:55px;font-weight:900;color:#c3d8ff;
- text-shadow:0 0 8px #fff,0 0 25px #386bff,4px 5px #243ca1;
- letter-spacing:-3px;
-}
-.hero-logo small{display:block;text-align:center;font-size:35px}
-.hero-character{
- position:absolute;right:4%;bottom:32px;font-size:105px;
- filter:drop-shadow(0 0 25px #ff3e91);
-}
-.hero-house{
- position:absolute;right:34%;bottom:30px;font-size:100px;
- filter:drop-shadow(0 0 25px #ff9c48);
-}
-.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:16px 0 22px}
-.benefit{
- background:var(--panel);border:1px solid var(--border);
- border-radius:17px;padding:18px;display:flex;align-items:center;gap:18px;
-}
-.benefit i{font-size:34px;font-style:normal}
-.benefit b{font-size:14px}
-.benefit small{display:block;color:#aeb6d7;margin-top:5px}
+        /* Snowfall */
+        #snowfall {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-/* МАГАЗИН */
-.layout{display:grid;grid-template-columns:255px 1fr;gap:20px}
-.sidebar,.shop{
- background:var(--panel);border:1px solid var(--border);
- border-radius:20px;padding:19px;
-}
-.side-title{font-size:17px;font-weight:900;margin-bottom:16px}
-.side-btn{
- width:100%;background:transparent;border:0;color:#d5d9f0;
- padding:14px;text-align:left;border-radius:12px;
- font-weight:700;margin-bottom:4px;
-}
-.side-btn:hover,.side-btn.selected{
- background:linear-gradient(90deg,#ff1743,#b41439);
- box-shadow:0 0 20px #ff234455;color:white;
-}
-.community{
- margin-top:18px;text-align:center;padding:18px;
- border-radius:16px;background:linear-gradient(140deg,#35115e,#151638);
-}
-.community .gift{font-size:55px}
-.community p{font-size:12px;margin:10px;color:#d5d5ed}
-.discord{background:#6338ec;border:0;padding:12px 22px;border-radius:25px;font-weight:800}
-.sound{
- position:fixed;bottom:15px;left:15px;z-index:20;
- background:#10132d;border:1px solid #6753a5;
- padding:12px 17px;border-radius:30px;font-size:12px;
-}
-.shop-head{
- display:flex;justify-content:space-between;align-items:center;
- gap:15px;flex-wrap:wrap;margin-bottom:20px;
-}
-.shop-head h2{font-size:25px}
-.shop-head p{font-size:12px;color:#aeb5d6;margin-top:5px}
-.search{
- background:#080b20;border:1px solid #58558c;color:white;
- padding:14px 18px;border-radius:25px;width:280px;outline:none;
-}
-.search:focus{border-color:#a88cff;box-shadow:0 0 15px #7545ff44}
-.products{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
-.product{
- background:linear-gradient(150deg,#1b1c45,#0c102b);
- border:1px solid #514180;border-radius:17px;
- padding:10px;position:relative;text-align:center;
- transition:.25s;overflow:hidden;
-}
-.product:hover{
- transform:translateY(-6px);
- border-color:#b77aff;
- box-shadow:0 10px 30px #883dff35;
-}
-.art{
- height:145px;border-radius:12px;display:grid;
- place-items:center;position:relative;overflow:hidden;
- background:radial-gradient(circle,#ef48b888,transparent 70%),#291038;
-}
-.art svg{width:100px;height:105px;filter:drop-shadow(0 0 15px currentColor)}
-.product:nth-child(5n+2) .art{background:radial-gradient(circle,#ffbe37aa,transparent 70%),#38250e}
-.product:nth-child(5n+3) .art{background:radial-gradient(circle,#ff344eaa,transparent 70%),#350d20}
-.product:nth-child(5n+4) .art{background:radial-gradient(circle,#397bffaa,transparent 70%),#101e48}
-.product:nth-child(5n+5) .art{background:radial-gradient(circle,#e9baffaa,transparent 70%),#26152e}
-.product h3{font-size:16px;margin:10px 0 5px}
-.product p{font-size:11px;color:#c3c4dc}
-.label{
- position:absolute;top:9px;left:9px;
- background:#ff2346;border-radius:7px;
- padding:5px 9px;font-size:10px;font-weight:900;z-index:2;
-}
-.label.green{background:#0ebd78}
-.price-row{display:flex;justify-content:space-between;align-items:center;gap:4px;margin-top:13px}
-.price{font-size:19px;font-weight:900}
-.add{background:var(--red);border:0;border-radius:10px;padding:10px 12px;font-size:11px;font-weight:800}
-.add:hover{box-shadow:0 0 18px #ff2344}
-.hidden{display:none!important}
-.toast{
- position:fixed;bottom:22px;right:22px;z-index:40;
- padding:17px 23px;border-radius:15px;
- background:#171c3a;border:1px solid #62569a;
- box-shadow:0 10px 30px #0009;animation:pop .3s;
-}
-@keyframes pop{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-.modal-bg{
- display:none;position:fixed;inset:0;background:#000b;
- z-index:50;align-items:center;justify-content:center;padding:20px;
-}
-.modal-bg.show{display:flex}
-.modal{
- width:450px;max-width:100%;max-height:85vh;overflow:auto;
- background:#151831;border:1px solid #6854a5;
- border-radius:20px;padding:25px;
-}
-.modal h2{margin-bottom:18px}
-.close{float:right;background:#383959;border:0;border-radius:8px;padding:8px}
-.cart-line{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #393958}
-.cart-line button{background:#ed2344;border:0;border-radius:8px;padding:6px 10px}
-.total{font-size:23px;font-weight:900;margin:20px 0}
-footer{text-align:center;color:#858eaf;font-size:12px;padding:35px}
-@media(max-width:1150px){
- header{flex-wrap:wrap}
- nav{order:3;width:100%;justify-content:center;flex-wrap:wrap}
- .products{grid-template-columns:repeat(3,1fr)}
- .hero-logo{font-size:38px}
-}
-@media(max-width:750px){
- main{padding:10px}
- .layout{grid-template-columns:1fr}
- .benefits{grid-template-columns:1fr}
- .hero{height:420px}
- .hero-content{left:20px;top:25px;width:90%}
- .hero h1{font-size:36px}
- .hero-logo{display:none}
- .hero-character{font-size:65px}
- .hero-house{font-size:65px;right:30%}
- .products{grid-template-columns:repeat(2,minmax(0,1fr))}
- .status{display:none}
- .search{width:100%}
-}
-@media(max-width:400px){.products{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<div class="snow"></div>
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            animation: fall linear infinite;
+            text-shadow: 0 0 5px rgba(138, 58, 185, 0.3);
+        }
 
-<header>
- <div class="logo">❄ Comfort<span>World</span>
- <small>ТВОЙ МИР. ТВОИ ПРАВИЛА.</small></div>
- <nav>
-  <button class="active" onclick="page('home',this)">⌂ Главная</button>
-  <button onclick="page('shop',this)">🛒 Магазин</button>
-  <button onclick="info('О проекте','Добро пожаловать в ComfortWorld!')">● О проекте</button>
-  <button onclick="info('Правила','Соблюдай правила нашего проекта!')">▤ Правила</button>
-  <button onclick="info('Поддержка','Наша поддержка всегда готова помочь.')">☏ Поддержка</button>
- </nav>
- <div class="status"><span>●</span> Сервер онлайн<br>142/1000</div>
- <button class="cart" onclick="openCart()">🛒 Корзина (<span id="count">0</span>)</button>
-</header>
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.3;
+            }
+        }
 
-<main>
-<section class="hero" id="home">
- <div class="mountains"></div>
- <div class="hero-content">
-  <span class="tag">✦ WELCOME TO COMFORTWORLD</span>
-  <h1>ТВОЙ МИР.<br><span>ТВОИ ПРАВИЛА.</span></h1>
-  <p>Открой для себя новый уровень Minecraft. Покупай привилегии и развивайся вместе с нами!</p>
-  <div class="actions">
-   <button class="primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">🛒 Перейти в магазин →</button>
-   <button class="secondary" onclick="info('Discord','Добавь ссылку своего Discord-сервера.')">🎮 Наш Discord</button>
-  </div>
- </div>
- <div class="hero-logo">ComfortWorld<small>❄</small></div>
- <div class="hero-house">🏰</div>
- <div class="hero-character">👑</div>
-</section>
+        /* Stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-<section class="benefits">
- <div class="benefit"><i>⚡</i><div><b>Быстрый сервер</b><small>Стабильный онлайн 24/7</small></div></div>
- <div class="benefit"><i>👑</i><div><b>Уникальные привилегии</b><small>Выбирай свой уровень</small></div></div>
- <div class="benefit"><i>🎧</i><div><b>Отличная поддержка</b><small>Мы всегда поможем</small></div></div>
-</section>
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite alternate;
+        }
 
-<div class="layout" id="catalog">
- <aside class="sidebar">
-  <div class="side-title">✦ Категории</div>
-  <button class="side-btn selected" onclick="filter('priv',this)">👑 Привилегии　›</button>
-  <button class="side-btn" onclick="filter('chest',this)">🎁 Сундуки　›</button>
-  <button class="side-btn" onclick="filter('service',this)">⚙ Услуги　›</button>
-  <div class="community">
-   <div class="gift">🎁</div>
-   <b>Присоединяйся</b>
-   <p>к нашему сообществу!</p>
-   <button class="discord" onclick="info('Discord','Здесь будет приглашение на Discord.')">🎮 Discord</button>
-  </div>
- </aside>
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
 
- <section class="shop">
-  <div class="shop-head">
-   <div><h2 id="title">👑 Привилегии</h2><p>Лучшие привилегии для комфортной игры</p></div>
-   <input class="search" id="search" placeholder="⌕ Поиск по товарам..." oninput="render()">
-  </div>
-  <div class="products" id="products"></div>
- </section>
-</div>
-</main>
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 15px 0;
+        }
 
-<footer>© 2026 ComfortWorld. Все права защищены.<br>Твой мир. Твои правила.</footer>
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-<button class="sound" id="sound" onclick="toggleSound()">◖ Звук выключен</button>
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-light);
+        }
 
-<div class="modal-bg" id="bg" onclick="if(event.target===this)closeModal()">
- <div class="modal" id="modal"></div>
-</div>
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-violet));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(138, 58, 185, 0.4);
+        }
 
-<script>
-const icons={
- VAMPIRE:`<svg viewBox="0 0 100 100" fill="none"><path d="M50 28L9 8 21 58 42 46 50 78 58 46 79 58 91 8Z" fill="#17122f" stroke="#d95aff" stroke-width="4"/><circle cx="39" cy="43" r="5" fill="#ff244b"/><circle cx="61" cy="43" r="5" fill="#ff244b"/><path d="M38 60L50 75 62 60" stroke="#fff" stroke-width="4"/></svg>`,
- GOD:`<svg viewBox="0 0 100 100" fill="none"><path d="M13 34L32 48 50 10 68 48 87 34 81 76 19 76Z" fill="#ffbd36" stroke="#fff0a0" stroke-width="4"/><path d="M19 77H81V89H19Z" fill="#e88c15"/><circle cx="50" cy="44" r="8" fill="#fff5bd"/><circle cx="31" cy="55" r="5" fill="#fff"/></svg>`,
- DIABLO:`<svg viewBox="0 0 100 100" fill="none"><path d="M18 35Q-2 0 4 4Q38 7 42 33M82 35Q102 0 96 4Q62 7 58 33" fill="#ed183e" stroke="#ff7080" stroke-width="4"/><path d="M50 22L80 42 73 80 50 96 27 80 20 42Z" fill="#391020" stroke="#ff304f" stroke-width="4"/><path d="M31 53L44 60 35 68M69 53L56 60 65 68" stroke="#ff3155" stroke-width="7"/></svg>`,
- PEGAS:`<svg viewBox="0 0 100 100" fill="none"><path d="M35 49Q3 1 10 35Q10 55 37 67M65 49Q97 1 90 35Q90 55 63 67" fill="#b8e5ff" stroke="#fff" stroke-width="4"/><path d="M50 23Q79 30 68 61Q59 82 37 70Q21 58 34 38Z" fill="#d9f5ff" stroke="#579cff" stroke-width="3"/><path d="M37 38L28 25 45 31 56 18 60 35" fill="#fff"/><circle cx="56" cy="46" r="3" fill="#293d83"/></svg>`,
- RABBIT:`<svg viewBox="0 0 100 100" fill="none"><path d="M34 45Q16 -9 29 4Q46 12 47 42M58 42Q59 -12 73 4Q83 22 68 47" fill="#fff" stroke="#c9b7ff" stroke-width="4"/><circle cx="50" cy="61" r="31" fill="#fff" stroke="#c9b7ff" stroke-width="4"/><circle cx="40" cy="57" r="4" fill="#17152c"/><circle cx="60" cy="57" r="4" fill="#17152c"/><path d="M46 68Q50 75 54 68" stroke="#ff6e9c" stroke-width="4"/></svg>`,
- PHANTOM:`<svg viewBox="0 0 100 100"><path d="M50 5Q90 20 83 65L90 90 68 80 50 95 32 80 10 90 17 65Q10 20 50 5Z" fill="#b9b6ff" stroke="#7161ff" stroke-width="4"/><circle cx="37" cy="50" r="6" fill="#3532a0"/><circle cx="63" cy="50" r="6" fill="#3532a0"/></svg>`,
- CRYSTAL:`<svg viewBox="0 0 100 100"><path d="M50 5L88 37 50 95 12 37Z" fill="#53caff" stroke="#d8f7ff" stroke-width="4"/><path d="M50 5V95M12 37H88M50 5L35 37 50 95 65 37Z" stroke="#fff" stroke-width="3"/></svg>`,
- LEGEND:`<svg viewBox="0 0 100 100"><path d="M50 4L64 30 94 36 72 58 77 90 50 75 23 90 28 58 6 36 36 30Z" fill="#ffdc67" stroke="#fff" stroke-width="4"/><circle cx="50" cy="49" r="13" fill="#ff8d24"/></svg>`,
- MAGIC:`<svg viewBox="0 0 100 100"><path d="M50 3L60 36 94 50 60 62 50 97 38 63 5 50 38 37Z" fill="#be76ff" stroke="#fff" stroke-width="4"/></svg>`,
- ULTRA:`<svg viewBox="0 0 100 100"><path d="M50 4L91 50 50 96 9 50Z" fill="#8e66ff" stroke="#fff" stroke-width="4"/><path d="M50 4V96M9 50H91" stroke="#e9dfff" stroke-width="4"/></svg>`
-};
-const items=[
- ['VAMPIRE','Особая привилегия',29,'priv','ХИТ'],
- ['GOD','Премиум привилегия',49,'priv','ТОП'],
- ['DIABLO','Премиум привилегия',59,'priv',''],
- ['PEGAS','Премиум привилегия',79,'priv',''],
- ['RABBIT','Премиум привилегия',99,'priv',''],
- ['PHANTOM','Редкая привилегия',119,'priv',''],
- ['CRYSTAL','Кристальная привилегия',149,'priv',''],
- ['LEGEND','Легендарная привилегия',199,'priv',''],
- ['MAGIC','Магическая привилегия',249,'priv',''],
- ['ULTRA','Максимальный уровень',299,'priv',''],
- ['Маленький сундук','Набор наград',19,'chest',''],
- ['Большой сундук','Большой набор наград',49,'chest',''],
- ['Магический сундук','Особые награды',99,'chest',''],
- ['Смена ника','Измени свой ник',39,'service',''],
- ['Разбан','Услуга проекта',149,'service','']
-];
-let category='priv',cart=[],soundOn=false,ctx;
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-function render(){
- const q=document.getElementById('search').value.toLowerCase();
- const list=items.filter(x=>x[3]===category&&x[0].toLowerCase().includes(q));
- document.getElementById('products').innerHTML=list.map(x=>`
- <article class="product">
- ${x[4]?`<span class="label ${x[4]==='ТОП'?'green':''}">${x[4]}</span>`:''}
- <div class="art">${icons[x[0]]||'<span style="font-size:70px">▣</span>'}</div>
- <h3>${x[0]}</h3><p>${x[1]}</p>
- <div class="price-row"><span class="price">${x[2]} ₽</span>
- <button class="add" onclick="add('${x[0]}')">🛒 В корзину</button></div>
- </article>`).join('')||'<p>Ничего не найдено.</p>';
-}
-function filter(type,btn){
- category=type;
- document.querySelectorAll('.side-btn').forEach(x=>x.classList.remove('selected'));
- btn.classList.add('selected');
- document.getElementById('title').textContent=type==='priv'?'👑 Привилегии':type==='chest'?'🎁 Сундуки':'⚙ Услуги';
- render();
-}
-function add(name){
- cart.push(items.find(x=>x[0]===name));
- update();toast('Успешно!','Товар добавлен в корзину');
-}
-function update(){document.getElementById('count').textContent=cart.length}
-function openCart(){
- const total=cart.reduce((s,x)=>s+x[2],0);
- document.getElementById('modal').innerHTML=`
- <button class="close" onclick="closeModal()">✕</button><h2>🛒 Твоя корзина</h2>
- ${cart.length?cart.map((x,i)=>`<div class="cart-line"><span>${x[0]} — ${x[2]} ₽</span><button onclick="removeItem(${i})">✕</button></div>`).join(''):'<p>Корзина пока пустая.</p>'}
- <div class="total">Итого: ${total} ₽</div>
- <button class="primary" onclick="info('Оформление заказа','Это демонстрационная корзина. Настоящую оплату нужно подключить отдельно.')">Оформить заказ →</button>`;
- showModal();
-}
-function removeItem(i){cart.splice(i,1);update();openCart()}
-function info(title,msg){
- document.getElementById('modal').innerHTML=`<button class="close" onclick="closeModal()">✕</button><h2>${title}</h2><p style="line-height:1.8;color:#c8cbea">${msg}</p>`;
- showModal();
-}
-function showModal(){document.getElementById('bg').classList.add('show')}
-function closeModal(){document.getElementById('bg').classList.remove('show')}
-function toast(title,msg){
- const t=document.createElement('div');
- t.className='toast';t.innerHTML=`<b>✓ ${title}</b><br><small>${msg}</small>`;
- document.body.appendChild(t);setTimeout(()=>t.remove(),2500);
-}
-function page(p,btn){
- document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
- btn.classList.add('active');
- if(p==='shop')document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
- else window.scrollTo({top:0,behavior:'smooth'});
-}
-function toggleSound(){
- soundOn=!soundOn;
- document.getElementById('sound').textContent=soundOn?'◖ Звук включен':'◖ Звук выключен';
-}
-document.addEventListener('click',e=>{
- if(!soundOn||!e.target.closest('button'))return;
- try{
- ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();
- const o=ctx.createOscillator(),g=ctx.createGain();
- o.connect(g);g.connect(ctx.destination);
- o.frequency.value=550;g.gain.value=.035;
- g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.1);
- o.start();o.stop(ctx.currentTime+.1);
- }catch(e){}
-});
-render();
-</script>
-</body>
-</html>
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-violet);
+            text-shadow: 0 0 10px rgba(180, 74, 255, 0.5);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .online-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(0, 204, 102, 0.15);
+            border: 1px solid rgba(0, 204, 102, 0.3);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--success);
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 204, 102, 0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(0, 204, 102, 0); }
+        }
+
+        .cart-btn {
+            position: relative;
+            background: var(--btn-primary);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .cart-btn:hover {
+            background: var(--btn-hover);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 20px 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(138, 58, 185, 0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--btn-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(138, 58, 185, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: var(--btn-hover);
+            box-shadow: 0 6px 25px rgba(138, 58, 185, 0.6);
+        }
+
+        .btn-discord {
+            background: #5865F2;
+            color: white;
+            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-discord:hover {
+            background: #4752c4;
+            box-shadow: 0 6px 25px rgba(88, 101, 242, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(138, 58, 185, 0.2);
+            color: var(--accent-violet);
+            border: 1px solid var(--card-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(138, 58, 185, 0.3);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        .btn-danger {
+            background: rgba(255, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 68, 68, 0.3);
+        }
+
+        .note-link {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Sections */
+        .section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        /* Categories */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(138, 58, 185, 0.3);
+        }
+
+        .category-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .category-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .category-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Shop */
+        .shop-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-box {
+            padding: 10px 16px;
+            border: 1px solid var(--card-border);
+            background: rgba(26, 31, 78, 0.6);
+            color: var(--text-light);
+            border-radius: 8px;
+            font-size: 14px;
+            min-width: 250px;
+        }
+
+        .search-box::placeholder {
+            color: var(--text-muted);
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--card-border);
+            background: rgba(26, 31, 78, 0.6);
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--btn-primary);
+            color: white;
+            border-color: var(--accent-purple);
+        }
+
+        /* Product Cards */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-violet));
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(138, 58, 185, 0.3);
+        }
+
+        .product-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .product-icon.vampire {
+            background: linear-gradient(135deg, #8b0000, #2d0000);
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+        }
+
+        .product-icon.god {
+            background: linear-gradient(135deg, #ffd700, #b8860b);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .product-icon.diablo {
+            background: linear-gradient(135deg, #4a0000, #2d0000);
+            box-shadow: 0 4px 15px rgba(74, 0, 0, 0.4);
+        }
+
+        .product-icon.pegasus {
+            background: linear-gradient(135deg, #00bfff, #0000ff);
+            box-shadow: 0 4px 15px rgba(0, 191, 255, 0.4);
+        }
+
+        .product-icon.rabbit {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--text-light);
+        }
+
+        .product-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 15px;
+        }
+
+        .product-price span {
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        /* Cart */
+        .cart-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 40px;
+            display: none;
+        }
+
+        .cart-container.active {
+            display: block;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(138, 58, 185, 0.2);
+        }
+
+        .cart-item-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--card-border);
+            background: rgba(26, 31, 78, 0.6);
+            color: var(--text-light);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .qty-btn:hover {
+            background: var(--btn-primary);
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--success);
+            margin: 20px 0;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--btn-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: var(--btn-hover);
+        }
+
+        /* About, Rules, Support Sections */
+        .info-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .info-section h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--accent-violet);
+        }
+
+        .info-section p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-section ul li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .info-section ul li::before {
+            content: '❄';
+            position: absolute;
+            left: 0;
+            color: var(--accent-violet);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--primary-blue);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--accent-violet);
+        }
+
+        .modal p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 14, 39, 0.95);
+            border-top: 1px solid var(--card-border);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-violet);
+        }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .categories, .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+    style>
+head>
+body>
+    div id="snowfall">div>
+    div class="stars">div>
+
+    nav>
+        div class="nav-container">
+            a href="#" class="logo">
+                div class="logo-icon">i class="fas fa-cube">/i>div>
+                span class="logo-text">ComfortWorldspan>
+            a>
+            ul class="nav-links">
+                li>a href="#home">Главная/li>
+                li>a href="#shop">Магазин/li>
+                li>a href="#about">О проекте/li>
+                li>a href="#rules">Правила/li>
+                li>a href="#support">Поддержка/li>
+            ul>
+            div class="nav-right">
+                div class="online-indicator">
+                    div class="online-dot">/div>
+                    span>127 онлайнspan>
+                div>
+                button class="cart-btn" onclick="toggleCart()">
+                    i class="fas fa-shopping-cart">/i>
+                    span class="cart-count" id="cartCount">0span>
+                button>
+            div>
+        div>
+    nav>
+
+    main>
+        section class="hero" id="home">
+            h1 class="fade-in">ТВОЙ МИР. ТВОИ ПРАВИЛА.h1>
+            p class="fade-in stagger-1">Добро пожаловать в ComfortWorld — лучший Minecraft сервер с уникальными привилегиями, щедрыми сундуками и крутыми услугами!p>
+            div class="hero-buttons fade-in stagger-2">
+                a href="#shop" class="btn btn-primary">
+                    i class="fas fa-shopping-bag">/i>
+                    Перейти в магазинa>
+                a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn btn-discord" id="discordLink">
+                    i class="fab fa-discord">/i>
+                    Discorda>
+                    span class="note-link">* Замените ссылку на свою
+                a>
+            div>
+        section>
+
+        section class="section" id="categories">
+            h2 class="section-title fade-in">Категорииh2>
+            div class="categories">
+                div class="category-card fade-in stagger-1">
+                    span class="category-icon">i class="fas fa-crown">/i>span>
+                    h3>Привилегииh3>
+                    p>Уникальные возможности и преимущества на сервереp>
+                div>
+                div class="category-card fade-in stagger-2">
+                    span class="category-icon">i class="fas fa-box-open">/i>span>
+                    h3>Сундукиh3>
+                    p>Редкие ресурсы и ценные предметы в сундукахp>
+                div>
+                div class="category-card fade-in stagger-3">
+                    span class="category-icon">i class="fas fa-wand-magic-sparkles">/i>span>
+                    h3>Услугиh3>
+                    p>Помощь с постройками, настройкой и поддержкойp>
+                div>
+            div>
+        section>
+
+        section class="section" id="shop">
+            h2 class="section-title fade-in">Магазин привилегийh2>
+            div class="shop-controls">
+                input type="text" class="search-box" placeholder="Поиск привилегий..." id="searchBox" oninput="filterProducts()">
+                button class="filter-btn active" onclick="filterByCategory('all', this)">Всеbutton>
+                button class="filter-btn" onclick="filterByCategory('privilege', this)">Привилегииbutton>
+                button class="filter-btn" onclick="filterByCategory('chest', this)">Сундукиbutton>
+                button class="filter-btn" onclick="filterByCategory('service', this)">Услугиbutton>
+            div>
+            div class="products-grid" id="productsGrid">
+                div class="product-card fade-in stagger-1" data-category="privilege" data-name="Vampire">
+                    div class="product-icon vampire">i class="fas fa-bat">/i>div>
+                    div class="product-name">Vampirediv>
+                    div class="product-desc">Ночной охотник с уникальными способностями и привилегиями. Доступ к /warp vampire и /kit vampirediv>
+                    div class="product-price">29 ₽div>
+                    button class="btn btn-primary btn-sm" onclick="addToCart('Vampire', 29, 'vampire')">
+                        i class="fas fa-cart-plus">/i>
+                        В корзинуbutton>
+                div>
+                div class="product-card fade-in stagger-2" data-category="privilege" data-name="God">
+                    div class="product-icon god">i class="fas fa-star">/i>div>
+                    div class="product-name">Goddiv>
+                    div class="product-desc">Божественная сила! Максимальные возможности, полёт, креатив и эксклюзивный /kit goddiv>
+                    div class="product-price">49 ₽div>
+                    button class="btn btn-primary btn-sm" onclick="addToCart('God', 49, 'god')">
+                        i class="fas fa-cart-plus">/i>
+                        В корзинуbutton>
+                div>
+                div class="product-card fade-in stagger-3" data-category="privilege" data-name="Diablo">
+                    div class="product-icon diablo">i class="fas fa-fire">/i>div>
+                    div class="product-name">Diablodiv>
+                    div class="product-desc">Адская мощь! Уникальные заклинания, /warp diablo и /kit diablo для настоящих воиновdiv>
+                    div class="product-price">59 ₽div>
+                    button class="btn btn-primary btn-sm" onclick="addToCart('Diablo', 59, 'diablo')">
+                        i class="fas fa-cart-plus">/i>
+                        В корзинуbutton>
+                div>
+                div class="product-card fade-in stagger-4" data-category="privilege" data-name="Pegasus">
+                    div class="product-icon pegasus">i class="fas fa-horse">/i>div>
+                    div class="product-name">Pegasusdiv>
+                    div class="product-desc">Небесный всадник! Полёт на крылатом коне, /warp pegasus и /kit pegasusdiv>
+                    div class="product-price">79 ₽div>
+                    button class="btn btn-primary btn-sm" onclick="addToCart('Pegasus', 79, 'pegasus')">
+                        i class="fas fa-cart-plus">/i>
+                        В корзинуbutton>
+                div>
+                div class="product-card fade-in stagger-5" data-category="privilege" data-name="Rabbit">
+                    div class="product-icon rabbit">i class="fas fa-paw">/i>div>
+                    div class="product-name">Rabbitdiv>
+                    div class="product-desc">Быстрый кролик! Ускорение, /warp rabbit, /kit rabbit и уникальные частицыdiv>
+                    div class="product-price">99 ₽div>
+                    button class="btn btn-primary btn-sm" onclick="addToCart('Rabbit', 99, 'rabbit')">
+                        i class="fas fa-cart-plus">/i>
+                        В корзинуbutton>
+                div>
+            div>
+
+            div class="cart-container" id="cartContainer">
+                div class="cart-header">
+                    h3>i class="fas fa-shopping-cart">/i> Корзинаh3>
+                    button class="btn btn-danger btn-sm" onclick="toggleCart()">
+                        i class="fas fa-times">/i> Закрытьbutton>
+                div>
+                div class="cart-items" id="cartItems">div>
+                div class="cart-total" id="cartTotal">Итого: 0 ₽div>
+                button class="checkout-btn" onclick="checkout()">
+                    i class="fas fa-credit-card">/i>
+                    Оформить заказ (демо)button>
+            div>
+        section>
+
+        section class="section" id="about">
+            h2 class="section-title fade-in">О проектеh2>
+            div class="info-section fade-in">
+                h3>Добро пожаловать в ComfortWorld!h3>
+                p>ComfortWorld — это уникальный Minecraft сервер, созданный с любовью к деталям и вниманием к каждому игроку. Мы стремимся предоставить лучший игровой опыт с уникальными механиками, дружелюбным сообществом и честной игровой средой.p>
+                p>Наш сервер работает на мощном оборудовании, что обеспечивает стабильную игру без лагов. Мы регулярно обновляем контент и добавляем новые возможности, основываясь на пожеланиях нашего сообщества.p>
+                p>Мы открыты для обратной связи и всегда рады новым идеям от наших игроков. Присоединяйтесь к нашему Discord для общения с сообществом и получения последних новостей!p>
+            div>
+        section>
+
+        section class="section" id="rules">
+            h2 class="section-title fade-in">Правила сервераh2>
+            div class="info-section fade-in">
+                h3>Основные правилаh3>
+                ul>
+                    li>Уважайте всех игроков и не допускайте оскорблений, расизма или дискриминации
+                    li>Запрещено использование читов, хаков, макросов и сторонних программ, дающих преимущество
+                    li>Не гриферьте и не разрушайте постройки других игроков без разрешения
+                    li>Запрещена реклама других серверов и ресурсов
+                    li>Соблюдайте правила чата: не спамьте, не флудите, используйте русский или английский язык
+                    li>Багоюз (эксплуатация ошибок) карается временным баном
+                    li>Администрация оставляет за собой право принимать окончательные решения
+                    li>Спорные вопросы решаются через Discord или тикеты в игре
+                    li>Нарушение правил может привести к предупреждению, муту или бану
+                    li>Играйте честно и получайте удовольствие от игры!
+                ul>
+            div>
+        section>
+
+        section class="section" id="support">
+            h2 class="section-title fade-in">Поддержкаh2>
+            div class="info-section fade-in">
+                h3>Как получить помощь?h3>
+                p>Мы всегда готовы помочь вам с любыми вопросами! Выберите удобный способ связи:p>
+                ul>
+                    li>Напишите в наш Discord-сервер: перейдите по ссылке в разделе "Discord" на нашем сайте
+                    li>Создайте тикет прямо в игре с помощью команды /ticket
+                    li>Отправьте письмо на поддержку: support@comfortworld.ru (в разработке)
+                    li>Про frequently задаваемые вопросы в нашем Discord
+                    li>Время ответа поддержки: обычно до 24 часов
+                ul>
+                p style="margin-top: 20px; font-style: italic; color: var(--accent-violet);">Примечание: Это демонстрационный сайт. Для реальных платежей и поддержки настройте интеграцию с платёжными системами и сервисами поддержки.p>
+            div>
+        section>
+    main>
+
+    div class="modal-overlay" id="checkoutModal">
+        div class="modal">
+            i class="fas fa-check-circle" style="font-size: 48px; color: var(--success); margin-bottom: 20px; display: block;">/i>
+            h3>Заказ оформлен! (Демо)h3>
+            p>Это демонстрационное оформление заказа. Реальные платежи не обрабатываются. Для подключения настоящей платёжной системы обратитесь к разработчику.p>
+            p>Спасибо за покупку в ComfortWorld! Спасибо, что выбираете нас!p>
+            button class="btn btn-primary" onclick="closeModal()">
+                i class="fas fa-thumbs-up">/i>
+                Понятноbutton>
+        div>
+    div>
+
+    footer>
+        div class="footer-content">
+            div class="footer-links">
+                a href="#home">Главнаяa>
+                a href="#shop">Магазина>
+                a href="#about">О проектеa>
+                a href="#rules">Правилаa>
+                a href="#support">Поддержкаa>
+            div>
+            p class="footer-copy">2024 ComfortWorld. Все права защищены. Сделано с i class="fas fa-heart" style="color: var(--accent-violet);">/i> для Minecraft-сообщества.p>
+        div>
+    footer>
+
+    script>
+        // Cart state
+        let cart = [];
+
+        // Snowfall
+        function createSnowfall() {
+            const snowfall = document.getElementById('snowfall');
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.textContent = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snowflake.style.opacity = Math.random() * 0.6 + 0.2;
+            snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+            snowfall.appendChild(snowflake);
+            setTimeout(() => snowflake.remove(), 5000);
+        }
+
+        setInterval(createSnowfall, 200);
+
+        // Stars
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i 50; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        createStars();
+
+        // Cart functions
+        function addToCart(name, price, icon) {
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ name, price, icon, quantity: 1 });
+            }
+            updateCart();
+            showToast('добавлено в корзину!' + name + '');
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cartCount');
+            const cartTotal = document.getElementById('cartTotal');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = 'div>Корзина пуста. /div>';
+                cartTotal.textContent = 'Итого: 0 ₽';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+                html += `div class="cart-item">
+                    div class="cart-item-info">
+                        div class="cart-item-icon product-icon ${item.icon}" style="width:40px;height:40px;font-size:18px;">i class="fas fa-${getIconClass(item.icon)}">/i>div>
+                        div>
+                            strong>item.name/strong>br>
+                            span style="color: var(--success);">item.price ₽span>
+                        div>
+                    div>
+                    div class="quantity-controls">
+                        button class="qty-btn" onclick="changeQuantity(${index}, -1)">-/button>
+                        span>item.quantity/span>
+                        button class="qty-btn" onclick="changeQuantity(${index}, 1)">+/button>
+                    div>
+                    button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">i class="fas fa-trash">/i>button>
+                div>`;
+            });
+
+            cartItems.innerHTML = html;
+            cartTotal.textContent = `Итого: ${total} ₽`;
+        }
+
+        function getIconClass(icon) {
+            const icons = {
+                vampire: 'bat',
+                god: 'star',
+                diablo: 'fire',
+                pegasus: 'horse',
+                rabbit: 'paw'
+            };
+            return icons[icon] || 'cube';
+        }
+
+        function changeQuantity(index, delta) {
+            cart[index].quantity += delta;
+            if (cart[index].quantity   0) {
+                cart.splice(index, 1);
+            }
+            updateCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function toggleCart() {
+            const cartContainer = document.getElementById('cartContainer');
+            cartContainer.classList.toggle('active');
+            cartContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showToast('Корзина пуста!');
+                return;
+            }
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('checkoutModal').classList.remove('active');
+            cart = [];
+            updateCart();
+        }
+
+        // Search and filter
+        function filterProducts() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const products = document.querySelectorAll('.product-card');
+
+            products.forEach(product => {
+                const name = product.dataset.name.toLowerCase();
+                if (name.includes(searchTerm)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        function filterByCategory(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const products = document.querySelectorAll('.product-card');
+            products.forEach(product => {
+                if (category === 'all' || product.dataset.category === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // Toast notification
+        function showToast(message) {
+            let toast = document.getElementById('toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast';
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background: var(--btn-primary);
+                    color: white;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                    z-index: 3000;
+                    animation: fadeIn 0.3s;
+                `;
+                document.body.appendChild(toast);
+            }
+            toast.textContent = message;
+            setTimeout(() => toast.remove(), 2000);
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    script>
+body>
+html>
